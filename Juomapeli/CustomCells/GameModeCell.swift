@@ -18,6 +18,8 @@ class GameModeCell: UITableViewCell {
     @IBOutlet weak var customImageView: UIImageView!
     
     var delegate: valueDelegate?
+    @IBOutlet weak var intensityMeter: UILabel!
+    @IBOutlet weak var penaltyMeter: UILabel!
     
     @IBAction func actionSliderChanged(_ sender: UISlider) {
         delegate?.setValue(to: sender.value, forTier: true)

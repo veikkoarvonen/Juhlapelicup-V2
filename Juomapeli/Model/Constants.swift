@@ -24,29 +24,41 @@ struct C {
 
 //Data for tableView cells in GameSelect VC. Just copy & paste strings and leave the tableView cell size the same
 struct Cells {
-    //Image names
     static let images: [UIImage] = [UIImage(named: "basic")!,UIImage(named: "treffit")!,UIImage(named: "extreme")!, UIImage(named: "selita")!]
-    //headers
-    static let headers: [String] = ["Basic game", "Date", "Extreme", "Explain!"]
-    //Paragraphs
+    static let headers: [String] = ["Peruspeli", "Treffit", "Extreme", "Selitä!"]
     static let paragraphs: [String] = [
-        "Basic game description: I can write this in Android studio in Finnish.",
-        "Date mode description: I can write this in Android studio in Finnish",
-        "Extreme mode description: I can write this in Android studio in Finnish.",
-        "Explain mode description: I can write this in Android studio in Finnish"
+        "Monipuolisia tehtäviä ja haasteita, jotka takaavat räväkän meiningin pysyen kuitenkin hyvän maun rajoissa... juuri ja juuri.",
+        "Syvällisiä, hauskoja ja mielenkiintoisia kysymyksiä ja tehtäviä, joiden avulla varmasti tutustut seuralaiseesi - myös pintaa syvemmältä.",
+        "VAROITUS: Ei nynnyille! Alla olevista mittareista voit itse valita pelin intensiteetin ja rangaistushuikkien määrän.                                           HUOM: Tehtävät vaativat pahimmillaan äärimmäistä heittäytymistä, joten peli sopii ainoastaan kovimmille bilehileille!",
+        "Sanaselitys! Sinulla on minuutti aikaa selittää pelikaverillesi niin monta sanaa, kuin kerkeät. Jokaisesta oikeasta vastauksesta saatte pisteen."
     ]
 }
 
 //Data for settings in Finnish language. You can copy & paste strings
 struct Settings {
     
-    static let headers: [String] = ["General", "Responsive playing", "Plus-version"]
+    struct English {
+        static let headers: [String] = ["About", "Responsive playing", "Plus-subscription", "Language"]
+        
+        static let sections: [[String]] = [
+            ["Juhlapeli Cup homepage", "Privacy Policy", "Terms of user"],
+            ["Remember to take care of yourself and your fellow players. This game is intended for entertainment purposes only, and no one should be forced to continue playing if they don't want to. We are not responsible for any damages or consequences that may arise from irresponsible play.","Learn more about responsive playing"],
+            ["Restore Purchases"],
+            ["🇫🇮 Suomi","🇬🇧 English"]
+        ]
+    }
     
-    static let sections: [[String]] = [
-        ["Juhlapeli Cup homepage", "Privacy policy", "Terms of use"],
-        ["Disclaimer: I can write this in Android studio in Finnish"],
-        ["Restore purchases"]
-    ]
+    struct Finnish {
+        static let headers: [String] = ["Tietoa", "Vastuullisuus", "Plus-tilaus", "Kieli"]
+        
+        static let sections: [[String]] = [
+            ["Juhlapeli Cup kotisivut", "Tietosuojakäytäntö", "Käyttöehdot"],
+            ["Muista pitää itsestäsi ja pelitovereistasi huolta. Kyseinen peli on tarkoitettu ainoastaan viihteelliseen käyttöön, eikä ketään tule pakottaa jatkamaan peliä, ellei halua. Emme vastaa mistään vahingoista tai seuraamuksista, jotka voivat aiheutua vastuuttomasta pelaamisesta.","Lue lisää vastuullisuudesta"],
+            ["Palauta ostot"],
+            ["🇫🇮 Suomi","🇬🇧 English"]
+        ]
+    }
+
 }
 
 

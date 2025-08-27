@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27EB4F1A2E4656E2001E715C /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB4F192E4656DB001E715C /* AppLanguage.swift */; };
+		27EB4F2B2E46778D001E715C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27EB4F292E46778D001E715C /* Localizable.strings */; };
 		A2DFD8032D7CACF000F115FA /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2DFD8022D7CACF000F115FA /* IAPManager.swift */; };
 		B604BC0C2C527CE50056B9CE /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B604BC0B2C527CE50056B9CE /* SettingsVC.swift */; };
 		B604BC0E2C5290360056B9CE /* ProBannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B604BC0D2C5290360056B9CE /* ProBannerVC.swift */; };
@@ -32,6 +34,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27EB4F192E4656DB001E715C /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
+		27EB4F2A2E46778D001E715C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		27EB4F2C2E4677B6001E715C /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Main.strings; sourceTree = "<group>"; };
+		27EB4F2D2E4677B6001E715C /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		27EB4F2E2E4677B6001E715C /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A2DFD8022D7CACF000F115FA /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		B604BC0B2C527CE50056B9CE /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		B604BC0D2C5290360056B9CE /* ProBannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProBannerVC.swift; sourceTree = "<group>"; };
@@ -69,6 +76,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27EB4F1B2E46636A001E715C /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				27EB4F292E46778D001E715C /* Localizable.strings */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
 		B60E455A2C304E6700F1B627 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +112,7 @@
 		B6194D452C2C865F00B6E462 /* Juomapeli */ = {
 			isa = PBXGroup;
 			children = (
+				27EB4F1B2E46636A001E715C /* Strings */,
 				B6378B9C2C611940001A958F /* CustomCells */,
 				B6194D652C2CA1C200B6E462 /* Model */,
 				B6194D5A2C2C90D700B6E462 /* Control */,
@@ -124,6 +140,7 @@
 		B6194D652C2CA1C200B6E462 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				27EB4F192E4656DB001E715C /* AppLanguage.swift */,
 				B6194D462C2C865F00B6E462 /* AppDelegate.swift */,
 				B6D3BEBC2CCD03B200D635FF /* SubscriptionManager.swift */,
 				B6194D482C2C865F00B6E462 /* SceneDelegate.swift */,
@@ -188,6 +205,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fi,
 			);
 			mainGroup = B6194D3A2C2C865F00B6E462;
 			preferredProjectObjectVersion = 77;
@@ -208,6 +226,7 @@
 				B6194D532C2C866100B6E462 /* LaunchScreen.storyboard in Resources */,
 				B65FAFF32C3E706D00D9EF26 /* TableViewTextCell.xib in Resources */,
 				B64A930D2C32B87900C00BA9 /* GameModeCell.xib in Resources */,
+				27EB4F2B2E46778D001E715C /* Localizable.strings in Resources */,
 				B60CEE2B2D352B5B003205BA /* EricaOne-Regular.ttf in Resources */,
 				B6194D502C2C866100B6E462 /* Assets.xcassets in Resources */,
 				B6194D4E2C2C865F00B6E462 /* Main.storyboard in Resources */,
@@ -232,6 +251,7 @@
 				B64A930F2C32BFEC00C00BA9 /* Constants.swift in Sources */,
 				B6194D4B2C2C865F00B6E462 /* StartVC.swift in Sources */,
 				B6385E9C2C4FEDCE00D5B3C2 /* WholeGame.swift in Sources */,
+				27EB4F1A2E4656E2001E715C /* AppLanguage.swift in Sources */,
 				B6194D472C2C865F00B6E462 /* AppDelegate.swift in Sources */,
 				B6D3BEBD2CCD03B200D635FF /* SubscriptionManager.swift in Sources */,
 				B6385E9A2C4FE96300D5B3C2 /* OneTask.swift in Sources */,
@@ -243,10 +263,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		27EB4F292E46778D001E715C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27EB4F2A2E46778D001E715C /* en */,
+				27EB4F2E2E4677B6001E715C /* fi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		B6194D4C2C2C865F00B6E462 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				B6194D4D2C2C865F00B6E462 /* Base */,
+				27EB4F2C2E4677B6001E715C /* fi */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -255,6 +285,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				B6194D522C2C866100B6E462 /* Base */,
+				27EB4F2D2E4677B6001E715C /* fi */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -266,6 +297,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -326,6 +358,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -398,7 +431,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.veikko.Juomapeli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -430,7 +463,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.veikko.Juomapeli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

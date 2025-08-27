@@ -12,6 +12,14 @@ protocol CellDelegate: AnyObject {
     func addPlayer(name: String, row: Int)
 }
 
+protocol nameTableViewDelegate: AnyObject {
+    func setPlaceholder()
+}
+
 protocol valueDelegate: AnyObject {
     func setValue(to: Float, forTier: Bool)
+}
+
+protocol LanguageReloader {
+    func reloadUILanguage()
 }

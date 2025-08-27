@@ -7,7 +7,13 @@
 
 import UIKit
 
-class GameSelectView: UIViewController, valueDelegate {
+class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
+    
+    func reloadUILanguage() {
+        tableView.reloadData()
+        print("Reloading language in Game select VC")
+    }
+    
     
 //MARK: Variables & IBOutlets
     
@@ -16,6 +22,7 @@ class GameSelectView: UIViewController, valueDelegate {
     var tierValueForGame: Float = 3.0
     var drinkValueForGame: Float = 3.0
     var shouldPopProVC: Bool = false
+    let languageManager = LanguageManager()
     
     @IBOutlet weak var tableView: UITableView!
  
@@ -33,10 +40,6 @@ class GameSelectView: UIViewController, valueDelegate {
             performSegue(withIdentifier: "pro", sender: self)
             shouldPopProVC = false
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -80,9 +83,27 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: C.gamemodeNIb, for: indexPath) as! GameModeCell
         cell.delegate = self
-        cell.header.text = Cells.headers[indexPath.row]
-        cell.rules.text = Cells.paragraphs[indexPath.row]
+        
+        //Headers and rules
+        cell.intensityMeter.text = languageManager.localizedString(forKey: "INTENSITY_METER")
+        cell.penaltyMeter.text = languageManager.localizedString(forKey: "PENALTY_METER")
+        
+        if indexPath.row == 0 {
+            cell.header.text = languageManager.localizedString(forKey: "HEADER_BASIC")
+            cell.rules.text = languageManager.localizedString(forKey: "PARAGRAPH_BASIC")
+        } else if indexPath.row == 1 {
+            cell.header.text = languageManager.localizedString(forKey: "HEADER_DATES")
+            cell.rules.text = languageManager.localizedString(forKey: "PARAGRAPH_DATES")
+        } else if indexPath.row == 2 {
+            cell.header.text = languageManager.localizedString(forKey: "HEADER_EXTREME")
+            cell.rules.text = languageManager.localizedString(forKey: "PARAGRAPH_EXTREME")
+        } else {
+            cell.header.text = languageManager.localizedString(forKey: "HEADER_EXPLAIN")
+            cell.rules.text = languageManager.localizedString(forKey: "PARAGRAPH_EXPLAIN")
+        }
+        
         cell.rules.font = .systemFont(ofSize: 15.8)
+        
         if indexPath.row != 2 {
             cell.lowerView.isHidden = true
         }
@@ -92,6 +113,7 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
         } else {
             print("Image view is nil")
         }
+        
         
         if indexPath.row != 0 && !IAPManager.shared.isSubscriptionActive() {
             cell.header.textColor = .orange

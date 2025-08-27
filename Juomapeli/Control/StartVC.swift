@@ -8,38 +8,29 @@
 import UIKit
 import StoreKit
 
-class Start: UIViewController {
+class Start: UIViewController, LanguageReloader {
     
-//    let subData = SubscriptionData()
-//    let subManager = SubscriptionManager()
+    let languageManager = LanguageManager()
+    var startButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        IAPManager.shared.start()  // initialize the IAP manager to handle auto renew subscriptions
+        initializeApplication()
         setUpUI()
-        let hasActiveSubscription = IAPManager.shared.isSubscriptionActive()
-        print("User has active subscription: \(hasActiveSubscription)")
-       
-    }
-    
-    
-    
-    
-
-    @IBAction func startPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "12", sender: self)
+        
     }
     
     private func setUpUI() {
         
+        //Background image
         let ukot = UIImageView()
         ukot.image = UIImage(named: "20")
         ukot.contentMode = .scaleAspectFill
         ukot.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(ukot)
         
-        
+        //Background
         let image = UIImageView()
         image.image = UIImage(named: "alkutausta")
         image.contentMode = .scaleToFill
@@ -47,6 +38,7 @@ class Start: UIViewController {
         view.addSubview(image)
         view.sendSubviewToBack(image)
         
+        //Layout
         NSLayoutConstraint.activate([
             image.topAnchor.constraint(equalTo: view.topAnchor),
             image.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -56,8 +48,59 @@ class Start: UIViewController {
             ukot.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             ukot.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
             ukot.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 5)
+            
         ])
+        
+        //Start button
+        let newStartButton = UIButton()
+        let startButtonText = languageManager.localizedString(forKey: "START_GAME")
+        newStartButton.setTitle(startButtonText, for: .normal)
+        newStartButton.titleLabel?.font = UIFont(name: "MarkerFelt-Wide", size: 25)
+        newStartButton.backgroundColor = .white
+        newStartButton.setTitleColor(UIColor(named: C.purple), for: .normal)
+        startButton = newStartButton
+        newStartButton.frame = CGRect(x: 50, y: 200, width: 140, height: 45)
+        newStartButton.center.x = view.center.x
+        newStartButton.center.y = view.center.y
+        newStartButton.layer.cornerRadius = 8
+        newStartButton.layer.masksToBounds = true
+        view.addSubview(newStartButton)
+        
+        newStartButton.addTarget(self, action: #selector(startButtonTapped(_:)), for: .touchUpInside)
+        
+        
+        
     }
-   
+    
+    @objc func startButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "12", sender: self)
+    }
+    
+    func reloadUILanguage() {
+        let startButtonText = languageManager.localizedString(forKey: "START_GAME")
+        startButton.setTitle(startButtonText, for: .normal)
+        print("Reloading language in Start VC")
+    }
+
+    func initializeApplication() {
+        IAPManager.shared.start()  // initialize the IAP manager to handle auto renew subscriptions
+        languageManager.checkDeviceLocalization()
+        languageManager.setDefaultLanguage()
+        let userLanguage = languageManager.getSelectedLanguage()
+        languageManager.setLanguage(languageIdentifier: userLanguage)
+    }
+
+    
+//MARK: - Not used in final code, only for testing
+    
+    func listAllAvailableFonts() {
+        for family in UIFont.familyNames {
+            print("Font Family: \(family)")
+            for font in UIFont.fontNames(forFamilyName: family) {
+                print("  Font: \(font)")
+            }
+        }
+    }
+    
 }
 

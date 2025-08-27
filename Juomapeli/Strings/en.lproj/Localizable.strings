@@ -1,0 +1,50 @@
+/* 
+  Localizable.strings
+  Juomapeli
+
+  Created by Veikko Arvonen on 8.8.2025.
+  
+*/
+
+//Start VC
+START_GAME = "Start Game";
+
+//Add players VC
+ADD_PLAYER = "+ Add Player";
+PLAYER_ALERT = "Add at least two players";
+OK_BUTTON = "OK";
+NEXT = "Next";
+
+/* Game Mode Headers */
+HEADER_BASIC = "Basic Game";
+HEADER_DATES = "Dates";
+HEADER_EXTREME = "Extreme";
+HEADER_EXPLAIN = "Explain!";
+
+/* Game Mode Paragraphs */
+PARAGRAPH_BASIC = "Plenty of versatile tasks and challenges that guarantee a fun night while still staying within the limits of good taste... barely!.";
+PARAGRAPH_DATES = "Deep, funny, and interesting questions and challenges that will help you get to know your date — even beyond the surface!";
+PARAGRAPH_EXTREME = "WARNING: Not for wimps! Use the sliders below to choose the naughtiness of the game and the number of penalties. CAUTION: Some tasks may require extreme boldness and commitment. This game is only for the wildest party animals out there!";
+PARAGRAPH_EXPLAIN = "Word explanation! You have one minute to explain as many words as possible to your game partner. You get a point for each correct answer.";
+
+INTENSITY_METER = "Naughty Meter";
+PENALTY_METER = "Penalty Meter";
+
+
+//Settings
+ABOUT_HEADER = "About";
+RESPONSIBLE_PLAYING_HEADER = "Responsive playing";
+PLUS_SUBSCRIPTION_HEADER = "Plus-subscription";
+LANGUAGE_HEADER = "Language";
+
+HOME_PAGE_LINK = "Juhlapeli Cup homepage";
+PRIVACY_POLICY_LINK = "Privacy Policy";
+TERMS_OF_USER_LINK = "Terms of use";
+
+RESPONSIBLE_PLAYING_DESCRIPTION = "Remember to take care of yourself and your fellow players. This game is intended for entertainment purposes only, and no one should be forced to continue playing if they don't want to. We are not responsible for any damages or consequences that may arise from irresponsible play.";
+LEARN_MORE_LINK = "Learn more about responsive playing";
+
+RESTORE_PURCHASES = "Restore Purchases";
+
+FINNISH_LANGUAGE = "🇫🇮 Suomi";
+ENGLISH_LANGUAGE = "🇬🇧 English";

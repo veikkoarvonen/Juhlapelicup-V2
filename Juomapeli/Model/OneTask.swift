@@ -134,8 +134,8 @@ struct SingleTask {
             "\(player1), ota \(getNumber(input: 3)) rankaisevaa tai poskiläimäisy pelaajalta \(player2)",
             "\(player1), oletko omasta mielestäsi hyvä sängyssä? Vastaa tai ota \(getNumber(input: 4)) rankaisevaa",
             "\(player1), kuiskaa salaisuus pelaajalle \(player2). Jos hän ei reagoi mitenkään, ota 2 rankaisevaa",
-            "Kertokaa tarina sana kerrallaan, se joka jäätyy ekana ota \(getNumber(input: 3)) rankaisevaa",
-            "\(player1), sano 5 kertaa putkeen ”floridan broileri ja reilu litra maitoa” ilman että kieli menee solmuun, tai ota \(getNumber(input: 3)) rankaisevaa",
+            "Kertokaa tarina sana kerrallaan, se joka jäätyy ekana ottaa \(getNumber(input: 3)) rankaisevaa",
+            "\(player1), sano 5 kertaa putkeen 'Floridan broileri ja reilu litra maitoa' ilman että kieli menee solmuun, tai ota \(getNumber(input: 3)) rankaisevaa",
             "\(player1), ota rangaistus pelaajan \(player2) navasta",
             "\(player1), seuraavan 3 kierroksen ajan, saat puhua vain suu kiinni. Jos epäonnistut, ota 3 rankaisevaa",
             "\(player1), ota housut pois loppupelin ajaksi tai \(getNumber(input: 4)) rankaisevaa",
@@ -213,7 +213,7 @@ struct SingleTask {
             "\(player1), kerro nolo muisto. Jos muut pelaajat eivät pidä sitä nolona, ota \(getNumber(input: 3)) rankaisevaa",
             "\(player1), imitoi orgasmia 10 sekunnin ajan tai ota \(getNumber(input: 5)) rankaisevaa",
             "\(player1), ole loppupeli silmät sidottuna tai ota \(getNumber(input: 4)) rankaisevaa",
-            "\(player1), freestyle-räppää aiheesta: ”Olen rakastunut pelaajaan \(player2). Kieltäytymisestä \(getNumber(input: 4)) rankaisevaa",
+            "\(player1), freestyle-räppää aiheesta: 'Olen rakastunut pelaajaan \(player2)'. Kieltäytymisestä \(getNumber(input: 4)) rankaisevaa",
             "\(player1), soita vanhemmillesi ja kerro olevasi raskaana, tai ota \(getNumber(input: 5)) rankaisevaa",
             "\(player1), lähetä tuhmin mahdollinen tekstiviesti pelaajalle \(player2) vain emojeita käyttäen. Kieltäytymisestä \(getNumber(input: 4)) rankaisevaa",
             "Ottakaa ryhmäkuva. Kieltäytyjä ottaa 4 rankaisevaa",
@@ -410,7 +410,17 @@ struct SingleTask {
             "Jokainen pelaaja laulaa sana kerrallaan JVG:n kappaletta Ikuinen vappu. Se, joka jäätyy ensimmäisenä, ottaa \(getNumber(input: 3)) rankaisevaa. \(player1) aloittaa",
             "\(player1), päätä, kuka pelaajista ottaa \(getNumber(input: 3)) rankaisevaa",
             "Pelaaja, jolla on pienin jalka, ottaa \(getNumber(input: 3)) rankaisevaa",
-            "Pelkäätkö enemmän korkeita vai ahtaita paikkoja? Äänestäkää! Vähemmistö ottaa \(getNumber(input: 4)) rankaisevaa"
+            "Pelkäätkö enemmän korkeita vai ahtaita paikkoja? Äänestäkää! Vähemmistö ottaa \(getNumber(input: 4)) rankaisevaa",
+            "\(player1), milloin viimeksi nolasit itsesi ja miten? Vastaa tai ota \(getNumber(input: 3)) rankaisevaa",
+            "\(player1), seuraavan 3 kierroksen ajan et saa puhua, vaan joudut esittämään asiasi äänettömästi Mr. Beanin tyyliin. Jos epäonnistut tai kieltäydyt, \(getNumber(input: 5)) rankaisevaa",
+            "\(player1), sinulla on 10 sekuntia aikaa ottaa käteesi jokin punainen esine. Jos epäonnistut, ota \(getNumber(input: 3)) rankaisevaa",
+            "\(player1), kerro hauska fakta tai tarina pelaajasta \(player2). Jos et keksi mitään, ota \(getNumber(input: 4)) rankaisevaa",
+            "\(player1), laula Suvivirren ensimmäinen säkeistö virheettömästi. Epäonnistumisesta \(getNumber(input: 4)) rankaisevaa",
+            "\(player1), laula Maamme-laulun ensimmäinen säkeistö virheettömästi. Epäonnistumisesta \(getNumber(input: 4)) rankaisevaa",
+            "\(player1), sano pelaajan \(player2) kokonimi. Jos et tiedä sitä, on aika ottaa \(getNumber(input: 4)) rankaisevaa ja tutustua pelitoveriisi paremmin",
+            "\(player1), tee jokin olettamus pelaajasta \(player2). Jos osut oikeaan, hän ottaa \(getNumber(input: 4)) rankaisevaa. Muuten otat itse \(getNumber(input: 2))",
+            "Jokainen pelaaja kertoo vuorollaan vitsin. Jos vitsi ei naurata, ottaa sen kertoja \(getNumber(input: 3)) rankaisevaa. Saatte 15 sekuntia aikaa valmistautua, \(player1) aloittaa",
+            "\(player1), mikä on pelaajan \(player2) syntymäpäivä ja -vuosi? Jos arvaat oikein, hän ottaa \(getNumber(input: 5)) rankaisevaa. Jos väärin, otat itse \(getNumber(input: 2))",
         ]
         
         self.tier2 = [
@@ -469,6 +479,12 @@ struct SingleTask {
             "\(player1), anna näytteesi Tarzanin ikonisesta viidakkohuudosta. Jos et vakuuta muita pelaajia, ota \(getNumber(input: 4)) rankaisevaa",
             "Seuraava pelaaja, joka räpäyttää silmiään, ottaa \(getNumber(input: 4)) rankaisevaa",
             "\(player1), ulvo suden lailla tai ota \(getNumber(input: 5)) rankaisevaa",
+            "\(player1), nimeä 5 animesarjaa 10 sekunnissa tai ota \(getNumber(input: 4)) rankaisevaa",
+            "Vanhin pelaaja antaa nuorimalle pelaajalle mullistavan elämänohjeen, tai ottaa \(getNumber(input: 3)) rankaisevaa",
+            "Jokainen pelaaja kertoo pahimman tekonsa viimeisen viikon aikana. Suurin lurjus ottaa \(getNumber(input: 5)) rankaisevaa",
+            "\(player1), pidä kasvosi peruslukemilla seuraavan kahden kierroksen ajan. Jokaista ilmeilyä kohden ota \(getNumber(input: 2)) rankaisevaa",
+            "\(player1), kehu pelaajaa \(player1) maasta taivaisiin! Jos saat hänet hymyilemään, säästyt \(getNumber(input: 3)) rankaisevalta. Jos hän punastuu, hän ottaa itse \(getNumber(input: 3))",
+            "Jokainen pelaaja esittelee itsensä hauskan faktan kera. Tylsimmän esittelyn esittäjä ottaa \(getNumber(input: 4)) rankaisevaa. \(player1) aloittaa",
         ]
         
         self.tier3 = [
@@ -497,11 +513,11 @@ struct SingleTask {
             "\(player1), näytä viimeisin kuva puhelimesi ”Kätketyt” -albumista",
             "\(player1), ota paita pois loppupelin ajaksi tai \(getNumber(input: 4)) rankaisevaa",
             "\(player1), näytä parhaimmat tanssiliikkeesi seuraavan 15 sekunnin ajan tai ota \(getNumber(input: 5)) rankaisevaa",
-            "Jokainen pelaaja laulaa sana kerrallaan Juice Leskisen kappaletta Ei tippa tapa. Se, joka jäätyy ensimmäisenä, ottaa \(getNumber(input: 3)) rankaisevaa. ”\(player1) aloittaa",
-            "Jokainen pelaaja laulaa sana kerrallaan PMMP:n kappaletta Rusketusraidat. Se, joka jäätyy ensimmäisenä, ottaa \(getNumber(input: 3)) rankaisevaa. ”\(player1) aloittaa",
+            "Jokainen pelaaja laulaa sana kerrallaan Irwin Goodmanin kappaletta Ei tippa tapa. Se, joka jäätyy ensimmäisenä, ottaa \(getNumber(input: 3)) rankaisevaa. \(player1) aloittaa",
+            "Jokainen pelaaja laulaa sana kerrallaan PMMP:n kappaletta Rusketusraidat. Se, joka jäätyy ensimmäisenä, ottaa \(getNumber(input: 3)) rankaisevaa. \(player1) aloittaa",
             "\(player1) ja \(player2), pitäkää toisianne kädestä kiinni loppupelin ajan. Jos kätenne irtoaa kesken pelin, ottakaa molemmat \(getNumber(input: 5)) rankaisevaa",
             "\(player1), näytä seksikkäin ilme jonka osaat tehdä",
-            "\(player1), freestyle-räppää aiheesta: ”Olen rakastunut pelaajaan \(player2) tai ota \(getNumber(input: 4)) rankaisevaa",
+            "\(player1), freestyle-räppää aiheesta: 'Olen rakastunut pelaajaan \(player2)' tai ota \(getNumber(input: 4)) rankaisevaa",
             "\(player1), riisu valitsemasi vaatekappale tai ota \(getNumber(input: 4)) rankaisevaa",
             "\(player1), leikkaa saksilla pieni pala hiuksiasi tai ota \(getNumber(input: 5)) rankaisevaa",
             "\(player1), voihkaise aina ennen rankaisevaa loppupelin ajan",
@@ -531,6 +547,21 @@ struct SingleTask {
             "\(player1) ja \(player2), halatkaa toisianne loppupelin ajan niin, että vatsanne ovat jatkuvassa kosketuksessa. Epäonnistumisesta \(getNumber(input: 6)) rankaisevaa",
             "\(player1), esitä känniläistä 15 sekuntia tai ota \(getNumber(input: 2)) rankaisevaa",
             "\(player1), kerro nolo muisto. Jos muut pelaajat eivät pidä sitä nolona, ota \(getNumber(input: 3)) rankaisevaa",
+            "Kaikki sinkut ottavat \(getNumber(input: 4)) rankaisevaa, tai suutelevat samaa sukupuolta olevan pelaajan kanssa",
+            "\(player1), laita soimaan valitsemasi biisi. Jos joku pelaajista ei tykkää biisistä, ota \(getNumber(input: 2)) rankaisevaa",
+            "\(player1), pidätä hengitystäsi 30 sekuntia. Jos epäonnistut, ota \(getNumber(input: 3)) rankaisevaa",
+            "\(player1), kerro paras setämies-vitsisi. Jos muut ei naura, ota \(getNumber(input: 3)) rankaisevaa",
+            "Jokainen pelaaja kertoo pahimman tekemänsä rikoksen. Pahin rikollinen ottaa \(getNumber(input: 6)) rankaisevaa",
+            "Heteroin pelaaja ottaa \(getNumber(input: 3)) rankaisevaa",
+            "\(player1), laita valitsemasi biisi soimaan. Jos se ei saa ketään pelaajaa nauramaan, ota \(getNumber(input: 4)) rankaisevaa",
+            "Eniten työttömältä näyttävä pelaaja ottaa \(getNumber(input: 3)) rankaisevaa. Äänestäkää riitatilanteen sattuessa",
+            "\(player1), jos sinulla on tatuointeja, näytä niistä yksi ja ota \(getNumber(input: 3)) rankaisevaa",
+            "Jokainen itsensä feministiksi luokitteleva pelaaja ottaa \(getNumber(input: 2)) rankaisevaa",
+            "Jokainen pelaaja puhuu ja käyttäytyy tästedes kuin mitä kohteliain hienohelma. Ensimmäinen etikettiä rikkova törkysuu ottaa \(getNumber(input: 4)) rankaisevaa",
+            "Jokainen pelaaja esittää tästedes liioitellusti vastakkaisen sukupuolen edustajaa. Pelaaja, jolla menee ensimmäisenä maku ottaa \(getNumber(input: 4)) rankaisevaa",
+            "\(player1), saat puhua vain englantia loppupelin ajan. Ota tästedes \(getNumber(input: 2)) rankaisevaa jokaista muulla kielellä puhuttua toteamusta kohden",
+            "\(player1), esitä että esiinnyt loppuunmyydyllä keikalla ja anna muille pelaajille ennennäkemätön 15 sekunnin show. Jos et saa pelaajilta aplodeja, ota \(getNumber(input: 5)) huikkaa",
+            "Parhaimman hiusrajan omaava pelaaja ottaa \(getNumber(input: 3)) rankaisevaa",
             
         ]
         
@@ -554,7 +585,7 @@ struct SingleTask {
             "\(player1), ota \(getNumber(input: 5)) rankaisevaa",
             "\(player1), oudoin asia jonka olet tehnyt seksin aikana? Vastaa tai ota \(getNumber(input: 4)) rankaisevaa",
             "\(player1), kuvaile viimeisintä katsomaasi aikuisviihdevideota tai ota \(getNumber(input: 4)) rankaisevaa",
-            "\(player1), freestyle-räppää aiheesta: ”Haluan rakastella pelaajan \(player2) kanssa",
+            "\(player1), freestyle-räppää aiheesta: 'Haluan rakastella pelaajan \(player2) kanssa'",
             "\(player1), riisu 2 valitsemaasi vaatekappaletta tai ota \(getNumber(input: 4)) rankaisevaa",
             "\(player1), mikä on kiusallisin tilanne seksin aikana, johon olet joutunut? Vastaa tai ota \(getNumber(input: 3)) rankaisevaa",
             "\(player1), mikä on erikoisin paikka, jossa olet harrastanut seksiä? Vastaa tai ota \(getNumber(input: 4)) rankaisevaa",
@@ -585,6 +616,14 @@ struct SingleTask {
             "\(player1), haista pelaajan \(player2) jalkaa tai ota \(getNumber(input: 4)) rankaisevaa",
             "\(player1), arvaa minkä väriset alushousut pelaajalla \(player2) on. Jos arvaat oikein, hän ottaa \(getNumber(input: 3)) rankaisevaa. Jos väärin, otat itse \(getNumber(input: 3))",
             "\(player1) ja \(player2), laittakaa huulenne vastakkain 15 sekunnin ajaksi, mutta älkää suudelko. Epäonnistumisesta \(getNumber(input: 5)) rankaisevaa",
+            "\(player1), milloin viimeksi nolasit itsesi ja miten? Vastaa tai ota \(getNumber(input: 3)) rankaisevaa",
+            "\(player1), nuuhkaise pelaajan \(player2) haaroväliä. Kieltäytyjälle \(getNumber(input: 5)) rankaisevaa",
+            "\(player1), seuraavan 3 kierroksen ajan et saa puhua, vaan joudut esittämään asiasi äänettömästi Mr. Beanin tyyliin. Jos epäonnistut tai kieltäydyt, \(getNumber(input: 5)) rankaisevaa",
+            "\(player1), mielestäsi syntisin pelaaja ottaa \(getNumber(input: 3)) rankaisevaa",
+            "\(player1), mille masturboit viimeksi? Vastaa tai ota \(getNumber(input: 5)) rankaisevaa",
+            "Jokainen pelaaja kertoo vuorollaan vitsin. Jos vitsi ei naurata, ottaa sen kertoja \(getNumber(input: 3)) rankaisevaa. Saatte 15 sekuntia aikaa valmistautua, \(player1) aloittaa",
+            "Jokainen pelaaja riisuu vuorollaan yhden vaatekappaleen. Ensimmäinen, joka lopettaa kesken, ottaa \(getNumber(input: 6)) rankaisevaa. \(player1) aloittaa",
+            "Keksikää vuorotellen synonyymi sanalle ”siitin”. Ensimmäinen joka ei keksi uutta, ottaa \(getNumber(input: 3)) rankaisevaa. \(player1) aloittaa",
             
     
             
@@ -597,7 +636,7 @@ struct SingleTask {
             "\(player1), mene pelaajan \(player2) kanssa lusikkaan loppupelin ajaksi. Kieltäytymisestä \(getNumber(input: 4)) rankaisevaa",
             "\(player1), anna pelaajalle \(player2) sylitanssi tai ota \(getNumber(input: 4)) rankaisevaa",
             "\(player1), tee 10 punnerrusta tai ottaa \(getNumber(input: 4)) rankaisevaa",
-            "\(player1), Telepatiahaaste! Yrittäkää sanoa pelaajan \(player2) kanssa sama sana samaan aikaan. Jos epäonnistutte otatte molemmat \(getNumber(input: 2)) rankaisevaa. Kategoria: seksilelu",
+            "\(player1), Telepatiahaaste! Yrittäkää sanoa pelaajan \(player2) kanssa sama sana samaan aikaan. Jos epäonnistutte otatte molemmat \(getNumber(input: 2)) rankaisevaa. Kategoria: seksilelut",
             "\(player1), kuvaile viimeisintä katsomaasi aikuisviihdevideota yksityiskohtaisesti tai ota \(getNumber(input: 5)) rankaisevaa",
             "\(player1), twerkkaa 10 sekuntia tai ota \(getNumber(input: 5)) rankaisevaa",
             "\(player1), riisuudu alusvaatteillesi loppupelin ajaksi tai ota \(getNumber(input: 4)) rankaisevaa",
@@ -637,7 +676,14 @@ struct SingleTask {
             "\(player1) ja \(player2), koskettakaa kielillänne toistenne kieltä. Kieltäytymisestä \(getNumber(input: 5)) rankaisevaa",
             "\(player1) ja \(player2), näyttäkää yhdessä muille pelaajille, miltä lehmityttö-asento näyttää. Kieltäytymisestä \(getNumber(input: 5)) rankaisevaa",
             "\(player1) ja \(player2), näyttäkää yhdessä muille pelaajille, miltä lähetyssaarnaaja-asento näyttää. Kieltäytymisestä \(getNumber(input: 5)) rankaisevaa",
-            "\(player1) hyväile pelaajan \(player2) rintakehää 10 sekunnin ajan. Kieltäytymisestä \(getNumber(input: 5)) rankaisevaa"
+            "\(player1) hyväile pelaajan \(player2) rintakehää 10 sekunnin ajan. Kieltäytymisestä \(getNumber(input: 5)) rankaisevaa",
+            "\(player1), sinulla on 10 sekuntia aikaa ottaa käteesi jokin punainen esine. Jos epäonnistut, ota \(getNumber(input: 3)) rankaisevaa",
+            "\(player1), kuvaile aikuisviihdevideota, jonka katsomisesta sinulle on tullut isoin morkkis. Tai ota \(getNumber(input: 5)) rankaisevaa",
+            "\(player1), kerro hauska fakta tai tarina pelaajasta \(player2). Jos et keksi mitään, ota \(getNumber(input: 4)) rankaisevaa",
+            "\(player1), laula Suvivirren ensimmäinen säkeistö virheettömästi. Epäonnistumisesta \(getNumber(input: 4)) rankaisevaa",
+            "\(player1), laula Maamme-laulun ensimmäinen säkeistö virheettömästi. Epäonnistumisesta \(getNumber(input: 4)) rankaisevaa",
+            "\(player1), pidä kasvosi peruslukemilla seuraavan kahden kierroksen ajan. Jokaista ilmeilyä kohden ota \(getNumber(input: 2)) rankaisevaa",
+             "Keksikää vuorotellen synonyymi sanalle ”emätin”. Ensimmäinen joka ei keksi uutta, ottaa \(getNumber(input: 3)) rankaisevaa. \(player1) aloittaa",
         ]
     }
 }

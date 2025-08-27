@@ -1,0 +1,51 @@
+/* 
+  Localizable.strings
+  Juomapeli
+
+  Created by Veikko Arvonen on 8.8.2025.
+  
+*/
+
+//Start VC
+START_GAME = "Aloita Peli";
+
+//Add players VC
+ADD_PLAYER = "+ Lisää pelaaja";
+PLAYER_ALERT = "Lisää vähintään kaksi pelaajaa";
+OK_BUTTON = "Selvä";
+NEXT = "Seuraava";
+
+/* Game Mode Headers */
+HEADER_BASIC = "Peruspeli";
+HEADER_DATES = "Treffit";
+HEADER_EXTREME = "Extreme";
+HEADER_EXPLAIN = "Selitä!";
+
+/* Game Mode Paragraphs */
+PARAGRAPH_BASIC = "Monipuolisia tehtäviä ja haasteita, jotka takaavat räväkän meiningin pysyen kuitenkin hyvän maun rajoissa... juuri ja juuri.";
+PARAGRAPH_DATES = "Syvällisiä, hauskoja ja mielenkiintoisia kysymyksiä ja tehtäviä, joiden avulla varmasti tutustut seuralaiseesi - myös pintaa syvemmältä.";
+PARAGRAPH_EXTREME = "VAROITUS: Ei nynnyille! Alla olevista mittareista voit itse valita pelin intensiteetin ja rangaistushuikkien määrän. HUOM: Tehtävät vaativat pahimmillaan äärimmäistä heittäytymistä, joten peli sopii ainoastaan kovimmille bilehileille!";
+PARAGRAPH_EXPLAIN = "Sanaselitys! Sinulla on minuutti aikaa selittää pelikaverillesi niin monta sanaa, kuin kerkeät. Jokaisesta oikeasta vastauksesta saatte pisteen.";
+
+INTENSITY_METER = "Härskimittari";
+PENALTY_METER = "Rangaistusmittari";
+
+
+
+//Settings
+ABOUT_HEADER = "Tietoa";
+RESPONSIBLE_PLAYING_HEADER = "Vastuullisuus";
+PLUS_SUBSCRIPTION_HEADER = "Plus-tilaus";
+LANGUAGE_HEADER = "Kieli";
+
+HOME_PAGE_LINK = "Juhlapeli Cup kotisivut";
+PRIVACY_POLICY_LINK = "Tietosuojakäytäntö";
+TERMS_OF_USER_LINK = "Käyttöehdot";
+
+RESPONSIBLE_PLAYING_DESCRIPTION = "Muista pitää itsestäsi ja pelitovereistasi huolta. Kyseinen peli on tarkoitettu ainoastaan viihteelliseen käyttöön, eikä ketään tule pakottaa jatkamaan peliä, ellei halua. Emme vastaa mistään vahingoista tai seuraamuksista, jotka voivat aiheutua vastuuttomasta pelaamisesta.";
+LEARN_MORE_LINK = "Lue lisää vastuullisuudesta";
+
+RESTORE_PURCHASES = "Palauta ostot";
+
+FINNISH_LANGUAGE = "🇫🇮 Suomi";
+ENGLISH_LANGUAGE = "🇬🇧 English";

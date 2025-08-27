@@ -1,0 +1,39 @@
+
+/* Class = "UILabel"; text = " Label"; ObjectID = "7qf-Bs-rAJ"; */
+"7qf-Bs-rAJ.text" = " Label";
+
+/* Class = "UIButton"; configuration.title = "Aloita Peli"; ObjectID = "Iq8-mH-1J3"; */
+"Iq8-mH-1J3.configuration.title" = "Aloita Peli";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Iq8-mH-1J3"; */
+"Iq8-mH-1J3.normalTitle" = "Button";
+
+/* Class = "UIBarButtonItem"; title = "takaisin"; ObjectID = "LVh-QA-30z"; */
+"LVh-QA-30z.title" = "takaisin";
+
+/* Class = "UIBarButtonItem"; title = "takaisin"; ObjectID = "Lmf-OU-2kj"; */
+"Lmf-OU-2kj.title" = "takaisin";
+
+/* Class = "UIBarButtonItem"; title = "takaisin"; ObjectID = "PCz-9Q-i25"; */
+"PCz-9Q-i25.title" = "takaisin";
+
+/* Class = "UILabel"; text = " 9.99€ / vuosi"; ObjectID = "Pte-Pe-8Si"; */
+"Pte-Pe-8Si.text" = " 9.99€ / vuosi";
+
+/* Class = "UIButton"; configuration.title = "Onko sinulla jo tilaus? Palauta ostot"; ObjectID = "TVe-Ql-F4v"; */
+"TVe-Ql-F4v.configuration.title" = "Onko sinulla jo tilaus? Palauta ostot";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "TVe-Ql-F4v"; */
+"TVe-Ql-F4v.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = " Label"; ObjectID = "aHG-Ge-ZP6"; */
+"aHG-Ge-ZP6.text" = " Label";
+
+/* Class = "UIButton"; configuration.title = "Seuraava"; ObjectID = "ovU-gQ-aAG"; */
+"ovU-gQ-aAG.configuration.title" = "Seuraava";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "ovU-gQ-aAG"; */
+"ovU-gQ-aAG.normalTitle" = "Button";
+
+/* Class = "UIBarButtonItem"; title = "takaisin"; ObjectID = "yl3-kJ-3Gy"; */
+"yl3-kJ-3Gy.title" = "takaisin";

@@ -18,6 +18,7 @@ class TableViewTextCell: UITableViewCell {
     
     var row: Int?
     var delegate: CellDelegate?
+    let languageManager = LanguageManager()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,7 +27,9 @@ class TableViewTextCell: UITableViewCell {
         textField.delegate = self
         
         //"Lisää pelaaja" = "Add player" in Finnish
-        setPlaceholder(text: " + Add player")
+        
+        let placeHolderText = languageManager.localizedString(forKey: "ADD_PLAYER")
+        setPlaceholder(text: placeHolderText)
         
         backView.layer.masksToBounds = false
         backView.layer.shadowColor = UIColor.black.cgColor
@@ -37,7 +40,6 @@ class TableViewTextCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         
     }
     
@@ -70,7 +72,7 @@ extension TableViewTextCell: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        setPlaceholder(text: " + Add player")
+        setPlaceholder(text: languageManager.localizedString(forKey: "ADD_PLAYER"))
         if let text = textField.text {
             if text != "" {
                 delegate?.addPlayer(name: text, row: row!)

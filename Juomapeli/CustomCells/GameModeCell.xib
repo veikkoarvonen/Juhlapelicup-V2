@@ -30,7 +30,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Uk-8f-Zg6">
                                 <rect key="frame" x="0.0" y="214" width="471" height="140"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intensity of tasks" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cDu-UA-POY">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Härskimittari" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cDu-UA-POY">
                                         <rect key="frame" x="2" y="2" width="467" height="27"/>
                                         <fontDescription key="fontDescription" name="Optima-Bold" family="Optima" pointSize="22"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -43,7 +43,7 @@
                                             <action selector="actionSliderChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="WIQ-c1-6LV"/>
                                         </connections>
                                     </slider>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount of punishments in game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Xc-9M-TFV">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rangaistusmittari" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Xc-9M-TFV">
                                         <rect key="frame" x="2" y="64" width="467" height="27"/>
                                         <fontDescription key="fontDescription" name="Optima-Bold" family="Optima" pointSize="22"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -133,7 +133,9 @@
                 <outlet property="drinkSlider" destination="EN7-oC-xy4" id="G7x-m0-DDI"/>
                 <outlet property="header" destination="ebs-XN-aPI" id="1hh-Tn-W8t"/>
                 <outlet property="imageView" destination="Zya-v8-MvD" id="rL8-jr-4Yp"/>
+                <outlet property="intensityMeter" destination="cDu-UA-POY" id="yOC-VY-qG0"/>
                 <outlet property="lowerView" destination="4Uk-8f-Zg6" id="jCF-rR-Hti"/>
+                <outlet property="penaltyMeter" destination="3Xc-9M-TFV" id="GGf-Mz-TEn"/>
                 <outlet property="rules" destination="dbb-ov-bMg" id="EkX-TN-5bX"/>
             </connections>
             <point key="canvasLocation" x="245.03816793893128" y="57.04225352112676"/>
