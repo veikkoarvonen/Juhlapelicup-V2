@@ -22,4 +22,5 @@ protocol valueDelegate: AnyObject {
 
 protocol LanguageReloader {
     func reloadUILanguage()
+    func reloadBackButtonLanguage()
 }

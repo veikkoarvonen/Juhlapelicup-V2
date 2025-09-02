@@ -117,16 +117,36 @@ struct GameManager {
         let task = SingleTask(player1: "", player2: "", color1: .red, color2: .red, category: 0, tier: 0, drinkValue: 0, taskIndex: 0)
         let ud = UD()
         
-        var indexArrays: [[Int]] = [
-            Array(0..<task.normals.count),
-            Array(0..<task.dates.count),
-            Array(0..<task.tier1.count),
-            Array(0..<task.tier2.count),
-            Array(0..<task.tier3.count),
-            Array(0..<task.tier4.count),
-            Array(0..<task.tier5.count),
+        var indexArraysFI: [[Int]] = [
+            Array(0..<task.normalsFI.count),
+            Array(0..<task.datesFI.count),
+            Array(0..<task.tier1FI.count),
+            Array(0..<task.tier2FI.count),
+            Array(0..<task.tier3FI.count),
+            Array(0..<task.tier4FI.count),
+            Array(0..<task.tier5FI.count),
             Array(0..<30)
         ]
+        
+        var indexArraysEN: [[Int]] = [
+            Array(0..<task.normalsEN.count),
+            Array(0..<task.datesEN.count),
+            Array(0..<task.tier1EN.count),
+            Array(0..<task.tier2EN.count),
+            Array(0..<task.tier3EN.count),
+            Array(0..<task.tier4EN.count),
+            Array(0..<task.tier5EN.count),
+            Array(0..<30)
+        ]
+        
+        var indexArrays: [[Int]] = {
+            let languageManager = LanguageManager()
+            if languageManager.getSelectedLanguage() == "en" {
+                return indexArraysEN
+            } else {
+                return indexArraysFI
+            }
+        }()
         
         for i in 0..<indexArrays.count {
             indexArrays[i].shuffle()

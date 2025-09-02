@@ -266,6 +266,8 @@
                     <navigationItem key="navigationItem" id="G6b-nL-LuF"/>
                     <connections>
                         <outlet property="monthlyButton" destination="aHG-Ge-ZP6" id="vJ9-9d-txy"/>
+                        <outlet property="promoImage" destination="lKf-Cq-GsA" id="6rN-PW-V72"/>
+                        <outlet property="restoreButton" destination="TVe-Ql-F4v" id="5oJ-Oo-6CO"/>
                         <outlet property="weeklyButton" destination="7qf-Bs-rAJ" id="lk4-Pl-qTw"/>
                         <outlet property="yearlyButton" destination="Pte-Pe-8Si" id="NgH-DE-nge"/>
                     </connections>
@@ -343,7 +345,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="FVt-sc-X64"/>
+        <segue reference="AY0-WQ-bpb"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="28" width="3375" height="6000"/>

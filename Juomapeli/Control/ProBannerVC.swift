@@ -20,6 +20,8 @@ class ProView: UIViewController {
     @IBOutlet weak var monthlyButton: UILabel!
     @IBOutlet weak var weeklyButton: UILabel!
     
+    @IBOutlet weak var promoImage: UIImageView!
+    @IBOutlet weak var restoreButton: UIButton!
     var activityIndicator: UIActivityIndicatorView!
     
     let weeklyKey = "weeklySubscription"
@@ -33,6 +35,8 @@ class ProView: UIViewController {
     ]
     
     var productToBuy: [String: ProductInfo] = [:]
+    
+    let languageManager = LanguageManager()
     
     // Example of checking if a product is available
     func isProductAvailable(productIdentifier: String) -> Bool? {
@@ -65,7 +69,7 @@ class ProView: UIViewController {
                     print("Product not found in productToBuy dictionary: \(cProduct.productIdentifier)")
                 }
             }
-        }else {
+        } else {
             print("An error occured while fetching the product list")
         }
     }
@@ -164,9 +168,18 @@ extension ProView {
         yearlyButton.layer.cornerRadius = roundness
         monthlyButton.layer.cornerRadius = roundness
         weeklyButton.layer.cornerRadius = roundness
-        weeklyButton.text = "   0.99€ / viikko" //"Viikko" = "week"
-        monthlyButton.text = "   3.99€ / kuukausi" //"Kuukausi" = "Month"
-        yearlyButton.text = "   9.99€ / vuosi" //"Vuosi" = "year"
+        
+        if languageManager.getSelectedLanguage() == "en" {
+            weeklyButton.text = "   0.99€ / week" //"Viikko" = "week"
+            monthlyButton.text = "   3.99€ / month" //"Kuukausi" = "Month"
+            yearlyButton.text = "   9.99€ / year" //"Vuosi" = "year"
+        } else {
+            weeklyButton.text = "   0.99€ / viikko" //"Viikko" = "week"
+            monthlyButton.text = "   3.99€ / kuukausi" //"Kuukausi" = "Month"
+            yearlyButton.text = "   9.99€ / vuosi" //"Vuosi" = "year"
+        }
+        
+        
         
         yearlyButton.isUserInteractionEnabled = true
         monthlyButton.isUserInteractionEnabled = true
@@ -187,6 +200,16 @@ extension ProView {
         addShadow(to: yearlyButton)
         addShadow(to: monthlyButton)
         addShadow(to: weeklyButton)
+        
+        let restoreTitle = languageManager.localizedString(forKey: "RESTORE")
+        
+        restoreButton.setTitle(restoreTitle, for: .normal)
+        
+        if languageManager.getSelectedLanguage() == "en" {
+            promoImage.image = UIImage(named: "kultatilienglish")
+        } else {
+            promoImage.image = UIImage(named: "28")
+        }
     }
     
     private func discountLabel() {
@@ -253,7 +276,11 @@ extension ProView {
                                 
                         if let formattedPrice = priceFormatter.string(from: price) {
                             print("weekly Product price: \(formattedPrice)")
-                            weeklyButton.text = "   \(formattedPrice) / viikko"
+                            if languageManager.getSelectedLanguage() == "en" {
+                                weeklyButton.text = "   \(formattedPrice) / week"
+                            } else {
+                                weeklyButton.text = "   \(formattedPrice) / viikko"
+                            }
                         }
                     }
                 case monthlyKey:
@@ -268,7 +295,12 @@ extension ProView {
                                 
                         if let formattedPrice = priceFormatter.string(from: price) {
                             print("monthly Product price: \(formattedPrice)")
-                            monthlyButton.text = "   \(formattedPrice) / kuukausi"
+                            if languageManager.getSelectedLanguage() == "en" {
+                                monthlyButton.text = "   \(formattedPrice) / month"
+                            } else {
+                                monthlyButton.text = "   \(formattedPrice) / kuukausi"
+                            }
+                            
                         }
                     }
                 case yearlyKey:
@@ -283,7 +315,11 @@ extension ProView {
                                 
                         if let formattedPrice = priceFormatter.string(from: price) {
                             print("yearly Product price: \(formattedPrice)")
-                            yearlyButton.text = "   \(formattedPrice) / vuosi"
+                            if languageManager.getSelectedLanguage() == "en" {
+                                yearlyButton.text = "   \(formattedPrice) / year"
+                            } else {
+                                yearlyButton.text = "   \(formattedPrice) / vuosi"
+                            }
                         }
                     }
                 default:

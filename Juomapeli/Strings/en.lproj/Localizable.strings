@@ -6,6 +6,10 @@
   
 */
 
+//Universal
+BACK = "Back";
+RESTORE = "Already subscribed? Restore purchases";
+
 //Start VC
 START_GAME = "Start Game";
 

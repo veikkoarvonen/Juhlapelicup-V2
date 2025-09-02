@@ -24,13 +24,21 @@ struct SingleTask {
     var taskIndex: Int
     
     //tasks
-    var normals: [String] = []
-    var dates: [String] = []
-    var tier1: [String] = []
-    var tier2: [String] = []
-    var tier3: [String] = []
-    var tier4: [String] = []
-    var tier5: [String] = []
+    var normalsFI: [String] = []
+    var datesFI: [String] = []
+    var tier1FI: [String] = []
+    var tier2FI: [String] = []
+    var tier3FI: [String] = []
+    var tier4FI: [String] = []
+    var tier5FI: [String] = []
+    
+    var normalsEN: [String] = []
+    var datesEN: [String] = []
+    var tier1EN: [String] = []
+    var tier2EN: [String] = []
+    var tier3EN: [String] = []
+    var tier4EN: [String] = []
+    var tier5EN: [String] = []
     
     //amount of punishments
     func getNumber(input: Int) -> Int {
@@ -44,20 +52,41 @@ struct SingleTask {
     func getTask() -> NSAttributedString {
         var taskArray: [String]
         
-        if category == 0 {
-            taskArray = normals
-        } else if category == 1 {
-            taskArray = dates
+        let languageManager = LanguageManager()
+        
+        if languageManager.getSelectedLanguage() == "en" {
+            if category == 0 {
+                taskArray = normalsEN
+            } else if category == 1 {
+                taskArray = datesEN
+            } else {
+                switch tier {
+                case 1: taskArray = tier1EN
+                case 2: taskArray = tier2EN
+                case 3: taskArray = tier3EN
+                case 4: taskArray = tier4EN
+                case 5: taskArray = tier5EN
+                default: taskArray = tier3EN
+                }
+            }
         } else {
-            switch tier {
-            case 1: taskArray = tier1
-            case 2: taskArray = tier2
-            case 3: taskArray = tier3
-            case 4: taskArray = tier4
-            case 5: taskArray = tier5
-            default: taskArray = tier3
+            if category == 0 {
+                taskArray = normalsFI
+            } else if category == 1 {
+                taskArray = datesFI
+            } else {
+                switch tier {
+                case 1: taskArray = tier1FI
+                case 2: taskArray = tier2FI
+                case 3: taskArray = tier3FI
+                case 4: taskArray = tier4FI
+                case 5: taskArray = tier5FI
+                default: taskArray = tier3FI
+                }
             }
         }
+        
+        
         
         guard taskIndex < taskArray.count else {
             print("Task index out of range!")
@@ -65,6 +94,7 @@ struct SingleTask {
         }
         
         let taskString = taskArray[taskIndex]
+        
         let attributedString = attributedText(for: taskString, highlight1: player1, highlight2: player2, color1: color1, color2: color2)
         
         return attributedString
@@ -108,11 +138,11 @@ struct SingleTask {
         self.drinkValue = drinkValue
         self.taskIndex = taskIndex
    
-//MARK: - Tasks for the games in Finnish language. Just copy paste strings
+//MARK: - Finnish tasks
         
 //The getNumber function inserts a number in the string calculated by game parameters
         
-        self.normals = [
+        self.normalsFI = [
             
             //Free version tasks
             
@@ -265,7 +295,7 @@ struct SingleTask {
             "\(player1), mikä on erikoisin paikka, jossa olet harrastanut seksiä? Vastaa tai ota \(getNumber(input: 4)) rankaisevaa",
         ]
         
-        self.dates = [
+        self.datesFI = [
             "\(player1), kerro jokin red flag itsestäsi",
             "\(player1), kerro jokin red flag vastakkaisessa sukupuolessa",
             "\(player1), kerro jokin green flag vastakkaisessa sukupuolessa",
@@ -368,7 +398,7 @@ struct SingleTask {
             "\(player1), uskotko sielunkumppanuuteen?"
         ]
         
-        self.tier1 = [
+        self.tier1FI = [
             "\(player1), nimeä viisi Jediritaria Tähtiensota-elokuvista tai ota \(getNumber(input: 3)) rankaisevaa",
             "\(player1), jos olisit peruna, tulisitko mieluummin kuorituksi vai keitetyksi?",
             "Jokainen pelaaja, joka on alle 180 cm pitkä, ottaa \(getNumber(input: 3)) rankaisevaa",
@@ -423,7 +453,7 @@ struct SingleTask {
             "\(player1), mikä on pelaajan \(player2) syntymäpäivä ja -vuosi? Jos arvaat oikein, hän ottaa \(getNumber(input: 5)) rankaisevaa. Jos väärin, otat itse \(getNumber(input: 2))",
         ]
         
-        self.tier2 = [
+        self.tier2FI = [
             "\(player1), Mikä on pisin aikasi pesemättä hampaita? Vastaa tai ota \(getNumber(input: 2)) rankaisevaa.",
             "Pelaaja, jolla on paras peppu, ottaa \(getNumber(input: 4)) rankaisevaa",
             "Pelaaja, jolla on isoin hauis, ottaa \(getNumber(input: 4)) rankaisevaa",
@@ -487,7 +517,7 @@ struct SingleTask {
             "Jokainen pelaaja esittelee itsensä hauskan faktan kera. Tylsimmän esittelyn esittäjä ottaa \(getNumber(input: 4)) rankaisevaa. \(player1) aloittaa",
         ]
         
-        self.tier3 = [
+        self.tier3FI = [
             "\(player1), Mikä on pisin aikasi ilman suihkua? Vastaa tai ota \(getNumber(input: 3)) rankaisevaa.",
             "Voiko pettämisen antaa anteeksi? Äänestäkää! Vähemmistö ottaa \(getNumber(input: 4)) rankaisevaa",
             "\(player1), nuolaise pelaajan \(player2) napaa tai ota \(getNumber(input: 5)) rankaisevaa",
@@ -565,7 +595,7 @@ struct SingleTask {
             
         ]
         
-        self.tier4 = [
+        self.tier4FI = [
             "\(player1), milloin menetit neitsyytesi? Vastaa tai ota \(getNumber(input: 4)) rankaisevaa",
             "\(player1), vaihda housuja pelaajan \(player2) kanssa. Kieltäytymisestä \(getNumber(input: 4)) rankaisevaa",
             "\(player1), istu pelaajan \(player2) syliin loppupelin ajaksi. Kieltäytyjälle \(getNumber(input: 4)) rankaisevaa",
@@ -630,7 +660,7 @@ struct SingleTask {
             
         ]
         
-        self.tier5 = [
+        self.tier5FI = [
             "\(player1), riisu pelaajan \(player2) housut tai ota \(getNumber(input: 3)) rankaisevaa",
             "\(player1), milloin, missä ja miten menetit neitsyytesi? Kerro yksityiskohtaisesti tai ota \(getNumber(input: 5)) rankaisevaa",
             "\(player1), mene pelaajan \(player2) kanssa lusikkaan loppupelin ajaksi. Kieltäytymisestä \(getNumber(input: 4)) rankaisevaa",
@@ -685,5 +715,490 @@ struct SingleTask {
             "\(player1), pidä kasvosi peruslukemilla seuraavan kahden kierroksen ajan. Jokaista ilmeilyä kohden ota \(getNumber(input: 2)) rankaisevaa",
              "Keksikää vuorotellen synonyymi sanalle ”emätin”. Ensimmäinen joka ei keksi uutta, ottaa \(getNumber(input: 3)) rankaisevaa. \(player1) aloittaa",
         ]
+        
+//MARK: - English tasks
+        
+      
+        self.normalsEN = [
+        "\(player1), smell \(player2)'s armpit or take \(getNumber(input: 3)) penalties",
+        "\(player1), truth or dare? \(player2) will ask you a question or give you a dare based on your answer",
+        "\(player1), take 5 penalties",
+        "\(player1), take a sip without using your hands. If you fail, take \(getNumber(input: 2)) penalties",
+        "\(player1), tell a joke. If other players don't laugh, take \(getNumber(input: 2)) penalties",
+        "\(player1), demonstrate your favorite sex position with \(player2) or take \(getNumber(input: 3)) penalties",
+        "\(player1), Telepathy challenge! Try to say the same word as \(player2) at the same time. If you fail, you both take \(getNumber(input: 2)) penalties. Category: color",
+        "\(player1), every time you swear, take a penalty for the rest of the game",
+        "\(player1), try to make \(player2) laugh in 30 seconds. If you fail, take \(getNumber(input: 3)) penalties",
+        "\(player1), take off your shirt for the rest of the game or take \(getNumber(input: 4)) penalties",
+        "\(player1), talk for the next 3 rounds without letting your lips touch. If you fail, take \(getNumber(input: 3)) penalties",
+        "\(player1), try to make other players laugh without speaking. If you fail, take \(getNumber(input: 3)) penalties",
+        "\(player1), give your best Goofy impression or take \(getNumber(input: 4)) penalties",
+        "\(player1), if you had to roleplay with \(player2), what would you both dress up as? Answer or take 3 penalties",
+        "\(player1), take \(getNumber(input: 3)) penalties or a slap on the cheek from \(player2)",
+        "\(player1), do you think you're good in bed? Answer or take \(getNumber(input: 4)) penalties",
+        "\(player1), whisper a secret to \(player2). If they don't react, take 2 penalties",
+        "Tell a story one word at a time, whoever freezes first takes \(getNumber(input: 3)) penalties. \(player1) starts",
+        "\(player1), say 'Peter Piper picked a peck of pickled peppers' 5 times fast without twisting your tongue or take \(getNumber(input: 3)) penalties",
+        "\(player1), take a sip of drink from \(player2)'s bellybutton",
+        "\(player1), for the next 3 rounds, you may only talk with your mouth closed. If you fail, take 3 penalties",
+        "\(player1), take off your pants for the rest of the game or take \(getNumber(input: 4)) penalties",
+        "\(player1), kiss the player in front of you or take \(getNumber(input: 4)) penalties",
+        "\(player1), describe the last NSFW video you watched or take 6 penalties",
+        "\(player1) and \(player2), staring contest! Loser takes \(getNumber(input: 3)) penalties",
+        "\(player1), carry \(player2) on your back and do 3 squats, or take \(getNumber(input: 5)) penalties",
+        "\(player1), act drunk for 15 seconds or take \(getNumber(input: 2)) penalties",
+        "\(player1), show your sexiest facial expression or take 5 penalties",
+        "\(player1), what's the most unattractive body part on the opposite sex? Answer or take 3 penalties",
+        "\(player1), do 10 push-ups or take \(getNumber(input: 4)) penalties",
+        "\(player1), take \(getNumber(input: 5)) penalties",
+
+        // Plus version tasks
+
+        "\(player1), burp or take \(getNumber(input: 3)) penalties",
+        "\(player1), however many push-ups you do, \(player2) takes that many penalties",
+        "\(player1), freestyle rap about tonight. The other players are the jury and decide if you avoid \(getNumber(input: 3)) penalties",
+        "\(player1), lick \(player2)'s foot or take \(getNumber(input: 3)) penalties",
+        "\(player1), rank these body parts by attractiveness: armpits, toes, ears, or take \(getNumber(input: 2)) penalties",
+
+        "\(player1), what's the weirdest thing you've done during sex? Answer or take 5 penalties",
+        "\(player1), do you have any fetishes? Reveal them or take \(getNumber(input: 4)) penalties",
+        "\(player1), call your ex or take \(getNumber(input: 4)) penalties",
+        "\(player1), show your last sent message or take \(getNumber(input: 3)) penalties",
+        "\(player1), imitate a celebrity chosen by other players or take \(getNumber(input: 3)) penalties",
+        "\(player1), call an acquaintance and tell them you love them or take \(getNumber(input: 4)) penalties",
+        "\(player1), show the latest photo from your 'Hidden' album or take \(getNumber(input: 4)) penalties",
+        "\(player1), give \(player2) a lap dance or take \(getNumber(input: 4)) penalties",
+        "\(player1), drink a raw egg or take \(getNumber(input: 3)) penalties",
+        "\(player1), when was the last time you had sex? Answer or take 5 penalties",
+        "\(player1), when was the last time you masturbated? Answer or take 5 penalties",
+        "\(player1), sing a song chosen by \(player2) or take \(getNumber(input: 3)) penalties",
+        "\(player1), show one of your nipples or take \(getNumber(input: 3)) penalties",
+        "\(player1), tell a secret to everyone or take \(getNumber(input: 3)) penalties",
+        "\(player1), are you interested in someone? Answer or take 3 penalties",
+        "\(player1), twerk for 10 seconds or take \(getNumber(input: 5)) penalties",
+        "\(player1), give your best Mickey Mouse impression or take \(getNumber(input: 3)) penalties",
+        "\(player1), swap clothes with \(player2) or both take \(getNumber(input: 5)) penalties",
+        "\(player1), for the next 3 rounds, you can only speak by singing. Otherwise you take 5 penalties",
+        "\(player1), have a pillow talk with a pillow for 30 seconds or take \(getNumber(input: 4)) penalties",
+        "\(player1), come up with a new nickname for every player or take \(getNumber(input: 2)) penalties",
+        "\(player1), imitate a lion for 15 seconds or take \(getNumber(input: 4)) penalties",
+        "\(player1), drink a glass of water in one go or take \(getNumber(input: 2)) penalties",
+        "\(player1), show your best dance moves for 15 seconds or take \(getNumber(input: 5)) penalties",
+        "\(player1), let \(player2) put lipstick on you for the rest of the game or take \(getNumber(input: 3)) penalties",
+        "\(player1), share an embarrassing memory. If others don't find it embarrassing, take \(getNumber(input: 3)) penalties",
+        "\(player1), fake an orgasm for 10 seconds or take \(getNumber(input: 5)) penalties",
+        "\(player1), stay blindfolded for the rest of the game or take \(getNumber(input: 4)) penalties",
+        "\(player1), freestyle rap about: 'I'm in love with \(player2)'. Refusing = \(getNumber(input: 4)) penalties",
+        "\(player1), call your parents and tell them you're pregnant, or take \(getNumber(input: 5)) penalties",
+        "\(player1), send the naughtiest possible message to \(player2) using only emojis. Refusing = \(getNumber(input: 4)) penalties",
+        "Take a group photo. Anyone refusing takes 4 penalties",
+        "Take a group photo with the ugliest faces you can make. Anyone refusing takes 4 penalties",
+        "\(player1), let \(player2) send a message to anyone from your phone. If you refuse, take \(getNumber(input: 4)) penalties",
+        "\(player1), name 5 countries starting with S in 10 seconds or take \(getNumber(input: 3)) penalties",
+        "\(player1), name 10 Disney princesses in 15 seconds or take \(getNumber(input: 3)) penalties",
+        "\(player1), remove \(player2)'s socks with your teeth or take \(getNumber(input: 4)) penalties",
+        "\(player1), howl like a wolf or take \(getNumber(input: 5)) penalties",
+        "\(player1), let \(player2) style your hair for the rest of the game or take 4 penalties",
+        "\(player1), moan every time you take a penalty for the rest of the game. If you forget, take \(getNumber(input: 2)) penalties",
+        "\(player1), act like a monkey for 10 seconds or take \(getNumber(input: 5)) penalties",
+        "\(player1), smell \(player2)'s armpit or take \(getNumber(input: 4)) penalties",
+        "\(player1), find out who has the smelliest feet or take \(getNumber(input: 6)) penalties",
+        "\(player1), guess what color underwear \(player2) is wearing. If correct, they take \(getNumber(input: 3)) penalties, if wrong, you take \(getNumber(input: 3)) penalties",
+        "\(player1), play an air guitar for 15 seconds with passion or take \(getNumber(input: 4)) penalties",
+        "\(player1), act like a robot for the next 3 rounds or take \(getNumber(input: 6)) penalties",
+        "\(player1), imitate a player until someone guesses who it is or take \(getNumber(input: 6)) penalties",
+        "\(player1), do 10 squats while \(player2) lies on their back beneath you. Refusing = \(getNumber(input: 6)) penalties",
+        "\(player1), growl sexily or take \(getNumber(input: 5)) penalties",
+        "\(player1), give \(player2) a 30-second foot massage or take \(getNumber(input: 4)) penalties",
+        "\(player1), try to fit \(player2)'s fist in your mouth or take \(getNumber(input: 4)) penalties",
+        "\(player1), try to lick your elbow. If you fail, take 2 penalties",
+        "\(player1), peel a banana with your feet or take \(getNumber(input: 4)) penalties",
+        "\(player1), imitate a celebrity until the others guess who it is. If you fail, take \(getNumber(input: 4)) penalties",
+        "\(player1), go sit in a corner alone for 3 rounds or take 5 penalties",
+        "\(player1), remove 2 clothing items of your choice or take \(getNumber(input: 4)) penalties",
+        "\(player1), if your screen time is higher than \(player2)'s, take \(getNumber(input: 3)) penalties. Otherwise, \(player2) takes \(getNumber(input: 3)) penalties",
+        "\(player1), answer 'yes' to everything for the next minute or take 5 penalties",
+        "\(player1), guess where each player will be in 5 years",
+        "\(player1), speak only in whispers for the next 3 rounds. If you fail, take \(getNumber(input: 3)) penalties",
+        "\(player1), twerk for 15 seconds or take \(getNumber(input: 4)) penalties",
+        "\(player1), show your orgasm face or take \(getNumber(input: 4)) penalties",
+        "\(player1), eat a banana seductively or take \(getNumber(input: 3)) penalties",
+        "\(player1), you are not allowed to laugh for the rest of the game. If you do, take 5 penalties",
+        "\(player1), best body part on the opposite sex? Answer or take \(getNumber(input: 3)) penalties",
+        "\(player1) and \(player2), rock-paper-scissors! Loser takes \(getNumber(input: 3)) penalties",
+        "All players with a penis take \(getNumber(input: 3)) penalties",
+        "\(player1), if you were a potato, would you prefer to be peeled or boiled? Answer or take \(getNumber(input: 1)) penalties",
+        "\(player1), how many people have you slept with? Answer or take \(getNumber(input: 4)) penalties",
+        "\(player1), does size matter?",
+        "\(player1), what is your biggest fantasy? Answer or take \(getNumber(input: 4)) penalties",
+        "\(player1), what's the most awkward situation you've been in? Answer or take \(getNumber(input: 3)) penalties",
+        "\(player1), what's the weirdest place you've had sex? Answer or take \(getNumber(input: 4)) penalties",
+        ]
+
+        self.datesEN = [
+            "\(player1), tell a red flag about yourself",
+            "\(player1), tell a red flag in the opposite sex",
+            "\(player1), tell a green flag in the opposite sex",
+            "\(player1), make an assumption about \(player2)",
+            "Put your lips together for 3 seconds without kissing",
+            "\(player1), tell 2 truths and one lie about yourself. If \(player2) guesses the lie, take 3 penalties",
+            "\(player1), share a secret",
+            "\(player1), describe yourself in 3 words",
+            "\(player1), describe \(player2) in 3 words",
+            "\(player1), do you believe in anything supernatural?",
+            "\(player1), what's your favorite movie?",
+            "\(player1), what was your childhood dream job?",
+            "\(player1), which celebrity do you admire?",
+            "\(player1), tell an embarrassing memory",
+            "\(player1), what's your biggest fear?",
+            "\(player1), money or love?",
+            "\(player1), what's your best trait?",
+            "\(player1), do you consider yourself weird?",
+            "\(player1), what's your favorite sport?",
+            "\(player1), what's your biggest dream?",
+            "\(player1), when was the last time you read a book?",
+            "\(player1), dare to show your phone gallery to player \(player2)?",
+            "\(player1), name a song you hate",
+            "\(player1), close your eyes. What color are player \(player2)'s eyes? If wrong, take 3 penalties",
+            "\(player1), if you had to tattoo something on your forehead, what would it be?",
+            "\(player1), do you have any phobias?",
+            "\(player1), do you have any fetishes? If yes, dare to tell player \(player2)?",
+            "\(player1), demonstrate the position you usually sleep in",
+            "\(player1), if you were on a walk together and \(player2) slipped, would you laugh or be worried?",
+            "\(player1), how would you react if \(player2) proposed to you right now?",
+            "\(player1), does pineapple belong on pizza?",
+            "\(player1), what's the most spontaneous thing you've done?",
+            "\(player1), show a unique skill you have. If none, take 3 penalties",
+            "\(player1), what is/was your favorite school subject?",
+            "\(player1), what is/was your least favorite school subject?",
+            "\(player1), say an opinion most people disagree with",
+            "\(player1), do you believe in magic?",
+            "\(player1), do you believe in love at first sight?",
+            "\(player1), what was your first impression of player \(player2)?",
+            "\(player1), have you ever been in love?",
+            "\(player1), are first dates usually fun or stressful to you?",
+            "\(player1), what do you look for in a relationship?",
+            "\(player1), who pays on a first date?",
+            "\(player1), what's the best thing about being single?",
+            "\(player1), what's the best thing about being in a relationship?",
+            "\(player1), if you could, would you want to live forever?",
+            "\(player1), what's the most attractive trait in the opposite sex?",
+            "\(player1), how do you usually flirt?",
+            "\(player1), what non-sexual trait do you find attractive?",
+            "\(player1), what would you like to do together with player \(player2)?",
+            "\(player1), give player \(player2) a shoulder massage for 30 seconds or take 4 penalties",
+            "\(player1), what's your best pick-up line?",
+            "\(player1), if you were a potato, would you rather be peeled or boiled?",
+            "\(player1), do you have skeletons in the closet?",
+            "\(player1), how long does it take for you to be fully yourself in a relationship?",
+            "\(player1), are you a big spoon or little spoon?",
+            "\(player1), top or bottom?",
+            "\(player1), give an eskimo kiss to \(player2)",
+            "\(player1), which celebrity would you marry?",
+            "\(player1), what do you like most about your body?",
+            "\(player1), if you had 24 hours to spend a million dollars, what would you buy?",
+            "\(player1), would you rather be cheated on or cheat yourself?",
+            "\(player1), what hardship has made you stronger?",
+            "\(player1), what substances do you use/have tried?",
+            "\(player1), do you believe in destiny?",
+            "\(player1), where do you want to be in 10 years?",
+            "\(player1), rank these by importance: money, love, health, freedom, safety",
+            "\(player1), what qualities do you value most in a partner?",
+            "\(player1), how do you handle conflicts in a relationship?",
+            "\(player1), how do you show love?",
+            "\(player1), if you wanted to sneak out of this date politely, how would you do it?",
+            "\(player1), what song has been stuck in your head lately?",
+            "\(player1), what's your favorite song of all time?",
+            "\(player1), what adjective describes you the best?",
+            "\(player1), tell me an inside joke without the context",
+            "\(player1), which decade/era has the best music in your opinion?",
+            "\(player1), if you could choose, which country would we fly to tomorrow?",
+            "\(player1), do you believe in horoscopes?",
+            "\(player1), do you believe in God?",
+            "\(player1), what's the best advice you've ever received?",
+            "\(player1), is it better to have 2 close friends or a casual friendship with 50 people?",
+            "\(player1), what's an annoying trait of yours?",
+            "\(player1), what's the most memorable compliment you've gotten?",
+            "\(player1), why are you still single?",
+            "\(player1), what advice would you give your 10-year-old self?",
+            "\(player1), would you rather meet a man or a bear alone in the woods?",
+            "\(player1), have you ever peed in a public swimming pool?",
+            "\(player1), what song do you listen to when you're sad?",
+            "\(player1), are you jealous of anyone? If yes, who and why?",
+            "\(player1), how would you define success?",
+            "\(player1), what's the best way to spend quality time together?",
+            "\(player1), how important is sex to you?",
+            "\(player1), what's the best thing about sex?",
+            "\(player1), what's the weirdest thing you've experienced in bed?",
+            "\(player1), have you ever deliberately left someone on read to seem busy?",
+            "\(player1), what do you think about one-night stands?",
+            "\(player1), what's your favorite sex position?",
+            "\(player1), do you listen more to your heart or your head?",
+            "\(player1), do you want to start a family someday?",
+            "\(player1), do you believe in soulmates?"
+        ]
+
+        self.tier1EN = [
+            "\(player1), name five Jedi Knights from Star Wars movies or take \(getNumber(input: 3)) penalties",
+            "\(player1), if you were a potato, would you rather be peeled or boiled?",
+            "Every player under 6 ft tall takes \(getNumber(input: 3)) penalties",
+            "\(player1), however many push-ups you do, \(player2) takes that many penalties",
+            "\(player1), Telepathy challenge! Try to say the same word as player \(player2) at the same time. If you fail, both take \(getNumber(input: 2)) penalties. Category: color",
+            "Tell a story one word at a time. The first player to freeze takes \(getNumber(input: 3)) penalties. Start clockwise from \(player1)",
+            "\(player1), guess where each player will be in 5 years",
+            "\(player1), name 5 countries starting with S in 10 seconds or take \(getNumber(input: 3)) penalties",
+            "\(player1), name 10 Disney princesses in 15 seconds or take \(getNumber(input: 3)) penalties",
+            "\(player1), do 10 push-ups or take \(getNumber(input: 4)) penalties",
+            "\(player1), make up a new nickname for every player",
+            "\(player1), imitate a player of your choice until someone guesses who it is",
+            "\(player1), confess a guilty pleasure or take \(getNumber(input: 5)) penalties",
+            "\(player1), does pineapple belong on pizza? Take as many penalties as there are players who disagree",
+            "\(player1), list the Finnish vowels in reverse order. If you fail, take \(getNumber(input: 3)) penalties",
+            "\(player1), name a good trait about player \(player2)",
+            "\(player1), name 4 James Bond actors in 10 seconds or take \(getNumber(input: 3)) penalties",
+            "\(player1), say something sensible in as many languages as you can. For each language, others take \(getNumber(input: 2)) penalties",
+            "\(player1) picks a category. The first player who can't name a new thing takes \(getNumber(input: 3)) penalties",
+            "\(player1), say 'Betty Botter bought some butter' five times fast without twisting your tongue or take 4 penalties",
+            "\(player1), say 'I saw a kitten eating chicken in the kitchen' five times fast without messing up or take \(getNumber(input: 3)) penalties",
+            "\(player1), name 5 NATO countries in 10 seconds or take \(getNumber(input: 3)) penalties",
+            "\(player1), name 6 U.S. states in 10 seconds or take \(getNumber(input: 3)) penalties",
+            "\(player1), quote two legendary one-liners from the Terminator movies or take \(getNumber(input: 3)) penalties",
+            "\(player1), give a nickname to every player or take \(getNumber(input: 3)) penalties",
+            "\(player1), challenge \(player2) to rock-paper-scissors. Loser takes \(getNumber(input: 3)) penalties",
+            "\(player1), imitate a politician of your choice for 10 seconds, or take \(getNumber(input: 3)) penalties",
+            "\(player1), name a song you hate or take \(getNumber(input: 2)) penalties",
+            "Waterfall! \(player1) starts. Move clockwise",
+            "\(player1), say 'Peter Piper picked a peck of pickled peppers' five times fast without a tongue twist or take \(getNumber(input: 3)) penalties",
+            "\(player1), describe your first kiss or take \(getNumber(input: 3)) penalties",
+            "\(player1), who's the hottest celebrity you know? Answer or take \(getNumber(input: 3)) penalties",
+            "\(player1), who's the most famous person whose number you have? Answer or take \(getNumber(input: 3)) penalties",
+            ]
+           
+            self.tier2EN = [
+                "\(player1), what's the longest you've gone without brushing your teeth? Answer or take \(getNumber(input: 2)) penalties.",
+                    "The player with the best butt takes \(getNumber(input: 4)) penalties.",
+                    "The player with the biggest biceps takes \(getNumber(input: 4)) penalties.",
+                    "\(player1), you’re not allowed to laugh for the rest of the game. If you fail, take \(getNumber(input: 5)) penalties.",
+                    "\(player1), tell a rare thing you've done. Everyone who hasn’t done it takes \(getNumber(input: 3)) penalties.",
+                    "\(player1), wear \(player2)’s socks on your hands for the rest of the game or take \(getNumber(input: 5)) penalties.",
+                    "Everyone makes baby noises. The worst performer takes \(getNumber(input: 3)) penalties.",
+                    "\(player1), if your screen time is higher than \(player2)’s, take \(getNumber(input: 3)) penalties. Otherwise, \(player2) takes \(getNumber(input: 3)) penalties.",
+                    "\(player2), tell an interesting fact. Everyone who didn’t know it takes \(getNumber(input: 2)) penalties.",
+                    "\(player1), rank these body parts in order of attractiveness: armpits, toes, ears — or take \(getNumber(input: 2)) penalties.",
+                    "Waterfall! \(player1) starts. Continue counter-clockwise.",
+                    "\(player1), impersonate one of the other players for 10 seconds.",
+                    "\(player1), challenge \(player2) to a thumb war. Loser takes \(getNumber(input: 3)) penalties.",
+                    "\(player1), give each player a funny nickname.",
+                    "\(player1), hug \(player2).",
+                    "\(player1), tell a joke. If no one laughs, take \(getNumber(input: 2)) penalties.",
+                    "\(player1), however many push-ups you do, \(player2) takes that many penalties.",
+                    "\(player1), do 10 push-ups or take \(getNumber(input: 4)) penalties.",
+                    "\(player1) and \(player2), staring contest! Loser takes \(getNumber(input: 3)) penalties.",
+                    "\(player1), imitate a lion for 15 seconds.",
+                    "\(player1), let player \(player2) style your hair for the rest of the game or take 4 penalties.",
+                    "\(player1), what's the most embarrassing situation you've been in? Answer or take \(getNumber(input: 3)) penalties.",
+                    "\(player1), impersonate a celebrity until others guess who it is. If you fail, take \(getNumber(input: 4)) penalties.",
+                    "\(player1), what's your biggest fantasy? Answer or take \(getNumber(input: 4)) penalties.",
+                    "\(player1), give your best pickup line. If others don’t find it funny, take \(getNumber(input: 2)) penalties.",
+                    "Each player makes a weird noise. Anyone refusing takes \(getNumber(input: 4)) penalties.",
+                    "\(player1), kneel before \(player2) and propose — or take \(getNumber(input: 3)) penalties.",
+                    "\(player1), purr like a cat for 5 seconds or take \(getNumber(input: 2)) penalties.",
+                    "Next player to laugh takes \(getNumber(input: 5)) penalties!",
+                    "\(player1), go to the corner to 'shame' yourself for three rounds.",
+                    "\(player1), name a song suitable for bedroom activities or take \(getNumber(input: 3)) penalties.",
+                    "\(player1), freestyle rap about tonight. The others will judge if you get away without \(getNumber(input: 3)) penalties.",
+                    "\(player1), try licking your elbow. If you fail, take \(getNumber(input: 2)) penalties.",
+                    "\(player1), what's your bench press max? For every 10 kg, give out \(getNumber(input: 1)) penalties.",
+                    "\(player1), Telepathy challenge! Try to say the same car brand as \(player2) at the same time. If you fail, both take \(getNumber(input: 2)) penalties.",
+                    "\(player1), give your best Goofy impression or take \(getNumber(input: 3)) penalties.",
+                    "\(player1), air guitar for 15 seconds or take \(getNumber(input: 4)) penalties.",
+                    "\(player1), whisper only for the next 3 rounds. If you fail, take \(getNumber(input: 3)) penalties.",
+                    "\(player1), make everyone laugh without talking. If you fail, take \(getNumber(input: 3)) penalties.",
+                    "\(player1), act like a baby for \(getNumber(input: 3)) rounds or take \(getNumber(input: 4)) penalties.",
+                    "Everyone impersonates an animal in turn. The worst one takes \(getNumber(input: 3)) penalties.",
+                    "\(player1), jump as high as you can. If the others aren’t convinced, take \(getNumber(input: 3)) penalties.",
+                    "\(player1), hold a plank for one minute. If you fail, take \(getNumber(input: 5)) penalties.",
+                    "\(player1), sing opera for 10 seconds or take \(getNumber(input: 4)) penalties.",
+                    "\(player1), hum a song of your choice. If others can’t guess it in 15 seconds, take \(getNumber(input: 3)) penalties.",
+                    "\(player1), what’s your squat max? For every 10 kg, give out \(getNumber(input: 1)) penalties.",
+                    "\(player1), if your heart rate is higher than \(player2)’s, take \(getNumber(input: 3)) penalties.",
+                    "\(player1), do 5 somersaults or take \(getNumber(input: 5)) penalties.",
+                    "\(player1) and \(player2), act out a dramatic breakup or both take \(getNumber(input: 4)) penalties.",
+                    "\(player1) vs \(player2)! First to do 5 somersaults wins. Loser takes \(getNumber(input: 4)) penalties.",
+                    "\(player1), meow like a cat for 10 seconds or take \(getNumber(input: 3)) penalties.",
+                    "\(player1), do your best Tarzan jungle yell. If you don’t convince the others, take \(getNumber(input: 4)) penalties.",
+                    "Next player to blink takes \(getNumber(input: 4)) penalties.",
+                    "\(player1), howl like a wolf or take \(getNumber(input: 5)) penalties."
+            ]
+            
+            self.tier3EN = [
+                "\(player1), what’s the longest you’ve gone without showering? Answer or take \(getNumber(input: 3)) penalties.",
+                    "Can cheating be forgiven? Vote! The minority takes \(getNumber(input: 4)) penalties",
+                    "\(player1), lick \(player2)’s belly button or take \(getNumber(input: 5)) penalties",
+                    "\(player1), kiss every player’s nose or take \(getNumber(input: 4)) penalties",
+                    "\(player1), come up with an erotic nickname for each player or take \(getNumber(input: 4)) penalties",
+                    "\(player1), remove \(player2)’s socks using only your teeth or take \(getNumber(input: 3)) penalties",
+                    "One by one, kiss the cheek of the player to your right. Refusers take \(getNumber(input: 5)) penalties",
+                    "\(player1), whisper a secret to \(player2). If they show no reaction, take \(getNumber(input: 2)) penalties",
+                    "\(player1), what’s your biggest fantasy? Answer or take \(getNumber(input: 4)) penalties",
+                    "\(player1), talk for three turns without letting your lips touch. If you fail, take \(getNumber(input: 3)) penalties",
+                    "\(player1), choose one player to take \(getNumber(input: 3)) penalties",
+                    "\(player1), close your eyes and point your index finger. \(player2) presses a body part against it. If you guess correctly, you’re spared \(getNumber(input: 4)) penalties",
+                    "Each player moans once. \(player1) starts",
+                    "\(player1), give \(player2) a 30-second foot massage or take \(getNumber(input: 4)) penalties",
+                    "\(player1), take \(getNumber(input: 3)) penalties or a slap on the cheek from \(player2)",
+                    "\(player1), rank these body parts by attractiveness: armpits, toes, ears",
+                    "\(player1), however many push-ups you do, \(player2) takes that many penalties",
+                    "\(player1), burp or take \(getNumber(input: 3)) penalties",
+                    "\(player1), if you had to roleplay with \(player2), what would you wear?",
+                    "\(player1), are you currently crushing on someone? Answer or take \(getNumber(input: 3)) penalties.",
+                    "\(player1), have you ever eaten a booger? Answer or take \(getNumber(input: 4)) penalties",
+                    "\(player1), do 10 push-ups or take \(getNumber(input: 4)) penalties",
+                    "\(player1), show the most recent photo from your Hidden album",
+                    "\(player1), take off your shirt for the rest of the game or take \(getNumber(input: 4)) penalties",
+                    "\(player1), show your best dance moves for the next 15 seconds or take \(getNumber(input: 5)) penalties",
+                    "Each player sings one word at a time from Europe’s ’The ’Final Countdown. The first one to freeze takes \(getNumber(input: 3)) penalties. \(player1) starts",
+                    "Each player sings one word at a time from Queen’s ’Bohemian Rhapsody’. The first one to freeze takes \(getNumber(input: 3)) penalties. \(player1) starts",
+                    "\(player1) and \(player2), hold hands for the rest of the game. If your hands separate, you both take \(getNumber(input: 5)) penalties",
+                    "\(player1), show the sexiest face you can make",
+                    "\(player1), freestyle rap about: 'I’m in love with \(player2)' or take \(getNumber(input: 4)) penalties",
+                    "\(player1), remove an item of clothing of your choice or take \(getNumber(input: 4)) penalties",
+                    "\(player1), cut off a small piece of your hair with scissors or take \(getNumber(input: 5)) penalties",
+                    "\(player1), moan every time you take a penalty for the rest of the game",
+                    "\(player1), what’s the most awkward dating situation you’ve experienced? Answer or take \(getNumber(input: 3)) penalties",
+                    "\(player1), favorite body part on the opposite sex? Answer or take \(getNumber(input: 4)) penalties",
+                    "\(player1), let \(player2) tickle you for 10 seconds. If you laugh, take \(getNumber(input: 3)) penalties",
+                    "\(player1), flirt in as many languages as you can. For each language, the others take \(getNumber(input: 2)) penalties",
+                    "\(player1), sit on \(player2)’s lap for three rounds. Refusing means \(getNumber(input: 4)) penalties",
+                    "Take \(getNumber(input: 3)) penalties if you could have sex with someone in the room",
+                    "\(player1), say “yes” to everything for the next minute or take 5 penalties",
+                    "\(player1), how many people have you kissed? Answer or take \(getNumber(input: 3)) penalties",
+                    "\(player1), do you think you're good in bed? Answer or take \(getNumber(input: 4)) penalties",
+                    "\(player1), what’s the biggest thing you’ve lied about? Answer or take \(getNumber(input: 3)) penalties",
+                    "\(player1), show your ahegao face or take \(getNumber(input: 4)) penalties",
+                    "Each player introduces themselves as sexily as possible. Refusers or underperformers take \(getNumber(input: 4)) penalties",
+                    "\(player1) and \(player2), swap clothes for the rest of the game (underwear excluded). Refusing means 7 penalties",
+                    "Each player names a sex toy or item in turn. First to freeze takes \(getNumber(input: 4)) penalties. \(player1) starts",
+                    "\(player1), smell \(player2)’s ears or take \(getNumber(input: 3)) penalties",
+                    "\(player1), swap shirts with \(player2). Refusing means \(getNumber(input: 4)) penalties",
+                    "\(player1), flex your pecs 10 times. If you can’t, take \(getNumber(input: 3)) penalties",
+                    "\(player1), smell each player’s neck one by one. The best-smelling player takes \(getNumber(input: 4)) penalties",
+                    "\(player1) and \(player2), do the yoga pose 'Boat' (Navasana) together. If you fail, take \(getNumber(input: 3)) penalties",
+                    "\(player1), carry \(player2) on your back for the rest of the game. Refusing means \(getNumber(input: 6)) penalties",
+                    "\(player1), hold \(player2) in your arms for the rest of the game. Refusing means \(getNumber(input: 6)) penalties",
+                    "\(player1), close your eyes. \(player2) puts a finger in your mouth. If you guess which finger, you’re spared \(getNumber(input: 3)) penalties",
+                    "\(player1), act enraged for 15 seconds. If others think you did well, you’re spared \(getNumber(input: 3)) penalties",
+                    "\(player1) and \(player2), hug with your stomachs touching for the rest of the game. Failing means \(getNumber(input: 6)) penalties",
+                    "\(player1), act drunk for 15 seconds or take \(getNumber(input: 2)) penalties",
+                    "\(player1), tell an embarrassing memory. If the others don’t think it’s embarrassing, take \(getNumber(input: 3)) penalties",
+            ]
+        
+
+            self.tier4EN = [
+            "\(player1), when did you lose your virginity? Answer or take \(getNumber(input: 4)) penalties",
+            "\(player1), swap pants with \(player2). Refusing means \(getNumber(input: 4)) penalties",
+            "\(player1), sit on \(player2)’s lap for the rest of the game. Refusing means \(getNumber(input: 4)) penalties",
+            "\(player1), peel a banana with your feet or take \(getNumber(input: 4)) penalties",
+            "\(player1), what’s the weirdest place you’ve had sex? Answer or take \(getNumber(input: 4)) penalties",
+            "\(player1), try to fit \(player2)’s fist in your mouth or take \(getNumber(input: 4)) penalties",
+            "\(player1), give the others a seductive 15-second belly dance show or take \(getNumber(input: 5)) penalties",
+            "\(player1), show your orgasm face or take \(getNumber(input: 4)) penalties",
+            "\(player1), eat a banana seductively or take \(getNumber(input: 3)) penalties",
+            "\(player1), do you think you’re good in bed? Answer or take \(getNumber(input: 4)) penalties",
+            "\(player1), when was the last time you had sex? Answer or take \(getNumber(input: 4)) penalties",
+            "\(player1), when was the last time you masturbated? Answer or take \(getNumber(input: 4)) penalties",
+            "\(player1), show your most recent sent message or take \(getNumber(input: 3)) penalties",
+            "\(player1), do 10 push-ups or take \(getNumber(input: 4)) penalties",
+            "\(player1), kiss the player in front of you or take \(getNumber(input: 4)) penalties",
+            "\(player1), Telepathy challenge! Try to say the same word as \(player2) at the same time. If you fail, you both take \(getNumber(input: 2)) penalties. Category: sex position",
+            "\(player1), take \(getNumber(input: 5)) penalties",
+            "\(player1), what’s the weirdest thing you’ve done during sex? Answer or take \(getNumber(input: 4)) penalties",
+            "\(player1), describe the last adult video you watched or take \(getNumber(input: 4)) penalties",
+            "\(player1), freestyle rap about: 'I want to make love with \(player2)'",
+            "\(player1), remove 2 clothing items of your choice or take \(getNumber(input: 4)) penalties",
+            "\(player1), what’s the most awkward moment you’ve had during sex? Answer or take \(getNumber(input: 3)) penalties",
+            "\(player1), what’s the weirdest place you’ve had sex? Answer or take \(getNumber(input: 4)) penalties",
+            "\(player1), best body part on \(player2)? Answer or take \(getNumber(input: 4)) penalties",
+            "\(player1), what’s your biggest sexual fantasy? Answer or take \(getNumber(input: 4)) penalties",
+            "\(player1), challenge \(player2) to arm wrestle. Loser takes \(getNumber(input: 3)) penalties",
+            "\(player1), what’s the worst date you’ve ever been on? Answer or take \(getNumber(input: 4)) penalties",
+            "All players with a penis take \(getNumber(input: 3)) penalties",
+            "\(player1), remove \(player2)’s shirt or take \(getNumber(input: 3)) penalties",
+            "\(player1), what’s your body count? Answer or take \(getNumber(input: 4)) penalties",
+            "\(player1), when was the last time you had sex? Answer or take \(getNumber(input: 5)) penalties",
+            "\(player1), does size matter? Answer or take \(getNumber(input: 4)) penalties",
+            "Each player kisses the one on their left. Refusing means \(getNumber(input: 4)) penalties",
+            "\(player1), pull down your pants and yank your underwear up as high as you can, or take \(getNumber(input: 4)) penalties",
+            "\(player1), imitate a turtle having sex. If the others aren’t impressed, take \(getNumber(input: 3)) penalties",
+            "\(player1) and \(player2), give each other hickeys on your chests. Refusing means \(getNumber(input: 5)) penalties",
+            "\(player1), which player would you most like to have sex with? Answer honestly or take \(getNumber(input: 4)) penalties",
+            "\(player1), put your pants on backwards for the rest of the game or take \(getNumber(input: 4)) penalties",
+            "\(player1), hump \(player2)’s leg for 10 seconds or take \(getNumber(input: 4)) penalties",
+            "\(player1), post a picture of your butt on social media or take \(getNumber(input: 4)) penalties. You can keep your pants on",
+            "One by one, grab the crotch of the player to your right. Refusing means \(getNumber(input: 5)) penalties. \(player1) starts",
+            "Everyone kisses the player on their right on the lips. Refusing means \(getNumber(input: 5)) penalties",
+            "\(player1), lick \(player2)’s foot. Refusing means \(getNumber(input: 5)) penalties",
+            "\(player1) and \(player2), kiss. Other players take as many penalties as the kiss lasts in seconds",
+            "\(player1), let \(player2) wear your bra. If you don’t have one or refuse, take \(getNumber(input: 5)) penalties",
+            "\(player1), put your tongue in \(player2)’s nostril or take \(getNumber(input: 5)) penalties",
+            "\(player1), find out who has the smelliest feet or take \(getNumber(input: 6)) penalties",
+            "\(player1), smell \(player2)’s foot or take \(getNumber(input: 4)) penalties",
+            "\(player1), guess what color underwear \(player2) is wearing. If you’re right, they take \(getNumber(input: 3)) penalties. If wrong, you take \(getNumber(input: 3))",
+            "\(player1) and \(player2), press your lips together for 15 seconds, but don’t kiss!. Failing means \(getNumber(input: 5)) penalties",
+        ]
+
+            self.tier5EN = [
+            "\(player1), remove \(player2)’s pants or take \(getNumber(input: 3)) penalties",
+            "\(player1), when, where and how did you lose your virginity? Describe in detail or take \(getNumber(input: 5)) penalties",
+            "\(player1), spoon with \(player2) for the rest of the game. Refusing means \(getNumber(input: 4)) penalties",
+            "\(player1), give \(player2) a lap dance or take \(getNumber(input: 4)) penalties",
+            "\(player1), do 10 push-ups or take \(getNumber(input: 4)) penalties",
+            "\(player1), Telepathy challenge! Try to say the same word at the same time with \(player2). If you fail, you both take \(getNumber(input: 2)) penalties. Category: sex toys",
+            "\(player1), describe the last adult video you watched or take \(getNumber(input: 5)) penalties",
+            "\(player1), twerk for 10 seconds or take \(getNumber(input: 5)) penalties",
+            "\(player1), strip to your underwear for the rest of the game or take \(getNumber(input: 4)) penalties",
+            "\(player1), remove 3 clothing items of your choice or take \(getNumber(input: 4)) penalties",
+            "\(player1), massage \(player2)’s best body part for 10 seconds or take \(getNumber(input: 3)) penalties",
+            "\(player1), lick \(player2)’s nipple or take \(getNumber(input: 3)) penalties",
+            "\(player1), show your bare butt or take \(getNumber(input: 3)) penalties",
+            "\(player1), kiss \(player2) or take \(getNumber(input: 3)) penalties",
+            "\(player1), fart or take \(getNumber(input: 5)) penalties",
+            "\(player1), make the weirdest sound you can or take \(getNumber(input: 3)) penalties",
+            "\(player1), cause secondhand embarrassment for the other players in the next 15 seconds or take \(getNumber(input: 6)) penalties",
+            "\(player1), pick \(player2)’s nose or take \(getNumber(input: 3)) penalties",
+            "\(player1), let \(player2) spit into your mouth or take \(getNumber(input: 5)) penalties",
+            "\(player1), which player would you most like to have sex with? Answer or take \(getNumber(input: 3)) penalties",
+            "\(player1), rub both your nipples while moaning for 5 seconds or take \(getNumber(input: 3)) penalties",
+            "\(player1), put \(player2)’s foot in your mouth or take \(getNumber(input: 3)) penalties",
+            "\(player1), let \(player2) slap your butt or take \(getNumber(input: 4)) penalties",
+            "\(player1), bend over for the other players or take \(getNumber(input: 3)) penalties",
+            "\(player1), sing the song 'Ievan Polkka' as best as you can. Other players decide if you’re spared \(getNumber(input: 3)) penalties",
+            "\(player1), if your penis is currently longer than 3.5 inches, take \(getNumber(input: 3)) penalties (don’t lie)",
+            "\(player1), act like a dog for the next 3 turns or take \(getNumber(input: 5)) penalties",
+            "\(player1) and \(player2), French kiss or both take \(getNumber(input: 5)) penalties",
+            "\(player1) and \(player2), staring contest! Loser takes \(getNumber(input: 3)) penalties",
+            "\(player1), act like a monkey for the next 3 turns or take \(getNumber(input: 4)) penalties",
+            "No one is allowed to laugh! The first to laugh takes \(getNumber(input: 3)) penalties",
+            "\(player1), do 10 armpit farts or take \(getNumber(input: 3)) penalties",
+            "\(player1), drum the ABC song melody on \(player2)’s butt. Refusing means \(getNumber(input: 5)) penalties",
+            "\(player1) and \(player2), dry hump each other for 10 seconds. Refusing means \(getNumber(input: 6)) penalties",
+            "The shortest player takes \(getNumber(input: 3)) penalties",
+            "\(player1), fill your mouth with drink and transfer the liquid to \(player2)’s mouth. Refusing means \(getNumber(input: 5)) penalties",
+            "\(player1) and \(player2), swap underwear with each other. Refusing means \(getNumber(input: 6)) penalties",
+            "\(player1), show your boobs or take \(getNumber(input: 5)) penalties",
+            "\(player1), show your penis or take \(getNumber(input: 6)) penalties. If you don’t have one, take \(getNumber(input: 2)) penalties",
+            "\(player1), give \(player2) a hickey. Refusing means \(getNumber(input: 5)) penalties",
+            "\(player1) and \(player2), 7 minutes in heaven. Refusing means \(getNumber(input: 5)) penalties",
+            "\(player1) and \(player2), touch each other’s tongues with your tongues. Refusing means \(getNumber(input: 5)) penalties",
+            "\(player1) and \(player2), show the others what the cowgirl position looks like. Refusing means \(getNumber(input: 5)) penalties",
+            "\(player1) and \(player2), show the others what the missionary position looks like. Refusing means \(getNumber(input: 5)) penalties",
+            "\(player1), massage \(player2)’s chest for 10 seconds. Refusing means \(getNumber(input: 5)) penalties"
+        ]
+
+
+
+
+        
+        
     }
 }

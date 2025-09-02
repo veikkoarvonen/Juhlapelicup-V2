@@ -25,12 +25,10 @@ class AddPlayers: UIViewController, CellDelegate, LanguageReloader {
         tableView.delegate = self
         tableView.backgroundColor = .clear
         
-        
-        
         //Gesture regognizer
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleScreenTap))
         self.view.addGestureRecognizer(tapGestureRecognizer)
-        
+        reloadBackButtonLanguage()
     }
     
     override func viewDidLayoutSubviews() {
@@ -106,6 +104,7 @@ class AddPlayers: UIViewController, CellDelegate, LanguageReloader {
         let nextButtonText = languageManager.localizedString(forKey: "NEXT")
         nextButton.setTitle(nextButtonText, for: .normal)
         tableView.reloadData()
+        reloadBackButtonLanguage()
         print("Reloading language in Add players VC")
     }
 }
@@ -164,6 +163,11 @@ extension AddPlayers {
         
         // Present the alert controller
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func reloadBackButtonLanguage() {
+        let backText = languageManager.localizedString(forKey: "BACK")
+        self.navigationItem.backBarButtonItem?.title = backText
     }
     
 }

@@ -246,10 +246,11 @@ extension SettingsView: UITableViewDataSource, UITableViewDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
             self.stopLoading()
             self.reloadNavigationStack()
+            self.navigationController?.popViewController(animated: true)
             //self.navigationController?.popToRootViewController(animated: true)
             print(languageManager.localizedString(forKey: "START_GAME"))
             //self.printCurrentBundle()
-            tableView.reloadData()
+            //tableView.reloadData()
         }
         
     }
@@ -278,8 +279,10 @@ extension SettingsView: UITableViewDataSource, UITableViewDelegate {
         for controller in viewControllers {
             if let reloadableController = controller as? LanguageReloader {
                 reloadableController.reloadUILanguage()
+                reloadableController.reloadBackButtonLanguage()
             }
         }
+        
         
         
     }

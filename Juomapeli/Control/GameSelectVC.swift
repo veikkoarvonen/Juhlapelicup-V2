@@ -11,6 +11,7 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
     
     func reloadUILanguage() {
         tableView.reloadData()
+        reloadBackButtonLanguage()
         print("Reloading language in Game select VC")
     }
     
@@ -33,6 +34,7 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
         tableView.register(UINib(nibName: C.gamemodeCell, bundle: nil), forCellReuseIdentifier: C.gamemodeNIb)
         tableView.dataSource = self
         tableView.delegate = self
+        reloadBackButtonLanguage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,6 +52,11 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
             destinationVC.tierValue = tierValueForGame
             destinationVC.drinkValue = drinkValueForGame
         }
+    }
+    
+    func reloadBackButtonLanguage() {
+        let backText = languageManager.localizedString(forKey: "BACK")
+        self.navigationItem.backBarButtonItem?.title = backText
     }
  
 //MARK: - Handle cells' sliders value change
@@ -106,6 +113,8 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
         
         if indexPath.row != 2 {
             cell.lowerView.isHidden = true
+        } else {
+            cell.lowerView.isHidden = false
         }
         
         if let imageView = cell.customImageView {
@@ -114,9 +123,10 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
             print("Image view is nil")
         }
         
-        
         if indexPath.row != 0 && !IAPManager.shared.isSubscriptionActive() {
             cell.header.textColor = .orange
+        } else {
+            cell.header.textColor = .black
         }
         
         return cell

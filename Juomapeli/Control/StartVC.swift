@@ -12,6 +12,7 @@ class Start: UIViewController, LanguageReloader {
     
     let languageManager = LanguageManager()
     var startButton = UIButton()
+    var figuresImage = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,10 +26,15 @@ class Start: UIViewController, LanguageReloader {
         
         //Background image
         let ukot = UIImageView()
-        ukot.image = UIImage(named: "20")
+        if languageManager.getSelectedLanguage() == "en" {
+            ukot.image = UIImage(named: "theukotenglish")
+        } else {
+            ukot.image = UIImage(named: "20")
+        }
         ukot.contentMode = .scaleAspectFill
         ukot.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(ukot)
+        figuresImage = ukot
         
         //Background
         let image = UIImageView()
@@ -75,12 +81,6 @@ class Start: UIViewController, LanguageReloader {
     @objc func startButtonTapped(_ sender: UIButton) {
         performSegue(withIdentifier: "12", sender: self)
     }
-    
-    func reloadUILanguage() {
-        let startButtonText = languageManager.localizedString(forKey: "START_GAME")
-        startButton.setTitle(startButtonText, for: .normal)
-        print("Reloading language in Start VC")
-    }
 
     func initializeApplication() {
         IAPManager.shared.start()  // initialize the IAP manager to handle auto renew subscriptions
@@ -88,6 +88,7 @@ class Start: UIViewController, LanguageReloader {
         languageManager.setDefaultLanguage()
         let userLanguage = languageManager.getSelectedLanguage()
         languageManager.setLanguage(languageIdentifier: userLanguage)
+        reloadBackButtonLanguage()
     }
 
     
@@ -102,5 +103,27 @@ class Start: UIViewController, LanguageReloader {
         }
     }
     
+}
+
+
+//MARK: - Language delegate functions
+
+extension Start {
+    
+    func reloadUILanguage() {
+        let startButtonText = languageManager.localizedString(forKey: "START_GAME")
+        startButton.setTitle(startButtonText, for: .normal)
+        if languageManager.getSelectedLanguage() == "en" {
+            figuresImage.image = UIImage(named: "theukotenglish")
+        } else {
+            figuresImage.image = UIImage(named: "20")
+        }
+        print("Reloading language in Start VC")
+    }
+    
+    func reloadBackButtonLanguage() {
+        let backText = languageManager.localizedString(forKey: "BACK")
+        self.navigationItem.backBarButtonItem?.title = backText
+    }
 }
 

@@ -6,6 +6,10 @@
   
 */
 
+//Universal
+BACK = "Takaisin";
+RESTORE = "Onko sinulla jo tilaus? Palauta ostot";
+
 //Start VC
 START_GAME = "Aloita Peli";
 
