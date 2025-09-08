@@ -52,3 +52,10 @@ RESTORE_PURCHASES = "Restore Purchases";
 
 FINNISH_LANGUAGE = "🇫🇮 Suomi";
 ENGLISH_LANGUAGE = "🇬🇧 English";
+
+//Game VC
+GAME_OVER = "Game over!";
+BACKGROUND_IMAGE = "jampartycup_raibale";
+
+//Pro VC
+DISCOUNT_LABEL = "discountEN";

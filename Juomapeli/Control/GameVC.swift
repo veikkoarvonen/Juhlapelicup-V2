@@ -12,6 +12,7 @@ class GameView: UIViewController {
 //MARK: - Variables & constants
     
     var tapGesture: UITapGestureRecognizer?
+    let languageManger = LanguageManager()
     
     //Game parameters from previous VC
     var players: [String] = []
@@ -45,8 +46,11 @@ class GameView: UIViewController {
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var timebar: UIProgressView!
     
+//MARK: - ViewDidLoad & Screen tap
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setBackgroundImage()
         setGameParameters()
         prepareGame()
         runIndexSafetyCheck()
@@ -76,7 +80,11 @@ class GameView: UIViewController {
 //MARK: - Word explanation
     
     private func displayWordGameInstructions() {
-        taskLabel.text = WordGame.startMessage
+        if languageManger.getSelectedLanguage() == "en" {
+            taskLabel.text = WordGame.startMessageEN
+        } else {
+            taskLabel.text = WordGame.startMessage
+        }
     }
     
     @objc private func handleLeftButtonTap() {
@@ -122,7 +130,12 @@ class GameView: UIViewController {
         guard words.count > currentTask else { return }
         if didScorePoint {
             points += 1
-            pointLabel.text = "Pisteet: \(points)"
+            if languageManger.getSelectedLanguage() == "en" {
+                pointLabel.text = "Score: \(points)"
+            } else {
+                pointLabel.text = "Pisteet: \(points)"
+            }
+            
         }
         taskLabel.text = words[currentTask]
         currentTask += 1
@@ -131,7 +144,11 @@ class GameView: UIViewController {
     
     private func addPointLabel() {
         //"Pisteet" = "Points" in Finnish
-        pointLabel.text = "Pisteet: \(points)"
+        if languageManger.getSelectedLanguage() == "en" {
+            pointLabel.text = "Score: \(points)"
+        } else {
+            pointLabel.text = "Pisteet: \(points)"
+        }
         pointLabel.textAlignment = .center
         pointLabel.textColor = .white
         pointLabel.font = UIFont(name: C.wordGameFont, size: 30)
@@ -176,7 +193,12 @@ class GameView: UIViewController {
     
     private func performTypingAnimation() {
         pointLabel.text = ""
-        let text = "Pisteet: \(points)"
+        var text = "Pisteet: \(points)"
+        if languageManger.getSelectedLanguage() == "en" {
+            text = "Score: \(points)"
+        } else {
+            text = "Pisteet: \(points)"
+        }
         var charIndex = 0.0
         for letter in text {
             Timer.scheduledTimer(withTimeInterval: 0.1 * charIndex, repeats: false) { (timer) in self.pointLabel.text?.append(letter)
@@ -235,12 +257,18 @@ class GameView: UIViewController {
     
     private func endGame() {
         //"Peli loppui" = "Game over" in Finnish
-        taskLabel.text = "Peli loppui!"
+        taskLabel.text = languageManger.localizedString(forKey: "GAME_OVER")
         performShakingAnimation()
         shouldReturn = true
     }
     
 //MARK: - Prepare game and parameters
+    
+    private func setBackgroundImage() {
+        if languageManger.getSelectedLanguage() == "en" {
+            backImageView.image = UIImage(named: "jampartycup_raibale")
+        }
+    }
     
     private func setGameParameters() {
         var isDateCategory: Bool = false
@@ -254,7 +282,14 @@ class GameView: UIViewController {
         p2list = playerLists.p2
         tiers = game.generateTierList(sliderValue: tierValue, numberOfTasks: numberOfTasks)
         tasksIndexes = game.generateTaskIndexes(category: gameCategory, numberOfTasks: numberOfTasks, tiers: tiers)
-        words = WordGame.words
+        
+        if languageManger.getSelectedLanguage() == "en" {
+            words = WordGame.wordsEN
+        } else {
+            words = WordGame.words
+        }
+        
+        
         words.shuffle()
     }
     

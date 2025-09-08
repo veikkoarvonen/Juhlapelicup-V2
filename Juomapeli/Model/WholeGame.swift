@@ -115,9 +115,8 @@ struct GameManager {
     
     func generateTaskIndexes(category: Int, numberOfTasks: Int, tiers: [Int]) -> [Int] {
         let task = SingleTask(player1: "", player2: "", color1: .red, color2: .red, category: 0, tier: 0, drinkValue: 0, taskIndex: 0)
-        let ud = UD()
         
-        var indexArraysFI: [[Int]] = [
+        let indexArraysFI: [[Int]] = [
             Array(0..<task.normalsFI.count),
             Array(0..<task.datesFI.count),
             Array(0..<task.tier1FI.count),
@@ -128,7 +127,7 @@ struct GameManager {
             Array(0..<30)
         ]
         
-        var indexArraysEN: [[Int]] = [
+        let indexArraysEN: [[Int]] = [
             Array(0..<task.normalsEN.count),
             Array(0..<task.datesEN.count),
             Array(0..<task.tier1EN.count),

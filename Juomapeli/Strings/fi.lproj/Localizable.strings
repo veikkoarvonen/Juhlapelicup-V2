@@ -53,3 +53,10 @@ RESTORE_PURCHASES = "Palauta ostot";
 
 FINNISH_LANGUAGE = "🇫🇮 Suomi";
 ENGLISH_LANGUAGE = "🇬🇧 English";
+
+//Game VC
+GAME_OVER = "Peli Loppui!";
+BACKGROUND_IMAGE = "raibale_OIKEESTIOIKEESTI";
+
+//Pro VC
+DISCOUNT_LABEL = "discountFI";

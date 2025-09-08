@@ -215,7 +215,8 @@ extension ProView {
     private func discountLabel() {
         // Create the UIImageView
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "discount")
+        let discountLabelName = languageManager.localizedString(forKey: "DISCOUNT_LABEL")
+        imageView.image = UIImage(named: discountLabelName)
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -226,8 +227,8 @@ extension ProView {
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100),
             imageView.centerYAnchor.constraint(equalTo: yearlyButton.topAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 200),  // Adjust width as needed
-            imageView.heightAnchor.constraint(equalToConstant: 200)  // Adjust height as needed
+            imageView.widthAnchor.constraint(equalToConstant: 100),  // Adjust width as needed
+            imageView.heightAnchor.constraint(equalToConstant: 100)  // Adjust height as needed
         ])
     }
     
