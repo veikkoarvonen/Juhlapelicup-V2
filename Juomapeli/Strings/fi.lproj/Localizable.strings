@@ -12,6 +12,7 @@ RESTORE = "Onko sinulla jo tilaus? Palauta ostot";
 
 //Start VC
 START_GAME = "Aloita Peli";
+FIGURES = "20";
 
 //Add players VC
 ADD_PLAYER = "+ Lisää pelaaja";

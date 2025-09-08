@@ -16,21 +16,15 @@ class Start: UIViewController, LanguageReloader {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         initializeApplication()
         setUpUI()
-        
     }
     
     private func setUpUI() {
         
         //Background image
         let ukot = UIImageView()
-        if languageManager.getSelectedLanguage() == "en" {
-            ukot.image = UIImage(named: "theukotenglish")
-        } else {
-            ukot.image = UIImage(named: "20")
-        }
+        ukot.image = UIImage(named: languageManager.localizedString(forKey: "FIGURES"))
         ukot.contentMode = .scaleAspectFill
         ukot.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(ukot)

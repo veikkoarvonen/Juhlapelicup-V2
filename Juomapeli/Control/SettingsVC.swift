@@ -117,20 +117,38 @@ extension SettingsView: UITableViewDataSource, UITableViewDelegate {
             // Handle cell selection
             tableView.deselectRow(at: indexPath, animated: true)
             
-            let links = ["https://veikkoarvonen.github.io/juhlapeli/","https://veikkoarvonen.github.io/juhlapeli/HTML/tietosuoja.html","https://veikkoarvonen.github.io/juhlapeli/HTML/kauttoehdot.html","https://veikkoarvonen.github.io/juhlapeli/HTML/vastuullisuus.html"]
+            let links = [
+                "https://veikkoarvonen.github.io/juhlapeliWebsite/",
+                "https://veikkoarvonen.github.io/juhlapeliWebsite/HTML/tietosuoja.html",
+                "https://veikkoarvonen.github.io/juhlapeliWebsite/HTML/kauttoehdot.html",
+                "https://veikkoarvonen.github.io/juhlapeliWebsite/HTML/vastuullisuus.html"
+            ]
+            
+            let englishLinks = [
+                "https://veikkoarvonen.github.io/juhlapeliWebsite/HTML/homeEnglish.html",
+                "https://veikkoarvonen.github.io/juhlapeliWebsite/HTML/privacyPolicy.html",
+                "https://veikkoarvonen.github.io/juhlapeliWebsite/HTML/termsOfUse.html",
+                "https://veikkoarvonen.github.io/juhlapeliWebsite/HTML/responsivePlaying.html"
+            ]
        
 //MARK: - Section 0
+            var destinationArray: [String] = []
+            if languageManager.getSelectedLanguage() == "en" {
+                destinationArray = englishLinks
+            } else {
+                destinationArray = links
+            }
             
             if indexPath.section == 0 {
                 if indexPath.row == 0 {
                     print("Perussivu")
-                    openURL(link: links[0])
+                    openURL(link: destinationArray[0])
                 } else if indexPath.row == 1 {
                     print("Tietosuoja")
-                    openURL(link: links[1])
+                    openURL(link: destinationArray[1])
                 } else if indexPath.row == 2 {
                     print("Käyttöehdot")
-                    openURL(link: links[2])
+                    openURL(link: destinationArray[2])
                 }
 
 //MARK: - Section 1

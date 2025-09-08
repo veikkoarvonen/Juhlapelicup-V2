@@ -12,6 +12,7 @@ RESTORE = "Already subscribed? Restore purchases";
 
 //Start VC
 START_GAME = "Start Game";
+FIGURES = "theukotenglish";
 
 //Add players VC
 ADD_PLAYER = "+ Add Player";
