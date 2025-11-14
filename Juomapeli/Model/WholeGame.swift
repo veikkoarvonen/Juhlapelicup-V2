@@ -171,28 +171,6 @@ struct GameManager {
         }
         
         return indexes
-//        let subManager = SubscriptionData()
-//        let hasPlusVersion = !subManager.fetchIDArray()!.isEmpty
-//        
-//        var indexes: [Int] = []
-//        
-//        if category == 0 {
-//            if ud.hasPurchasedPlusVersion() {
-//                indexes = indexArrays[0]
-//            } else {
-//                indexes = indexArrays[7]
-//            }
-//        } else if category == 1 {
-//            indexes = indexArrays[1]
-//        } else {
-//            for i in 0..<numberOfTasks {
-//                let tier = tiers[i]
-//                let targetArray = indexArrays[tier + 1]
-//                indexes.append(targetArray[i])
-//            }
-//        }
-//        
-//        return indexes
         
     }
     

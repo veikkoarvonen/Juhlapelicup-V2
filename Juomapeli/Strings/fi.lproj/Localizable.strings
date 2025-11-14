@@ -24,12 +24,14 @@ NEXT = "Seuraava";
 /* Game Mode Headers */
 HEADER_BASIC = "Peruspeli";
 HEADER_DATES = "Treffit";
+HEADER_TEAM = "Tiimipeli";
 HEADER_EXTREME = "Extreme";
 HEADER_EXPLAIN = "Selitä!";
 
 /* Game Mode Paragraphs */
 PARAGRAPH_BASIC = "Monipuolisia tehtäviä ja haasteita, jotka takaavat räväkän meiningin pysyen kuitenkin hyvän maun rajoissa... juuri ja juuri.";
 PARAGRAPH_DATES = "Syvällisiä, hauskoja ja mielenkiintoisia kysymyksiä ja tehtäviä, joiden avulla varmasti tutustut seuralaiseesi - myös pintaa syvemmältä.";
+PARAGRAPH_TEAM = "Valmistautukaa taisteluun! Pelaajat arvotaan kahteen tiimiin, jotka kisaavat toisiaan vastaan. Vain suurimmat heittäytyjät voittavat.";
 PARAGRAPH_EXTREME = "VAROITUS: Ei nynnyille! Alla olevista mittareista voit itse valita pelin intensiteetin ja rangaistushuikkien määrän. HUOM: Tehtävät vaativat pahimmillaan äärimmäistä heittäytymistä, joten peli sopii ainoastaan kovimmille bilehileille!";
 PARAGRAPH_EXPLAIN = "Sanaselitys! Sinulla on minuutti aikaa selittää pelikaverillesi niin monta sanaa, kuin kerkeät. Jokaisesta oikeasta vastauksesta saatte pisteen.";
 
@@ -41,8 +43,11 @@ PENALTY_METER = "Rangaistusmittari";
 //Settings
 ABOUT_HEADER = "Tietoa";
 RESPONSIBLE_PLAYING_HEADER = "Vastuullisuus";
+POINTS_HEADER = "Pisteiden lasku";
 PLUS_SUBSCRIPTION_HEADER = "Plus-tilaus";
 LANGUAGE_HEADER = "Kieli";
+
+POINTS_DESCRIPTION = "Kerää pisteitä pelin aikana. Peli kysyy jokaisen tehtävän kohdalla, mikäli pelaaja suoritti tehtävän. Suoritetuista tehtävistä saa pisteitä, jotka näytetään kierroksen loputtua";
 
 HOME_PAGE_LINK = "Juhlapeli Cup kotisivut";
 PRIVACY_POLICY_LINK = "Tietosuojakäytäntö";

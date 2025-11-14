@@ -12,6 +12,7 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
     func reloadUILanguage() {
         tableView.reloadData()
         reloadBackButtonLanguage()
+        pointSwitchLabel.text = languageManager.localizedString(forKey: "POINTS_HEADER")
         print("Reloading language in Game select VC")
     }
     
@@ -26,14 +27,30 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
     let languageManager = LanguageManager()
     
     @IBOutlet weak var tableView: UITableView!
- 
-//MARK: - Functions
+    @IBOutlet weak var pointSwitchView: UIView!
+    @IBOutlet weak var pointSwitchLabel: UILabel!
+    
+    //MARK: - Functions
+    
+    @IBAction func pointSwitchTurned(_ sender: UISwitch) {
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: C.gamemodeCell, bundle: nil), forCellReuseIdentifier: C.gamemodeNIb)
         tableView.dataSource = self
         tableView.delegate = self
+        
+        pointSwitchView.layer.cornerRadius = 10
+        pointSwitchView.layer.masksToBounds = false
+        pointSwitchView.layer.shadowColor = UIColor.black.cgColor
+        pointSwitchView.layer.shadowOpacity = 0.1
+        pointSwitchView.layer.shadowOffset = CGSize(width: 0, height: 5)
+        pointSwitchView.layer.shadowRadius = 3
+        
+        pointSwitchLabel.text = languageManager.localizedString(forKey: "POINTS_HEADER")
+        
         reloadBackButtonLanguage()
     }
     
@@ -58,6 +75,7 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
         let backText = languageManager.localizedString(forKey: "BACK")
         self.navigationItem.backBarButtonItem?.title = backText
     }
+    
  
 //MARK: - Handle cells' sliders value change
     
@@ -74,13 +92,13 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
 
 extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let normalHeight: Double = 160
         let extremeHeight: Double = 220
-        if indexPath.row == 2 {
+        if indexPath.row == 3 {
             return extremeHeight + 140
         } else {
             return normalHeight
@@ -102,6 +120,9 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
             cell.header.text = languageManager.localizedString(forKey: "HEADER_DATES")
             cell.rules.text = languageManager.localizedString(forKey: "PARAGRAPH_DATES")
         } else if indexPath.row == 2 {
+            cell.header.text = languageManager.localizedString(forKey: "HEADER_TEAM")
+            cell.rules.text = languageManager.localizedString(forKey: "PARAGRAPH_TEAM")
+        } else if indexPath.row == 3 {
             cell.header.text = languageManager.localizedString(forKey: "HEADER_EXTREME")
             cell.rules.text = languageManager.localizedString(forKey: "PARAGRAPH_EXTREME")
         } else {
@@ -111,7 +132,7 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
         
         cell.rules.font = .systemFont(ofSize: 15.8)
         
-        if indexPath.row != 2 {
+        if indexPath.row != 3 {
             cell.lowerView.isHidden = true
         } else {
             cell.lowerView.isHidden = false
@@ -141,6 +162,7 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
         case 1: category = 1; drinkValueForGame = 3
         case 2: category = 2
         case 3: category = 3
+        case 4: category = 4
         default: category = 0
         }
         
@@ -151,7 +173,11 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
                 print("No need to show subscription screen user has active subscription")
                 return
             }
-            performSegue(withIdentifier: "pro", sender: self)
+            
+//MARK: - Override paywall here
+            
+            performSegue(withIdentifier: "34", sender: self)
+            //performSegue(withIdentifier: "pro", sender: self)
         } else {
             performSegue(withIdentifier: "34", sender: self)
             if !IAPManager.shared.isSubscriptionActive() {

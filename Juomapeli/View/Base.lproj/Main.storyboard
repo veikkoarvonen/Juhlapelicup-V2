@@ -90,22 +90,54 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xUg-ma-KMX">
-                                <rect key="frame" x="0.0" y="94" width="375" height="684"/>
+                                <rect key="frame" x="0.0" y="94" width="375" height="594"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uKa-yi-seE">
+                                <rect key="frame" x="20" y="708" width="335" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVk-1J-haj">
+                                        <rect key="frame" x="20" y="0.0" width="241" height="50"/>
+                                        <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="22"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="E3b-gd-Bxj">
+                                        <rect key="frame" x="261" y="9.6666666666666288" width="51" height="31"/>
+                                        <color key="tintColor" name="brandPurple"/>
+                                        <color key="onTintColor" name="brandPurple"/>
+                                        <connections>
+                                            <action selector="pointSwitchTurned:" destination="oYz-kb-HrX" eventType="valueChanged" id="Ahi-Vw-peX"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="E3b-gd-Bxj" firstAttribute="centerY" secondItem="uKa-yi-seE" secondAttribute="centerY" id="Nza-uc-Kg7"/>
+                                    <constraint firstItem="E3b-gd-Bxj" firstAttribute="leading" secondItem="lVk-1J-haj" secondAttribute="trailing" id="Slq-2H-CIe"/>
+                                    <constraint firstAttribute="trailing" secondItem="E3b-gd-Bxj" secondAttribute="trailing" constant="25" id="V25-g3-KQB"/>
+                                    <constraint firstAttribute="bottom" secondItem="lVk-1J-haj" secondAttribute="bottom" id="VUD-wb-kHf"/>
+                                    <constraint firstItem="lVk-1J-haj" firstAttribute="leading" secondItem="uKa-yi-seE" secondAttribute="leading" constant="20" id="Xi9-Gf-mWW"/>
+                                    <constraint firstAttribute="height" constant="50" id="l7j-mI-Get"/>
+                                    <constraint firstItem="lVk-1J-haj" firstAttribute="top" secondItem="uKa-yi-seE" secondAttribute="top" id="sDY-cf-Fft"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kJx-lX-9eI"/>
                         <color key="backgroundColor" name="brandPurple"/>
                         <constraints>
+                            <constraint firstItem="uKa-yi-seE" firstAttribute="leading" secondItem="kJx-lX-9eI" secondAttribute="leading" constant="20" id="06K-Nc-Uab"/>
                             <constraint firstAttribute="bottom" secondItem="cYK-gP-w2v" secondAttribute="bottom" id="6Sm-sK-Eme"/>
                             <constraint firstItem="xUg-ma-KMX" firstAttribute="top" secondItem="kJx-lX-9eI" secondAttribute="top" id="LjX-Su-3VV"/>
                             <constraint firstItem="kJx-lX-9eI" firstAttribute="trailing" secondItem="xUg-ma-KMX" secondAttribute="trailing" id="NbJ-lA-0l3"/>
+                            <constraint firstItem="kJx-lX-9eI" firstAttribute="bottom" secondItem="uKa-yi-seE" secondAttribute="bottom" constant="20" id="O5E-ru-8A3"/>
                             <constraint firstAttribute="trailing" secondItem="cYK-gP-w2v" secondAttribute="trailing" id="dm4-8a-uyd"/>
                             <constraint firstItem="xUg-ma-KMX" firstAttribute="leading" secondItem="kJx-lX-9eI" secondAttribute="leading" id="fib-Gc-UfH"/>
-                            <constraint firstItem="kJx-lX-9eI" firstAttribute="bottom" secondItem="xUg-ma-KMX" secondAttribute="bottom" id="m2b-W8-L2J"/>
+                            <constraint firstItem="uKa-yi-seE" firstAttribute="top" secondItem="xUg-ma-KMX" secondAttribute="bottom" constant="20" id="mT6-YS-76C"/>
                             <constraint firstItem="cYK-gP-w2v" firstAttribute="leading" secondItem="kJx-lX-9eI" secondAttribute="leading" id="qiR-XX-rn5"/>
                             <constraint firstItem="cYK-gP-w2v" firstAttribute="top" secondItem="X91-Ss-CXs" secondAttribute="top" id="rSb-9k-SOG"/>
+                            <constraint firstItem="kJx-lX-9eI" firstAttribute="trailing" secondItem="uKa-yi-seE" secondAttribute="trailing" constant="20" id="twW-3N-85O"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="m8p-uL-zFY">
@@ -117,6 +149,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="pointSwitchLabel" destination="lVk-1J-haj" id="vtU-Lc-J9l"/>
+                        <outlet property="pointSwitchView" destination="uKa-yi-seE" id="kut-Oh-sFv"/>
                         <outlet property="tableView" destination="xUg-ma-KMX" id="Ca2-XZ-iTD"/>
                         <segue destination="0Sf-Hj-GC8" kind="show" identifier="34" id="r40-vw-hja"/>
                         <segue destination="zSN-b5-bL2" kind="showDetail" identifier="pro" id="Aiq-we-IZI"/>

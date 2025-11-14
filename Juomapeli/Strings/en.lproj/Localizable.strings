@@ -23,12 +23,14 @@ NEXT = "Next";
 /* Game Mode Headers */
 HEADER_BASIC = "Basic Game";
 HEADER_DATES = "Dates";
+HEADER_TEAM = "Teamwork";
 HEADER_EXTREME = "Extreme";
 HEADER_EXPLAIN = "Explain!";
 
 /* Game Mode Paragraphs */
 PARAGRAPH_BASIC = "Plenty of versatile tasks and challenges that guarantee a fun night while still staying within the limits of good taste... barely!.";
 PARAGRAPH_DATES = "Deep, funny, and interesting questions and challenges that will help you get to know your date — even beyond the surface!";
+PARAGRAPH_TEAM = "Get ready for battle! Players will be devided in two teams and compete againts eachother. Only the greatest will manage to win.";
 PARAGRAPH_EXTREME = "WARNING: Not for wimps! Use the sliders below to choose the naughtiness of the game and the number of penalties. CAUTION: Some tasks may require extreme boldness and commitment. This game is only for the wildest party animals out there!";
 PARAGRAPH_EXPLAIN = "Word explanation! You have one minute to explain as many words as possible to your game partner. You get a point for each correct answer.";
 
@@ -39,8 +41,11 @@ PENALTY_METER = "Penalty Meter";
 //Settings
 ABOUT_HEADER = "About";
 RESPONSIBLE_PLAYING_HEADER = "Responsive playing";
+POINTS_HEADER = "Count points";
 PLUS_SUBSCRIPTION_HEADER = "Plus-subscription";
 LANGUAGE_HEADER = "Language";
+
+POINTS_DESCRIPTION = "Collect points during the game. The game asks with every tasks, if the player completed the challenge. Completed challenges gather points, which are displayed after the round";
 
 HOME_PAGE_LINK = "Juhlapeli Cup homepage";
 PRIVACY_POLICY_LINK = "Privacy Policy";

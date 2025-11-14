@@ -24,7 +24,13 @@ struct C {
 
 //Data for tableView cells in GameSelect VC. Just copy & paste strings and leave the tableView cell size the same
 struct Cells {
-    static let images: [UIImage] = [UIImage(named: "basic")!,UIImage(named: "treffit")!,UIImage(named: "extreme")!, UIImage(named: "selita")!]
+    static let images: [UIImage] = [
+        UIImage(named: "basic")!,
+        UIImage(named: "treffit")!,
+        UIImage(named: "taisto")!,
+        UIImage(named: "extreme")!,
+        UIImage(named: "selita")!
+    ]
     static let headers: [String] = ["Peruspeli", "Treffit", "Extreme", "Selitä!"]
     static let paragraphs: [String] = [
         "Monipuolisia tehtäviä ja haasteita, jotka takaavat räväkän meiningin pysyen kuitenkin hyvän maun rajoissa... juuri ja juuri.",
