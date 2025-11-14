@@ -39,7 +39,7 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
     
     override func viewDidAppear(_ animated: Bool) {
         if shouldPopProVC && !IAPManager.shared.isSubscriptionActive() {
-            //performSegue(withIdentifier: "pro", sender: self)
+            performSegue(withIdentifier: "pro", sender: self)
             shouldPopProVC = false
         }
     }
@@ -124,7 +124,7 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
         }
         
         if indexPath.row != 0 && !IAPManager.shared.isSubscriptionActive() {
-            cell.header.textColor = .orange
+            cell.header.textColor = .orange //Orange
         } else {
             cell.header.textColor = .black
         }
@@ -151,8 +151,7 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
                 print("No need to show subscription screen user has active subscription")
                 return
             }
-            performSegue(withIdentifier: "34", sender: self)
-            //performSegue(withIdentifier: "pro", sender: self)
+            performSegue(withIdentifier: "pro", sender: self)
         } else {
             performSegue(withIdentifier: "34", sender: self)
             if !IAPManager.shared.isSubscriptionActive() {

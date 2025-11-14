@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27A58B6E2E81B8D000F8045A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27A58B6C2E81B8D000F8045A /* InfoPlist.strings */; };
 		27EB4F1A2E4656E2001E715C /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB4F192E4656DB001E715C /* AppLanguage.swift */; };
 		27EB4F2B2E46778D001E715C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27EB4F292E46778D001E715C /* Localizable.strings */; };
 		A2DFD8032D7CACF000F115FA /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2DFD8022D7CACF000F115FA /* IAPManager.swift */; };
@@ -34,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27A58B6D2E81B8D000F8045A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		27A58B6F2E81B8D700F8045A /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		27EB4F192E4656DB001E715C /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
 		27EB4F2A2E46778D001E715C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		27EB4F2C2E4677B6001E715C /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Main.strings; sourceTree = "<group>"; };
@@ -80,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				27EB4F292E46778D001E715C /* Localizable.strings */,
+				27A58B6C2E81B8D000F8045A /* InfoPlist.strings */,
 			);
 			path = Strings;
 			sourceTree = "<group>";
@@ -224,6 +228,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6194D532C2C866100B6E462 /* LaunchScreen.storyboard in Resources */,
+				27A58B6E2E81B8D000F8045A /* InfoPlist.strings in Resources */,
 				B65FAFF32C3E706D00D9EF26 /* TableViewTextCell.xib in Resources */,
 				B64A930D2C32B87900C00BA9 /* GameModeCell.xib in Resources */,
 				27EB4F2B2E46778D001E715C /* Localizable.strings in Resources */,
@@ -263,6 +268,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		27A58B6C2E81B8D000F8045A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27A58B6D2E81B8D000F8045A /* en */,
+				27A58B6F2E81B8D700F8045A /* fi */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		27EB4F292E46778D001E715C /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -431,7 +445,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.veikko.Juomapeli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -463,7 +477,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.veikko.Juomapeli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

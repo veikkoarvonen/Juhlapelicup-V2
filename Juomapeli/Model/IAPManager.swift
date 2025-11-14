@@ -215,7 +215,7 @@ extension IAPManager: SKPaymentTransactionObserver {
                 #if DEBUG
                     let urlString = "https://sandbox.itunes.apple.com/verifyReceipt"
                 #else
-                    let urlString = "https://buy.itunes.apple.com/verifyReceipt"
+                    let urlString = "https://buy.itunes.apple.com/verifyReceipt" 
                 #endif
                 let receiptData = try Data(contentsOf: self.getReceiptURL()!).base64EncodedString()
                 let requestData = ["receipt-data" : receiptData, "password" : self.sharedSecret, "exclude-old-transactions" : true] as [String : Any]
