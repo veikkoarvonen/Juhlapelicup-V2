@@ -10,8 +10,10 @@ import UIKit
 class GameView: UIViewController {
     
     var hasSetUI = false
+    let languageManager = LanguageManager()
+    let gameParameters = GameParameters()
     
-//MARK: - Game parameters from previous VC
+    //MARK: - Game parameters from previous VC
     
     var players: [String] = []
     var gameCategory: Int = 0
@@ -19,8 +21,9 @@ class GameView: UIViewController {
     var drinkValue: Float = 1.0
     var countPoints: Bool = false
     var shorterGame: Bool = false
+    var shouldReturn: Bool = false
     
-//MARK: - UIElements
+    //MARK: - UIElements
     
     let UIElements = GameVCUI()
     var backGroundImage = UIImageView()
@@ -31,6 +34,13 @@ class GameView: UIViewController {
     var timeLabel = UILabel()
     var wordLabelView = UIView()
     
+    //MARK: - Game parameters determined in this VC
+    
+    var currentTask: Int = 0
+    var numberOfTasks: Int = 30
+    var playerData: [PlayerData] = []
+    var tasks: [Task] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         printGameDetails()
@@ -39,49 +49,124 @@ class GameView: UIViewController {
     override func viewDidLayoutSubviews() {
         if !hasSetUI {
             setUIElements()
+            initializeGame()
             hasSetUI = true
+            
+            let converter = TaskStringConverter()
+            let testTask = BasicGameTasksFI.tasks[0]
+            let templateForTask = converter.renderTemplate(testTask.template, values: [
+                "player1" : "Veikko",
+                "player2" : "Mirka",
+                "penalties" : String(3)
+            ])
+            
+            let attributedString = converter.attributedText(for: templateForTask, highlight1: "Veikko", highlight2: "Mirka", color1: .red, color2: .blue)
+            
+            taskLabel.attributedText = attributedString
+            
         }
     }
     
     
-//MARK: - Objc functions
+    //MARK: - Objc functions
     
     @objc func handleYesTap() {
         print("YES tapped")
         // your logic here
     }
-
+    
     @objc func handleNoTap() {
         print("NO tapped")
         // your logic here
     }
-
+    
     @objc func handleScreenTap() {
-        print("Screen tapped")
-        // your logic here
+        if !countPoints {
+            print("Screen tapped")
+            // your logic here
+        }
     }
-
+    
+    
+    
+    //MARK: - Universal funtionality
+    
+    private func initializeGame() {
+        
+        if shorterGame { numberOfTasks = 15 }
+        if !countPoints {
+            pointLabel.isHidden = true
+            yesView.isHidden = true
+            noView.isHidden = true
+            yesView.isUserInteractionEnabled = false
+            noView.isUserInteractionEnabled = false
+        }
+        
+        playerData = gameParameters.generatePlayerData(players: players)
+        
+        if gameCategory == 0 {
+            initializeBasicgame()
+        } else if gameCategory == 1 {
+            initializeDatemode()
+        } else if gameCategory == 2 {
+            initializeTeammode()
+        } else if gameCategory == 3 {
+            initializeExtrememode()
+        } else if gameCategory == 4 {
+            initializeExplainmode()
+        } else {
+            print("Invalid game category")
+            //navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    //MARK: - Basic game funtionality
+    
+    private func initializeBasicgame() {
+        timeLabel.isHidden = true
+        wordLabelView.isHidden = true
+        let language = languageManager.getSelectedLanguage()
+        //let hasPlusSubscription = IAPManager.shared.isSubscriptionActive()
+        
+        checkPlayerData()
+    }
+    
+    //MARK: - Date mode funtionality
+    
+    private func initializeDatemode() {
+        timeLabel.isHidden = true
+        wordLabelView.isHidden = true
+        view.backgroundColor = UIColor(named: C.dateColor)
+    }
+    
+    //MARK: - Team mode funtionality
+    
+    private func initializeTeammode() {
+        timeLabel.isHidden = true
+        wordLabelView.isHidden = true
+        view.backgroundColor = UIColor(named: C.teamColor)
+    }
+    
+    //MARK: - Extreme mode funtionality
+    
+    private func initializeExtrememode() {
+        timeLabel.isHidden = true
+        wordLabelView.isHidden = true
+    }
+    
+    //MARK: - Explain mode funtionality
+    
+    private func initializeExplainmode() {
+        yesView.isHidden = true
+        noView.isHidden = true
+        pointLabel.isHidden = true
+        timeLabel.isHidden = true
+        wordLabelView.isHidden = true
+        view.backgroundColor = UIColor(named: C.explainColor)
+    }
+    
     
 }
-
-//MARK: - Universal funtionality
-
-private func initializeGame() {
-    
-}
-
-//MARK: - Basic game funtionality
-
-//MARK: - Date mode funtionality
-
-//MARK: - Team mode funtionality
-
-//MARK: - Extreme mode funtionality
-
-//MARK: - Explain mode funtionality
-
-
-
 
 
 
@@ -171,6 +256,28 @@ extension GameView {
         print("Penalty meter in position: \(drinkValue)")
         print("Counting points: \(countPoints)")
         print("Having shorter game: \(shorterGame)")
+    }
+    
+    private func checkTaskAmount(array: [Task]) {
+        print("Tasks in array: \(array.count)")
+    }
+    
+    private func checkTaskTemplateFunctionality(array: [Task]) {
+        for item in array {
+            let converter = TaskStringConverter()
+            let templateForTask = converter.renderTemplate(item.template, values: [
+                "player1" : "Veikko",
+                "player2" : "Mirka",
+                "penalties" : String(3)
+            ])
+            print(templateForTask)
+        }
+    }
+    
+    private func checkPlayerData() {
+        for i in 1...playerData.count {
+            print("Player #\(i): \(playerData[i-1].name), color: \(playerData[i-1].color), points: \(playerData[i-1].points)")
+        }
     }
     
 }

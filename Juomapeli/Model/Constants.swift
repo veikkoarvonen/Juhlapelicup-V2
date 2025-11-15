@@ -18,6 +18,9 @@ struct C {
     
     static let purple = "brandPurple"
     static let blue = "brandBlue"
+    static let dateColor = "dateMode"
+    static let teamColor = "teamMode"
+    static let explainColor = "explainMode"
     
     static let wordGameFont = "EricaOne-Regular"
 }

@@ -72,6 +72,14 @@
 		B6D3BEBC2CCD03B200D635FF /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		27D0F5572EC8E93900EFDB40 /* Tasks */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Tasks;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		B6194D402C2C865F00B6E462 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -148,6 +156,7 @@
 		B6194D652C2CA1C200B6E462 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				27D0F5572EC8E93900EFDB40 /* Tasks */,
 				27EB4F192E4656DB001E715C /* AppLanguage.swift */,
 				B6194D462C2C865F00B6E462 /* AppDelegate.swift */,
 				B6D3BEBC2CCD03B200D635FF /* SubscriptionManager.swift */,
@@ -188,6 +197,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				27D0F5572EC8E93900EFDB40 /* Tasks */,
 			);
 			name = Juomapeli;
 			productName = Juomapeli;
