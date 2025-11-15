@@ -90,54 +90,22 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xUg-ma-KMX">
-                                <rect key="frame" x="0.0" y="94" width="375" height="594"/>
+                                <rect key="frame" x="0.0" y="94" width="375" height="684"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uKa-yi-seE">
-                                <rect key="frame" x="20" y="708" width="335" height="50"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVk-1J-haj">
-                                        <rect key="frame" x="20" y="0.0" width="241" height="50"/>
-                                        <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="22"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="E3b-gd-Bxj">
-                                        <rect key="frame" x="261" y="9.6666666666666288" width="51" height="31"/>
-                                        <color key="tintColor" name="brandPurple"/>
-                                        <color key="onTintColor" name="brandPurple"/>
-                                        <connections>
-                                            <action selector="pointSwitchTurned:" destination="oYz-kb-HrX" eventType="valueChanged" id="Ahi-Vw-peX"/>
-                                        </connections>
-                                    </switch>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="E3b-gd-Bxj" firstAttribute="centerY" secondItem="uKa-yi-seE" secondAttribute="centerY" id="Nza-uc-Kg7"/>
-                                    <constraint firstItem="E3b-gd-Bxj" firstAttribute="leading" secondItem="lVk-1J-haj" secondAttribute="trailing" id="Slq-2H-CIe"/>
-                                    <constraint firstAttribute="trailing" secondItem="E3b-gd-Bxj" secondAttribute="trailing" constant="25" id="V25-g3-KQB"/>
-                                    <constraint firstAttribute="bottom" secondItem="lVk-1J-haj" secondAttribute="bottom" id="VUD-wb-kHf"/>
-                                    <constraint firstItem="lVk-1J-haj" firstAttribute="leading" secondItem="uKa-yi-seE" secondAttribute="leading" constant="20" id="Xi9-Gf-mWW"/>
-                                    <constraint firstAttribute="height" constant="50" id="l7j-mI-Get"/>
-                                    <constraint firstItem="lVk-1J-haj" firstAttribute="top" secondItem="uKa-yi-seE" secondAttribute="top" id="sDY-cf-Fft"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kJx-lX-9eI"/>
                         <color key="backgroundColor" name="brandPurple"/>
                         <constraints>
-                            <constraint firstItem="uKa-yi-seE" firstAttribute="leading" secondItem="kJx-lX-9eI" secondAttribute="leading" constant="20" id="06K-Nc-Uab"/>
                             <constraint firstAttribute="bottom" secondItem="cYK-gP-w2v" secondAttribute="bottom" id="6Sm-sK-Eme"/>
                             <constraint firstItem="xUg-ma-KMX" firstAttribute="top" secondItem="kJx-lX-9eI" secondAttribute="top" id="LjX-Su-3VV"/>
                             <constraint firstItem="kJx-lX-9eI" firstAttribute="trailing" secondItem="xUg-ma-KMX" secondAttribute="trailing" id="NbJ-lA-0l3"/>
-                            <constraint firstItem="kJx-lX-9eI" firstAttribute="bottom" secondItem="uKa-yi-seE" secondAttribute="bottom" constant="20" id="O5E-ru-8A3"/>
+                            <constraint firstItem="kJx-lX-9eI" firstAttribute="bottom" secondItem="xUg-ma-KMX" secondAttribute="bottom" id="Q8E-7J-uHn"/>
                             <constraint firstAttribute="trailing" secondItem="cYK-gP-w2v" secondAttribute="trailing" id="dm4-8a-uyd"/>
                             <constraint firstItem="xUg-ma-KMX" firstAttribute="leading" secondItem="kJx-lX-9eI" secondAttribute="leading" id="fib-Gc-UfH"/>
-                            <constraint firstItem="uKa-yi-seE" firstAttribute="top" secondItem="xUg-ma-KMX" secondAttribute="bottom" constant="20" id="mT6-YS-76C"/>
                             <constraint firstItem="cYK-gP-w2v" firstAttribute="leading" secondItem="kJx-lX-9eI" secondAttribute="leading" id="qiR-XX-rn5"/>
                             <constraint firstItem="cYK-gP-w2v" firstAttribute="top" secondItem="X91-Ss-CXs" secondAttribute="top" id="rSb-9k-SOG"/>
-                            <constraint firstItem="kJx-lX-9eI" firstAttribute="trailing" secondItem="uKa-yi-seE" secondAttribute="trailing" constant="20" id="twW-3N-85O"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="m8p-uL-zFY">
@@ -149,8 +117,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="pointSwitchLabel" destination="lVk-1J-haj" id="vtU-Lc-J9l"/>
-                        <outlet property="pointSwitchView" destination="uKa-yi-seE" id="kut-Oh-sFv"/>
                         <outlet property="tableView" destination="xUg-ma-KMX" id="Ca2-XZ-iTD"/>
                         <segue destination="0Sf-Hj-GC8" kind="show" identifier="34" id="r40-vw-hja"/>
                         <segue destination="zSN-b5-bL2" kind="showDetail" identifier="pro" id="Aiq-we-IZI"/>
@@ -317,35 +283,12 @@
                     <view key="view" contentMode="scaleToFill" id="sSN-T8-mqh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="raibale_OIKEESTIOIKEESTI" translatesAutoresizingMaskIntoConstraints="NO" id="opD-e7-2gr">
-                                <rect key="frame" x="0.0" y="94" width="375" height="644"/>
-                            </imageView>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="5q2-nZ-LeE">
-                                <rect key="frame" x="25" y="684" width="325" height="4"/>
-                                <color key="progressTintColor" name="brandPurple"/>
-                                <color key="trackTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </progressView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="eyi-8B-TXc"/>
                         <color key="backgroundColor" name="brandPurple"/>
-                        <constraints>
-                            <constraint firstItem="eyi-8B-TXc" firstAttribute="bottom" secondItem="opD-e7-2gr" secondAttribute="bottom" constant="40" id="1rU-KS-mqx"/>
-                            <constraint firstItem="eyi-8B-TXc" firstAttribute="trailing" secondItem="5q2-nZ-LeE" secondAttribute="trailing" constant="25" id="5Tv-iy-Bsb"/>
-                            <constraint firstItem="opD-e7-2gr" firstAttribute="leading" secondItem="eyi-8B-TXc" secondAttribute="leading" id="7Q5-We-xBL"/>
-                            <constraint firstItem="eyi-8B-TXc" firstAttribute="bottom" secondItem="5q2-nZ-LeE" secondAttribute="bottom" constant="90" id="GKa-Jt-scF"/>
-                            <constraint firstItem="5q2-nZ-LeE" firstAttribute="leading" secondItem="eyi-8B-TXc" secondAttribute="leading" constant="25" id="Q3p-xX-EgH"/>
-                            <constraint firstItem="eyi-8B-TXc" firstAttribute="trailing" secondItem="opD-e7-2gr" secondAttribute="trailing" id="cZh-KD-jrQ"/>
-                            <constraint firstItem="opD-e7-2gr" firstAttribute="top" secondItem="eyi-8B-TXc" secondAttribute="top" id="d8a-7b-N0T"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SOR-aE-MiX">
                         <barButtonItem key="backBarButtonItem" title="takaisin" id="yl3-kJ-3Gy"/>
                     </navigationItem>
-                    <connections>
-                        <outlet property="backImageView" destination="opD-e7-2gr" id="fib-r2-7Wd"/>
-                        <outlet property="timebar" destination="5q2-nZ-LeE" id="zVF-TF-9iB"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m5z-MP-WUC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -386,7 +329,6 @@
         <image name="alkutausta" width="3375" height="6000"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
         <image name="jp1-1" width="3375" height="6000"/>
-        <image name="raibale_OIKEESTIOIKEESTI" width="3375" height="6000"/>
         <namedColor name="brandPurple">
             <color red="0.59215686274509804" green="0.27843137254901962" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

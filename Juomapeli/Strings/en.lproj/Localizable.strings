@@ -37,15 +37,17 @@ PARAGRAPH_EXPLAIN = "Word explanation! You have one minute to explain as many wo
 INTENSITY_METER = "Naughty Meter";
 PENALTY_METER = "Penalty Meter";
 
+/* Game select Settings */
+POINTS_HEADER = "Count points";
+POINTS_DESCRIPTION = "Collect points during the game. The game asks with every tasks, if the player completed the challenge. Completed challenges gather points, which are displayed after the round";
+LENGTH_HEADER = "Shorter round";
+LENGTH_DESCRIPTION = "Want to play a shorter round? Activate this settings, and the game lasts for a shorter time by decreasing the amount of tasks. A perfect way for a hurry or to try out a new category!";
 
 //Settings
 ABOUT_HEADER = "About";
 RESPONSIBLE_PLAYING_HEADER = "Responsive playing";
-POINTS_HEADER = "Count points";
 PLUS_SUBSCRIPTION_HEADER = "Plus-subscription";
 LANGUAGE_HEADER = "Language";
-
-POINTS_DESCRIPTION = "Collect points during the game. The game asks with every tasks, if the player completed the challenge. Completed challenges gather points, which are displayed after the round";
 
 HOME_PAGE_LINK = "Juhlapeli Cup homepage";
 PRIVACY_POLICY_LINK = "Privacy Policy";

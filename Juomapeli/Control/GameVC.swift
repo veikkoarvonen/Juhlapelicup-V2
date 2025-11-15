@@ -9,6 +9,176 @@ import UIKit
 
 class GameView: UIViewController {
     
+    var hasSetUI = false
+    
+//MARK: - Game parameters from previous VC
+    
+    var players: [String] = []
+    var gameCategory: Int = 0
+    var tierValue: Float = 3.0
+    var drinkValue: Float = 1.0
+    var countPoints: Bool = false
+    var shorterGame: Bool = false
+    
+//MARK: - UIElements
+    
+    let UIElements = GameVCUI()
+    var backGroundImage = UIImageView()
+    var taskLabel = UILabel()
+    var yesView = UIImageView()
+    var noView = UIImageView()
+    var pointLabel = UILabel()
+    var timeLabel = UILabel()
+    var wordLabelView = UIView()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        printGameDetails()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if !hasSetUI {
+            setUIElements()
+            hasSetUI = true
+        }
+    }
+    
+    
+//MARK: - Objc functions
+    
+    @objc func handleYesTap() {
+        print("YES tapped")
+        // your logic here
+    }
+
+    @objc func handleNoTap() {
+        print("NO tapped")
+        // your logic here
+    }
+
+    @objc func handleScreenTap() {
+        print("Screen tapped")
+        // your logic here
+    }
+
+    
+}
+
+//MARK: - Universal funtionality
+
+private func initializeGame() {
+    
+}
+
+//MARK: - Basic game funtionality
+
+//MARK: - Date mode funtionality
+
+//MARK: - Team mode funtionality
+
+//MARK: - Extreme mode funtionality
+
+//MARK: - Explain mode funtionality
+
+
+
+
+
+
+
+
+//MARK: - Extension: Set User Interface
+
+extension GameView {
+    
+    private func setUIElements() {
+        
+        //Background image
+        let bgImage = UIElements.generateBackGroundImage(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(bgImage)
+        backGroundImage = bgImage
+        
+        //Task label
+        let tLabel = UIElements.generateTaskLabel(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(tLabel)
+        taskLabel = tLabel
+        
+        //yesView
+        let yView = UIElements.generateYesButton(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(yView)
+        yesView = yView
+        
+        // ➕ Add tap recognizer
+        let yesTap = UITapGestureRecognizer(target: self, action: #selector(handleYesTap))
+        yView.isUserInteractionEnabled = true
+        yView.addGestureRecognizer(yesTap)
+        
+        
+        //noView
+        let nView = UIElements.generateNoButton(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(nView)
+        noView = nView
+        
+        // ➕ Add tap recognizer
+        let noTap = UITapGestureRecognizer(target: self, action: #selector(handleNoTap))
+        nView.isUserInteractionEnabled = true
+        nView.addGestureRecognizer(noTap)
+        
+        
+        //Point label
+        let pLabel = UIElements.generatePointLabel(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(pLabel)
+        pointLabel = pLabel
+        
+        //Time label
+        let cLabel = UIElements.generateTimeLabel(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(cLabel)
+        timeLabel = cLabel
+        
+        //Word Label
+        let wlabel = UIElements.generateWordLabel(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(wlabel)
+        wordLabelView = wlabel
+        
+        
+        // ➕ Add tap recognizer to the whole view
+        let mainTap = UITapGestureRecognizer(target: self, action: #selector(handleScreenTap))
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(mainTap)
+    }
+
+    
+}
+
+//MARK: - Only for debugging below this point
+
+extension GameView {
+    
+    private func printGameDetails() {
+        var gameName: String {
+            switch gameCategory {
+            case 0: return "Basic game"
+            case 1: return "Date mode"
+            case 2: return "Team mode"
+            case 3: return "Extreme mode"
+            case 4: return "Explain mode"
+            default: return "Invalid category"
+            }
+        }
+        
+        print("Selected gamemode is: \(gameName)")
+        print("Intensity meter in position: \(tierValue)")
+        print("Penalty meter in position: \(drinkValue)")
+        print("Counting points: \(countPoints)")
+        print("Having shorter game: \(shorterGame)")
+    }
+    
+}
+
+/*
+
+class GameView: UIViewController {
+    
 //MARK: - Variables & constants
     
     var tapGesture: UITapGestureRecognizer?
@@ -356,123 +526,122 @@ class GameView: UIViewController {
     
 }
 
-/*
-    
-//MARK: - Variables & constants
-    
-    //Game parameters from previous VC
-    var players: [String] = []
-    var gameCategory: Int = 0
-    var tierValue: Float = 3.0
-    var drinkValue: Float = 1.0
-    
-    //Game elements
-    let numberOfTasks = 30
-    var currentTask = 0
-    var label = UILabel()
-    var headLabel = UILabel()
-    var shouldReturn = false
-    
-    //Generate based on info from previous VC
-    var p1list: [Player] = []
-    var p2list: [Player] = []
-    var tiers: [Int] = []
-    var tasksIndexes: [Int] = []
   
-//MARK: - Functions
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        prepareGame()
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleScreenTap))
-        self.view.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    @objc func handleScreenTap() {
-        if shouldReturn {
-            navigationController?.popViewController(animated: true)
-            shouldReturn = false
-        } else {
-            headLabel.removeFromSuperview()
-            newTask()
-        }
-    }
-    
-    func prepareGame() {
-        var isDateCategory: Bool {
-            if gameCategory == 1 {
-                return true
-            } else {
-                return false
-            }
-        }
-        let game = GameManager()
-        let players = game.generatePlayerLists(players: players, numberOfTasks: numberOfTasks, isDateCategory: isDateCategory)
-        p1list = players.p1
-        p2list = players.p2
-        tiers = game.generateTierList(sliderValue: tierValue, numberOfTasks: numberOfTasks)
-        tasksIndexes = game.generateTaskIndexes(category: gameCategory, numberOfTasks: numberOfTasks, tiers: tiers)
-        if isDateCategory {
-            view.backgroundColor = UIColor(red: 184/255.0, green: 108/255.0, blue: 165/255.0, alpha: 1.0)
-        }
-        newTask()
-    }
-    
-    func newTask() {
-        setLabel()
-        if currentTask >= numberOfTasks {
-            label.text = "Peli loppui!"
-            shouldReturn = true
-        } else {
-            let p1 = p1list[currentTask].name
-            let p2 = p2list[currentTask].name
-            let c1 = p1list[currentTask].color
-            let c2 = p2list[currentTask].color
-            let tier = tiers[currentTask]
-            let index = tasksIndexes[currentTask]
-            let task = SingleTask(player1: p1, player2: p2, color1: c1, color2: c2, category: gameCategory, tier: tier, drinkValue: drinkValue, taskIndex: index)
-            label.attributedText = task.getTask()
-        }
-        performShakingAnimation()
-        currentTask += 1
-    }
+  //MARK: - Variables & constants
   
-//MARK: - UI elements & functionality
-    
-    func setLabel() {
-        label.removeFromSuperview()
-        label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.textAlignment = .center
-        label.textColor = .black
-        label.clipsToBounds = true
-        label.frame = CGRect(x: 0, y: 0, width: 200, height: 250)
-        label.center.x = view.center.x
-        label.center.y = view.frame.height / 2
-        view.addSubview(label)
-        performShakingAnimation()
-    }
-    
-    func performShakingAnimation() {
-        let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-        shakeAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-        shakeAnimation.duration = 0.3
-        shakeAnimation.values = [-9, 9, -6, 6, -3, 3, 0]
-        label.layer.add(shakeAnimation, forKey: "shake")
-    }
-    
-    func setHeadLabel() {
-        headLabel.text = "Ohjeet"
-        headLabel.numberOfLines = 0
-        headLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        headLabel.textAlignment = .center
-        headLabel.textColor = .red
-        headLabel.clipsToBounds = true
-        headLabel.frame = CGRect(x: 0, y: 100, width: 200, height: 250)
-        headLabel.center.x = view.center.x
-        view.addSubview(headLabel)
-    }
-    
-}
-
-*/
+  //Game parameters from previous VC
+  var players: [String] = []
+  var gameCategory: Int = 0
+  var tierValue: Float = 3.0
+  var drinkValue: Float = 1.0
+  
+  //Game elements
+  let numberOfTasks = 30
+  var currentTask = 0
+  var label = UILabel()
+  var headLabel = UILabel()
+  var shouldReturn = false
+  
+  //Generate based on info from previous VC
+  var p1list: [Player] = []
+  var p2list: [Player] = []
+  var tiers: [Int] = []
+  var tasksIndexes: [Int] = []
+  
+  //MARK: - Functions
+  
+  override func viewDidLoad() {
+  super.viewDidLoad()
+  prepareGame()
+  let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleScreenTap))
+  self.view.addGestureRecognizer(tapGestureRecognizer)
+  }
+  
+  @objc func handleScreenTap() {
+  if shouldReturn {
+  navigationController?.popViewController(animated: true)
+  shouldReturn = false
+  } else {
+  headLabel.removeFromSuperview()
+  newTask()
+  }
+  }
+  
+  func prepareGame() {
+  var isDateCategory: Bool {
+  if gameCategory == 1 {
+  return true
+  } else {
+  return false
+  }
+  }
+  let game = GameManager()
+  let players = game.generatePlayerLists(players: players, numberOfTasks: numberOfTasks, isDateCategory: isDateCategory)
+  p1list = players.p1
+  p2list = players.p2
+  tiers = game.generateTierList(sliderValue: tierValue, numberOfTasks: numberOfTasks)
+  tasksIndexes = game.generateTaskIndexes(category: gameCategory, numberOfTasks: numberOfTasks, tiers: tiers)
+  if isDateCategory {
+  view.backgroundColor = UIColor(red: 184/255.0, green: 108/255.0, blue: 165/255.0, alpha: 1.0)
+  }
+  newTask()
+  }
+  
+  func newTask() {
+  setLabel()
+  if currentTask >= numberOfTasks {
+  label.text = "Peli loppui!"
+  shouldReturn = true
+  } else {
+  let p1 = p1list[currentTask].name
+  let p2 = p2list[currentTask].name
+  let c1 = p1list[currentTask].color
+  let c2 = p2list[currentTask].color
+  let tier = tiers[currentTask]
+  let index = tasksIndexes[currentTask]
+  let task = SingleTask(player1: p1, player2: p2, color1: c1, color2: c2, category: gameCategory, tier: tier, drinkValue: drinkValue, taskIndex: index)
+  label.attributedText = task.getTask()
+  }
+  performShakingAnimation()
+  currentTask += 1
+  }
+  
+  //MARK: - UI elements & functionality
+  
+  func setLabel() {
+  label.removeFromSuperview()
+  label.numberOfLines = 0
+  label.font = UIFont.systemFont(ofSize: 20)
+  label.textAlignment = .center
+  label.textColor = .black
+  label.clipsToBounds = true
+  label.frame = CGRect(x: 0, y: 0, width: 200, height: 250)
+  label.center.x = view.center.x
+  label.center.y = view.frame.height / 2
+  view.addSubview(label)
+  performShakingAnimation()
+  }
+  
+  func performShakingAnimation() {
+  let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+  shakeAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+  shakeAnimation.duration = 0.3
+  shakeAnimation.values = [-9, 9, -6, 6, -3, 3, 0]
+  label.layer.add(shakeAnimation, forKey: "shake")
+  }
+  
+  func setHeadLabel() {
+  headLabel.text = "Ohjeet"
+  headLabel.numberOfLines = 0
+  headLabel.font = UIFont.boldSystemFont(ofSize: 24)
+  headLabel.textAlignment = .center
+  headLabel.textColor = .red
+  headLabel.clipsToBounds = true
+  headLabel.frame = CGRect(x: 0, y: 100, width: 200, height: 250)
+  headLabel.center.x = view.center.x
+  view.addSubview(headLabel)
+  }
+  
+  }
+  
+  */

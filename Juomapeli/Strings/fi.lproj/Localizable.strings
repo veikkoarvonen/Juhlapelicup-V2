@@ -38,16 +38,20 @@ PARAGRAPH_EXPLAIN = "Sanaselitys! Sinulla on minuutti aikaa selittää pelikaver
 INTENSITY_METER = "Härskimittari";
 PENALTY_METER = "Rangaistusmittari";
 
+/* Game select settings */
 
+POINTS_HEADER = "Pisteiden lasku";
+POINTS_DESCRIPTION = "Kerää pisteitä pelin aikana. Peli kysyy jokaisen tehtävän kohdalla, mikäli pelaaja suoritti tehtävän. Suoritetuista tehtävistä saa pisteitä, jotka näytetään kierroksen loputtua";
+LENGTH_HEADER = "Lyhyempi kierros";
+LENGTH_DESCRIPTION = "Haluatko pelata lyhyemmän kierroksen? Aktivoi tämä asetus, jolloin peli kestää lyhyemmän aikaa vähentämällä tehtävien määrää pelissä. Täydellinen valinta kiireeseen tai kategorian kokeiluun!";
 
 //Settings
 ABOUT_HEADER = "Tietoa";
 RESPONSIBLE_PLAYING_HEADER = "Vastuullisuus";
-POINTS_HEADER = "Pisteiden lasku";
 PLUS_SUBSCRIPTION_HEADER = "Plus-tilaus";
 LANGUAGE_HEADER = "Kieli";
 
-POINTS_DESCRIPTION = "Kerää pisteitä pelin aikana. Peli kysyy jokaisen tehtävän kohdalla, mikäli pelaaja suoritti tehtävän. Suoritetuista tehtävistä saa pisteitä, jotka näytetään kierroksen loputtua";
+
 
 HOME_PAGE_LINK = "Juhlapeli Cup kotisivut";
 PRIVACY_POLICY_LINK = "Tietosuojakäytäntö";

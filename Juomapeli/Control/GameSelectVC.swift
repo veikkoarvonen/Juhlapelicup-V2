@@ -9,14 +9,6 @@ import UIKit
 
 class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
     
-    func reloadUILanguage() {
-        tableView.reloadData()
-        reloadBackButtonLanguage()
-        pointSwitchLabel.text = languageManager.localizedString(forKey: "POINTS_HEADER")
-        print("Reloading language in Game select VC")
-    }
-    
-    
 //MARK: Variables & IBOutlets
     
     var players: [String] = []
@@ -25,34 +17,36 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
     var drinkValueForGame: Float = 3.0
     var shouldPopProVC: Bool = false
     let languageManager = LanguageManager()
+    var UIElements = GameSelectVCUI()
+    var hasSetUI = false
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var pointSwitchView: UIView!
-    @IBOutlet weak var pointSwitchLabel: UILabel!
     
-    //MARK: - Functions
+//MARK: - UI Elements
     
-    @IBAction func pointSwitchTurned(_ sender: UISwitch) {
-    }
+    var settingsButtonLabel = UIView()
+    var settingsView: SettingsViewComponents?
+    var settingsViewIsEnabled = false
+    var countPointsInGame = false
+    var isShorterRound = false
     
+//MARK: - Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: C.gamemodeCell, bundle: nil), forCellReuseIdentifier: C.gamemodeNIb)
         tableView.dataSource = self
         tableView.delegate = self
-        
-        pointSwitchView.layer.cornerRadius = 10
-        pointSwitchView.layer.masksToBounds = false
-        pointSwitchView.layer.shadowColor = UIColor.black.cgColor
-        pointSwitchView.layer.shadowOpacity = 0.1
-        pointSwitchView.layer.shadowOffset = CGSize(width: 0, height: 5)
-        pointSwitchView.layer.shadowRadius = 3
-        
-        pointSwitchLabel.text = languageManager.localizedString(forKey: "POINTS_HEADER")
-        
         reloadBackButtonLanguage()
     }
+    
+    override func viewDidLayoutSubviews() {
+        if !hasSetUI {
+            setUpUI()
+            hasSetUI = true
+        }
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         if shouldPopProVC && !IAPManager.shared.isSubscriptionActive() {
@@ -68,6 +62,8 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
             destinationVC.gameCategory = categoryForGame
             destinationVC.tierValue = tierValueForGame
             destinationVC.drinkValue = drinkValueForGame
+            destinationVC.countPoints = countPointsInGame
+            destinationVC.shorterGame = isShorterRound
         }
     }
     
@@ -76,7 +72,104 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
         self.navigationItem.backBarButtonItem?.title = backText
     }
     
- 
+    
+//MARK: - Objc functions
+    
+    @objc private func handleGearTap() {
+        print("Gear icon tapped")
+        if settingsViewIsEnabled {
+            disableSettingsView()
+        } else {
+            enableSettingsView()
+        }
+    }
+    
+    @objc private func handleCrossTap() {
+        print("Cross icon tapped")
+        if settingsViewIsEnabled {
+            disableSettingsView()
+        } else {
+            enableSettingsView()
+        }
+    }
+    
+    @objc private func pointSwitchChanged(_ sender: UISwitch) {
+        print("Point switch is now: \(sender.isOn)")
+        countPointsInGame = sender.isOn
+    }
+    
+    @objc private func lengthSwitchChanged(_ sender: UISwitch) {
+        print("Length switch is now: \(sender.isOn)")
+        isShorterRound = sender.isOn
+    }
+    
+//MARK: - Settings view slide
+    
+    private func enableSettingsView() {
+        guard let container = settingsView?.container else { return }
+        
+        settingsViewIsEnabled = true
+        view.isUserInteractionEnabled = false
+        animateSettingsGear(clockWise: true)
+        tableView.isUserInteractionEnabled = false
+        navigationController?.navigationBar.isUserInteractionEnabled = false
+        
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut]) {
+            container.transform = CGAffineTransform(translationX: 0, y: -self.view.frame.height)
+            self.settingsButtonLabel.transform = CGAffineTransform(rotationAngle: .pi * 2)
+            self.tableView.alpha = 0.3
+            self.navigationController?.navigationBar.alpha = 0.3
+        } completion: { _ in
+            self.view.isUserInteractionEnabled = true
+            //print("Settingsview frame: \(self.settingsView!.container.frame)")
+        }
+    }
+
+    
+    private func disableSettingsView() {
+        guard let container = settingsView?.container else { return }
+        
+        container.isHidden = false
+        settingsViewIsEnabled = false
+        view.isUserInteractionEnabled = false
+        animateSettingsGear(clockWise: false)
+        
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn]) {
+            container.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
+            self.settingsButtonLabel.transform = CGAffineTransform(rotationAngle: .pi * -2)
+            self.tableView.alpha = 1.0
+            self.navigationController?.navigationBar.alpha = 1.0
+        } completion: { _ in
+            self.view.isUserInteractionEnabled = true
+            self.tableView.isUserInteractionEnabled = true
+            self.navigationController?.navigationBar.isUserInteractionEnabled = true
+        }
+    }
+    
+    private func animateSettingsGear(clockWise: Bool) {
+        let gear = settingsButtonLabel
+
+        let rotation = CABasicAnimation(keyPath: "transform.rotation")
+        rotation.fromValue = 0
+        
+        var rotationValue: CGFloat {
+            if clockWise {
+                return CGFloat.pi * 2
+            } else {
+                return CGFloat.pi * -2
+            }
+        }
+        
+        rotation.toValue = rotationValue
+        rotation.duration = 0.5
+        rotation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+
+        gear.layer.add(rotation, forKey: "rotate")
+    }
+
+
+    
+    
 //MARK: - Handle cells' sliders value change
     
     func setValue(to: Float, forTier: Bool) {
@@ -86,6 +179,25 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
             drinkValueForGame = to
         }
     }
+    
+//MARK: - Reload language
+    
+    func reloadUILanguage() {
+        tableView.reloadData()
+        reloadBackButtonLanguage()
+        print("Reloading language in Game select VC")
+        guard (settingsView != nil) else {
+            print("SettingsView is nil, cannot reload language")
+            return
+        }
+        settingsView?.pointHeaderLabel.text = languageManager.localizedString(forKey: "POINTS_HEADER")
+        settingsView?.pointDescLabel.text = languageManager.localizedString(forKey: "POINTS_DESCRIPTION")
+        settingsView?.lengthHeaderLabel.text = languageManager.localizedString(forKey: "LENGTH_HEADER")
+        settingsView?.lengthDescLabel.text = languageManager.localizedString(forKey: "LENGTH_DESCRIPTION")
+    }
+    
+    
+
 }
 
 //MARK: - TableView mathods
@@ -158,8 +270,8 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
         var category: Int
         
         switch indexPath.row {
-        case 0: category = 0; drinkValueForGame = 3
-        case 1: category = 1; drinkValueForGame = 3
+        case 0: category = 0
+        case 1: category = 1
         case 2: category = 2
         case 3: category = 3
         case 4: category = 4
@@ -174,15 +286,68 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
                 return
             }
             
-//MARK: - Override paywall here
+            //MARK: - Override paywall here
             
             performSegue(withIdentifier: "34", sender: self)
             //performSegue(withIdentifier: "pro", sender: self)
         } else {
             performSegue(withIdentifier: "34", sender: self)
             if !IAPManager.shared.isSubscriptionActive() {
-                shouldPopProVC = true
+                //shouldPopProVC = true
             }
         }
+    }
+}
+
+//MARK: - Set up UI
+
+extension GameSelectView {
+    
+    private func setUpUI() {
+        // Settings button (⚙️)
+        let settingsButtonView = UIElements.generateSettingsButtonView(
+            viewFrame: view.frame,
+            safeArea: view.safeAreaInsets
+        )
+        view.addSubview(settingsButtonView)
+        settingsButtonLabel = settingsButtonView  // assuming this is UIView
+        
+        // Settings modal view
+        let components = UIElements.generateSettingsView(
+            viewFrame: view.frame,
+            safeArea: view.safeAreaInsets
+        )
+        
+        view.addSubview(components.container)
+        settingsView = components
+        
+        
+        // 🔹 Tap on ⚙️ opens settings
+        let openTap = UITapGestureRecognizer(target: self, action: #selector(handleGearTap))
+        settingsButtonView.isUserInteractionEnabled = true
+        settingsButtonView.addGestureRecognizer(openTap)
+        
+        
+        // 🔹 Tap on ❌ closes settings
+        let closeTap = UITapGestureRecognizer(target: self, action: #selector(handleCrossTap))
+        components.crossLabel.isUserInteractionEnabled = true
+        components.crossLabel.addGestureRecognizer(closeTap)
+        
+        
+        // 🔹 Switch targets
+        components.pointSwitch.addTarget(
+            self,
+            action: #selector(pointSwitchChanged(_:)),
+            for: .valueChanged
+        )
+        
+        components.lengthSwitch.addTarget(
+            self,
+            action: #selector(lengthSwitchChanged(_:)),
+            for: .valueChanged
+        )
+        
+        //print("Settingsview frame: \(settingsView?.container.frame)")
+        
     }
 }
