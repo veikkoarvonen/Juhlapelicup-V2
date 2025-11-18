@@ -41,9 +41,9 @@ struct GameVCUI {
         taskLabel.textColor = .black
         taskLabel.backgroundColor = .yellow //For testing the frame
         
-        let height: CGFloat = 200.0
-        let width: CGFloat = viewFrame.width - 100
-        let x: CGFloat = 50
+        let height: CGFloat = 300.0
+        let width: CGFloat = viewFrame.width - 150
+        let x: CGFloat = 75
         let y: CGFloat = (viewFrame.height - safeArea.top - safeArea.bottom) / 2 + safeArea.top - (height / 2)
         
         taskLabel.frame = CGRect(x: x, y: y, width: width, height: height)
@@ -91,7 +91,7 @@ struct GameVCUI {
         pointLabel.font = UIFont(name: "EricaOne-Regular", size: 50.0)
         pointLabel.backgroundColor = .red
         
-        let width: CGFloat = 100
+        let width: CGFloat = viewFrame.width - 100.0
         let height: CGFloat = 50
         let x: CGFloat = viewFrame.width / 2 - width / 2
         let y: CGFloat = safeArea.top + 25.0

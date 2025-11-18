@@ -68,6 +68,8 @@ ENGLISH_LANGUAGE = "🇬🇧 English";
 //Game VC
 GAME_OVER = "Peli Loppui!";
 BACKGROUND_IMAGE = "raibale_OIKEESTIOIKEESTI";
+POINTLABEL_TEXT = "Pisteet suorittamisesta:";
+SCOREBOAD_HEADER = "Tulokset:";
 
 //Pro VC
 DISCOUNT_LABEL = "discountFI";

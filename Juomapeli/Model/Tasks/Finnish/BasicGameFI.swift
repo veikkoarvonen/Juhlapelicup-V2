@@ -36,17 +36,17 @@ struct BasicGameTasksFI {
         ),
         Task(
             template: "{player1}, demonstroi suosikki seksiasentosi pelaajan {player2} kanssa",
-            pointsToScore: 1,
+            pointsToScore: 2,
             baselinePenalty: 3
         ),
         Task(
             template: "{player1}, Telepatiahaaste! Yrittäkää sanoa pelaajan {player2} kanssa sama sana samaan aikaan. Jos epäonnistutte otatte molemmat {penalties} rankaisevaa. Kategoria: väri",
-            pointsToScore: 1,
+            pointsToScore: 0,
             baselinePenalty: 3
         ),
         Task(
             template: "{player1}, aina kun kiroilet, ota rankaiseva loppupelin ajan",
-            pointsToScore: 1,
+            pointsToScore: 0,
             baselinePenalty: 3
         ),
         Task(
@@ -56,17 +56,17 @@ struct BasicGameTasksFI {
         ),
         Task(
             template: "{player1}, ota paita pois loppupelin ajaksi tai ota {penalties} rankaisevaa",
-            pointsToScore: 1,
+            pointsToScore: 3,
             baselinePenalty: 3
         ),
         Task(
             template: "{player1}, puhu kolmen kierroksen ajan ilman, että huulesi koskettavat. Jos epäonnistut, ota {penalties} rankaisevaa",
-            pointsToScore: 1,
+            pointsToScore: 0,
             baselinePenalty: 3
         ),
         Task(
             template: "{player1}, yritä saada muut pelaajat nauramaan puhumatta. Jos epäonnistut, ota {penalties} rankaisevaa",
-            pointsToScore: 1,
+            pointsToScore: 2,
             baselinePenalty: 3
         ),
         Task(
@@ -81,7 +81,7 @@ struct BasicGameTasksFI {
         ),
         Task(
             template: "{player1}, ota {penalties} rankaisevaa tai poskiläimäisy pelaajalta {player2}",
-            pointsToScore: 1,
+            pointsToScore: 2,
             baselinePenalty: 3
         ),
         Task(
@@ -96,7 +96,7 @@ struct BasicGameTasksFI {
         ),
         Task(
             template: "Kertokaa tarina sana kerrallaan, se joka jäätyy ekana ottaa {penalties} rankaisevaa",
-            pointsToScore: 1,
+            pointsToScore: 0,
             baselinePenalty: 3
         ),
         Task(
@@ -106,37 +106,37 @@ struct BasicGameTasksFI {
         ),
         Task(
             template: "{player1}, ota rangaistus pelaajan {player2} navasta",
-            pointsToScore: 1,
+            pointsToScore: 2,
             baselinePenalty: 3
         ),
         Task(
             template: "{player1}, seuraavan 3 kierroksen ajan, saat puhua vain suu kiinni. Jos epäonnistut, ota {penalties} rankaisevaa",
-            pointsToScore: 1,
+            pointsToScore: 0,
             baselinePenalty: 3
         ),
         Task(
             template: "{player1}, ota housut pois loppupelin ajaksi tai {penalties} rankaisevaa",
-            pointsToScore: 1,
+            pointsToScore: 3,
             baselinePenalty: 3
         ),
         Task(
             template: "{player1}, suutele edessäsi olevaa pelaajaa tai ota {penalties} rankaisevaa",
-            pointsToScore: 1,
+            pointsToScore: 3,
             baselinePenalty: 3
         ),
         Task(
             template: "{player1}, kuvaile viimeisintä katsomaasi aikuisviihdevideota tai ota {penalties} rankaisevaa",
-            pointsToScore: 1,
+            pointsToScore: 3,
             baselinePenalty: 3
         ),
         Task(
             template: "{player1} ja {player2}, tuijotuskilpailu! Häviäjä ottaa {penalties} rankaisevaa",
-            pointsToScore: 1,
+            pointsToScore: 0,
             baselinePenalty: 3
         ),
         Task(
             template: "{player1}, ota pelaaja {player2} reppuselkään ja tee 3 kyykkyä, tai ota {penalties} rankaisevaa",
-            pointsToScore: 1,
+            pointsToScore: 2,
             baselinePenalty: 3
         ),
         Task(

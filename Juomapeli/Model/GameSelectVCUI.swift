@@ -36,16 +36,12 @@ struct GameSelectVCUI {
         container.isUserInteractionEnabled = true
         
         // --- Inner Emoji Label ---
-        let label = UILabel()
-        label.text = "⛭"
-        label.font = UIFont.systemFont(ofSize: 80) // slightly smaller so it fits inside
-        label.textAlignment = .center
-        label.textColor = .black
-        label.backgroundColor = .clear
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "asetukset")
         
         // Center label inside container
-        label.frame = container.bounds
-        container.addSubview(label)
+        imageView.frame = container.bounds
+        container.addSubview(imageView)
         
         return container
     }
