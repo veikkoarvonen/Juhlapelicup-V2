@@ -33,7 +33,7 @@ class GameView: UIViewController {
     var noView = UIImageView()
     var pointLabel = UILabel()
     var timeLabel = UILabel()
-    var wordLabelView = UIView()
+    var wordLabelView: WordLabelComponents?
     
     //MARK: - Game parameters determined in this VC
     
@@ -80,7 +80,11 @@ class GameView: UIViewController {
         if shouldReturn {
             navigationController?.popViewController(animated: true)
         } else {
-           newTask(didScorePoint: false)
+            if gameCategory == 4 && !wordGameIsActive {
+                displayCountDownTimer()
+            } else {
+                newTask(didScorePoint: false)
+            }
         }
     }
     
@@ -120,6 +124,11 @@ class GameView: UIViewController {
 //MARK: - New task
     
     private func newTask(didScorePoint: Bool) {
+        
+        guard gameCategory != 4 else {
+            print("Word mode: exiting newTask function")
+            return
+        }
         
         let debug = true
         
@@ -168,6 +177,12 @@ class GameView: UIViewController {
         noView.isHidden = hidden
     }
     
+    private func toggleWordLabelViewVisibility(hidden: Bool) {
+        wordLabelView?.container.isHidden = hidden
+        wordLabelView?.label.isHidden = hidden
+    }
+    
+    
     private func performShakingAnimation() {
         let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.translation.x")
         shakeAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
@@ -195,7 +210,7 @@ class GameView: UIViewController {
         noView.isHidden = true
         pointLabel.isHidden = true
         timeLabel.isHidden = true
-        wordLabelView.isHidden = true
+        toggleWordLabelViewVisibility(hidden: true)
         
         let sortedPlayers = playerData.sorted { $0.points > $1.points }
         let labelWidth: CGFloat = view.frame.width - 30.0
@@ -246,7 +261,7 @@ class GameView: UIViewController {
     
     private func initializeBasicgame() {
         timeLabel.isHidden = true
-        wordLabelView.isHidden = true
+        toggleWordLabelViewVisibility(hidden: true)
         let language = languageManager.getSelectedLanguage()
         //let hasPlusSubscription = IAPManager.shared.isSubscriptionActive()
         let hasPlusSubscription = false
@@ -266,7 +281,7 @@ class GameView: UIViewController {
     
     private func initializeDatemode() {
         timeLabel.isHidden = true
-        wordLabelView.isHidden = true
+        toggleWordLabelViewVisibility(hidden: true)
         view.backgroundColor = UIColor(named: C.dateColor)
         let language = languageManager.getSelectedLanguage()
         p1indexes = gameParameters.generatePlayerIndexesForDatemode(players: players, numberOfTasks: numberOfTasks).p1
@@ -300,27 +315,103 @@ class GameView: UIViewController {
     
     private func initializeTeammode() {
         timeLabel.isHidden = true
-        wordLabelView.isHidden = true
+        toggleWordLabelViewVisibility(hidden: true)
         view.backgroundColor = UIColor(named: C.teamColor)
     }
     
     //MARK: - Extreme mode funtionality
     
     private func initializeExtrememode() {
-        timeLabel.isHidden = true
-        wordLabelView.isHidden = true
+        toggleWordLabelViewVisibility(hidden: true)
     }
     
     //MARK: - Explain mode funtionality
     
+    var wordGameIsActive = false
+    var wordGamePoints = 0
+    var wordGameTime = 10
+    var words: [String] = []
+    var currentWord = 0
+    var timer: Timer?
+    
     private func initializeExplainmode() {
         yesView.isHidden = true
         noView.isHidden = true
-        pointLabel.isHidden = true
         timeLabel.isHidden = true
-        wordLabelView.isHidden = true
+        toggleWordLabelViewVisibility(hidden: true)
         view.backgroundColor = UIColor(named: C.explainColor)
+        taskLabel.text = languageManager.localizedString(forKey: "WORDGAME_INSTRUCTIONS")
+        if languageManager.getSelectedLanguage() == "fi" {
+            words = WordsFI.words
+        } else {
+            words = WordsEN.words
+        }
+        words.shuffle()
     }
+    
+    private func newWord(didScorePoint: Bool) {
+        currentWord += 1
+    }
+    
+    private func displayCountDownTimer() {
+        wordGameIsActive = true
+        timeLabel.isHidden = false
+        taskLabel.isHidden = true
+        centerTimeLabel()
+        view.isUserInteractionEnabled = false
+        backGroundImage.isHidden = true
+        
+        var count = 3
+        animateCountdownNumber("\(count)", for: timeLabel)
+
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            count -= 1
+
+            if count == 0 {
+                timer.invalidate()
+                self.beginWordgameTime()
+            } else if count > 0 {
+                self.animateCountdownNumber("\(count)", for: self.timeLabel)
+            } else {
+                timer.invalidate()
+                self.beginWordgameTime()
+            }
+        }
+    }
+    
+    private func beginWordgameTime() {
+        resetTimeLabelPosition()
+        pointLabel.isHidden = false
+        pointLabel.text = "\(languageManager.localizedString(forKey: "POINTS")): \(wordGamePoints)"
+        toggleWordLabelViewVisibility(hidden: false)
+        wordLabelView?.label.text = words[currentWord]
+        animateCountdownNumber("\(wordGameTime)", for: timeLabel)
+        view.isUserInteractionEnabled = true
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            self.wordGameTime -= 1
+            self.animateCountdownNumber("\(self.wordGameTime)", for: self.timeLabel)
+            
+            if self.wordGameTime <= 0 {
+                timer.invalidate()
+                self.timeLabel.text = "MOE"
+            }
+        }
+    }
+
+    private func animateCountdownNumber(_ text: String, for label: UILabel) {
+        label.text = text
+        label.alpha = 0.0
+        label.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+
+        UIView.animate(withDuration: 0.25,
+                       delay: 0,
+                       options: [.curveEaseOut]) {
+            label.alpha = 1.0
+            label.transform = .identity
+        }
+    }
+
+    
     
     
 }
@@ -379,7 +470,7 @@ extension GameView {
         
         //Word Label
         let wlabel = UIElements.generateWordLabel(viewFrame: view.frame, safeArea: view.safeAreaInsets)
-        view.addSubview(wlabel)
+        view.addSubview(wlabel.container)
         wordLabelView = wlabel
         
         
@@ -392,6 +483,20 @@ extension GameView {
     private func adjustPointLabel() {
         pointLabel.frame.origin.y = taskLabel.frame.minY - 25 - pointLabel.frame.height
         pointLabel.font = UIFont(name: C.wordGameFont, size: 20)
+    }
+    
+    private func centerTimeLabel() {
+        let x = view.frame.width / 2 - timeLabel.frame.width / 2
+        let y: CGFloat = (view.frame.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom) / 2 + view.safeAreaInsets.top - (timeLabel.frame.height / 2)
+        timeLabel.frame = CGRect(x: x, y: y, width: timeLabel.frame.width, height: timeLabel.frame.height)
+    }
+    
+    private func resetTimeLabelPosition() {
+        let width: CGFloat = 100
+        let height: CGFloat = 50
+        let x: CGFloat = view.frame.width / 2 - width / 2
+        let y: CGFloat = view.frame.height - 100.0 - height
+        timeLabel.frame = CGRect(x: x, y: y, width: width, height: height)
     }
 
     

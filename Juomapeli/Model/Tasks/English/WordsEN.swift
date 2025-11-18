@@ -9,7 +9,7 @@ import Foundation
 
 struct WordsEN {
     
-    static let wordsEN: [String] = [
+    static let words: [String] = [
         "Spongebob", "Window", "Mike Tyson", "Elon Musk", "Shakira", "Jennifer Lopez", "Candle", "Sex",
         "Toe", "Nail polish", "Lips", "Butt cheek", "Ethanol", "Avatar", "Michael Jackson", "Condom",
         "Torch", "Notebook", "Cucumber", "Audi", "Vomit", "Alphabet", "Curtains", "Virgin Mary", "Puzzle",

@@ -122,10 +122,17 @@ struct GameVCUI {
         
     }
     
-    func generateWordLabel(viewFrame: CGRect, safeArea: UIEdgeInsets) -> UIView {
+    func generateWordLabel(viewFrame: CGRect, safeArea: UIEdgeInsets) -> WordLabelComponents {
         
         let container = UIView()
         container.backgroundColor = .clear
+        
+        let height: CGFloat = 350
+        let width: CGFloat = 220
+        let x: CGFloat = viewFrame.width / 2 - width / 2
+        let y: CGFloat = (viewFrame.height - safeArea.top - safeArea.bottom) / 2 + safeArea.top - height / 2
+        
+        container.frame = CGRect(x: x, y: y, width: width, height: height)
         
         // Shadow on container (not on label!)
         container.layer.shadowColor = UIColor.black.cgColor
@@ -144,17 +151,20 @@ struct GameVCUI {
         wordLabel.layer.cornerRadius = 10
         wordLabel.layer.masksToBounds = true  // IMPORTANT
         
-        let height: CGFloat = 350
-        let width: CGFloat = 220
-        let x: CGFloat = viewFrame.width / 2 - width / 2
-        let y: CGFloat = (viewFrame.height - safeArea.top - safeArea.bottom) / 2 + safeArea.top - height / 2
         
-        container.frame = CGRect(x: x, y: y, width: width, height: height)
-        wordLabel.frame = container.bounds
         
         container.addSubview(wordLabel)
-        return container
+        
+        wordLabel.frame = container.bounds
+        
+      
+        return WordLabelComponents(container: container, label: wordLabel)
     }
 
     
+}
+
+struct WordLabelComponents {
+    let container: UIView
+    let label: UILabel
 }

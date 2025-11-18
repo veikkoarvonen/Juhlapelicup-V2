@@ -69,7 +69,9 @@ ENGLISH_LANGUAGE = "🇬🇧 English";
 GAME_OVER = "Peli Loppui!";
 BACKGROUND_IMAGE = "raibale_OIKEESTIOIKEESTI";
 POINTLABEL_TEXT = "Pisteet suorittamisesta:";
+POINTS = "Pisteet";
 SCOREBOAD_HEADER = "Tulokset:";
+WORDGAME_INSTRUCTIONS = "Sanaselityspeli! Sinulla on minuutti aikaa selittää pelitoverillesi niin monta sanaa, kuin kerkeät. Jokaisesta oikeasta vastauksesta saatte pisteen. Kosketa näyttöä aloittaaksesi";
 
 //Pro VC
 DISCOUNT_LABEL = "discountFI";
