@@ -13,6 +13,8 @@ class GameView: UIViewController {
     let languageManager = LanguageManager()
     let gameParameters = GameParameters()
     let converter = TaskStringConverter()
+    var shouldUsePointButtons = false
+    var shouldMoveToPointView = false
     
     //MARK: - Game parameters from previous VC
     
@@ -46,7 +48,7 @@ class GameView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        printGameDetails()
+        if C.debugApp { printGameDetails() }
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,29 +63,57 @@ class GameView: UIViewController {
     //MARK: - Objc functions
     
     @objc func handleYesTap() {
+        //Return if game hass ended
         if shouldReturn {
             navigationController?.popViewController(animated: true)
+        } else if gameCategory == 2 {
+            
         } else {
-            newTask(didScorePoint: true)
+            scorePoint()
+            newTask()
+            shouldUsePointButtons = false
+            togglePointButtonVisibility(hidden: true)
         }
     }
     
     @objc func handleNoTap() {
+        //Return if game hass ended
         if shouldReturn {
             navigationController?.popViewController(animated: true)
+        } else if gameCategory == 2 {
+            
         } else {
-            newTask(didScorePoint: false)
+            newTask()
+            shouldUsePointButtons = false
+            togglePointButtonVisibility(hidden: true)
         }
     }
     
     @objc func handleScreenTap() {
+        //Return if game hass ended
         if shouldReturn {
             navigationController?.popViewController(animated: true)
         } else {
+            //Check if should use point buttons to proceed
+            if shouldUsePointButtons {
+                if C.debugApp { print("Should use point buttons") }
+                return
+            }
+            
+            //Explain mode
             if gameCategory == 4 && !wordGameIsActive {
                 displayCountDownTimer()
+            //Team mode
+            } else if gameCategory == 2 {
+            
+            //Basic & Date & Extreme
             } else {
-                newTask(didScorePoint: false)
+                if shouldMoveToPointView {
+                    displayPointScoringQuestion()
+                    shouldMoveToPointView = false
+                } else {
+                    newTask()
+                }
             }
         }
     }
@@ -94,14 +124,7 @@ class GameView: UIViewController {
     
     private func initializeGame() {
         
-        if shorterGame { numberOfTasks = 5 }
-        if !countPoints {
-            pointLabel.isHidden = true
-            yesView.isHidden = true
-            noView.isHidden = true
-            yesView.isUserInteractionEnabled = false
-            noView.isUserInteractionEnabled = false
-        }
+        if shorterGame { numberOfTasks = 8 }
         
         playerData = gameParameters.generatePlayerData(players: players)
         
@@ -123,63 +146,96 @@ class GameView: UIViewController {
     
 //MARK: - New task
     
-    private func newTask(didScorePoint: Bool) {
+    private func newTask() {
         
-        guard gameCategory != 4 else {
-            print("Word mode: exiting newTask function")
+        //Check if gamemode is explain
+        if gameCategory == 4 { return }
+        
+        //End game if task index is out of range
+        if currentTask >= numberOfTasks {
+            endGame()
             return
         }
         
-        let debug = true
+        if C.debugApp { showCurrentTaskDetails() }
         
-        if didScorePoint {
-            let scoredPoints = tasksTemplates[currentTask - 1].pointsToScore
-            let playerWhoScoredIndex = p1indexes[currentTask - 1]
-            playerData[playerWhoScoredIndex].points += scoredPoints
-            if debug { print("\(playerData[playerWhoScoredIndex].name) scored \(scoredPoints) points!") }
-        }
-        
-        if currentTask >= numberOfTasks {
-            endGame()
-        } else {
-            
-            //if debug { showCurrentTaskDetails() }
-            
-            
-            let currentTaskStucture = tasksTemplates[currentTask]
-            let template = currentTaskStucture.template
-            let p1index = p1indexes[currentTask]
-            let p2index = p2indexes[currentTask]
-            let player1 = playerData[p1index]
-            let player2 = playerData[p2index]
-            let taskString = converter.renderTemplate(template, values: [
-                "player1" : player1.name,
-                "player2" : player2.name,
-                "penalties" : String(currentTaskStucture.baselinePenalty)
-            ])
-            let attributedText = converter.attributedText(for: taskString, highlight1: player1.name, highlight2: player2.name, color1: player1.color, color2: player2.color)
-            taskLabel.attributedText = attributedText
-            performShakingAnimation()
-            let pointsToScore = tasksTemplates[currentTask].pointsToScore
-            if countPoints {
-                if pointsToScore == 0 { togglePointUIVisibility(hidden: true) } else { togglePointUIVisibility(hidden: false) }
-            }
+        //Display point label if counting points and task has scorable points
+        let pointsToScore = tasksTemplates[currentTask].pointsToScore
+        if countPoints && pointsToScore != 0 {
             pointLabel.text = "\(languageManager.localizedString(forKey: "POINTLABEL_TEXT")) \(pointsToScore)"
-            currentTask += 1
-            
+            pointLabel.isHidden = false
+            shouldMoveToPointView = true
+        } else {
+            pointLabel.isHidden = true
         }
+            
+        updateTaskLabelText()
+        performShakingAnimation()
+        
+        currentTask += 1
         
     }
+    
+    private func updateTaskLabelText() {
+        //Generate task string
+        let currentTaskStucture = tasksTemplates[currentTask]
+        let template = currentTaskStucture.template
+        let p1index = p1indexes[currentTask]
+        let p2index = p2indexes[currentTask]
+        let player1 = playerData[p1index]
+        let player2 = playerData[p2index]
+        var penalties = currentTaskStucture.baselinePenalty
+        if gameCategory == 4 { penalties = gameParameters.generatePenaltyValue(baseline: penalties, penaltySliderValue: drinkValue) }
+        let taskString = converter.renderTemplate(template, values: [
+            "player1" : player1.name,
+            "player2" : player2.name,
+            "penalties" : String(penalties)
+        ])
+        let attributedText = converter.attributedText(for: taskString, highlight1: player1.name, highlight2: player2.name, color1: player1.color, color2: player2.color)
+        taskLabel.attributedText = attributedText
+    }
+    
+    private func displayPointScoringQuestion() {
+        shouldUsePointButtons = true
+        togglePointButtonVisibility(hidden: false)
+        let p1index = p1indexes[currentTask - 1]
+        let player1 = playerData[p1index]
+        let converter = TaskStringConverter()
+        let template = converter.renderPointScoringTemplate(player: player1.name, language: languageManager.getSelectedLanguage())
+        let attributedString = converter.attributedText(for: template, highlight1: player1.name, highlight2: "", color1: player1.color, color2: .red)
+        taskLabel.attributedText = attributedString
+        performShakingAnimation()
+    }
+    
+    private func scorePoint() {
+        let pointsToScore = tasksTemplates[currentTask - 1].pointsToScore
+        let playerWhoScoredIndex = p1indexes[currentTask - 1]
+        playerData[playerWhoScoredIndex].points += pointsToScore
+        
+        if C.debugApp { print("\(playerData[playerWhoScoredIndex].name) scored \(pointsToScore) points") }
+        
+    }
+    
+//MARK: - UI Visibility
     
     private func togglePointUIVisibility(hidden: Bool) {
         pointLabel.isHidden = hidden
         yesView.isHidden = hidden
         noView.isHidden = hidden
+        yesView.isUserInteractionEnabled = !hidden
+        noView.isUserInteractionEnabled = !hidden
     }
     
     private func toggleWordLabelViewVisibility(hidden: Bool) {
         wordLabelView?.container.isHidden = hidden
         wordLabelView?.label.isHidden = hidden
+    }
+    
+    private func togglePointButtonVisibility(hidden: Bool) {
+        yesView.isHidden = hidden
+        noView.isHidden = hidden
+        yesView.isUserInteractionEnabled = !hidden
+        noView.isUserInteractionEnabled = !hidden
     }
     
     
@@ -261,6 +317,7 @@ class GameView: UIViewController {
     
     private func initializeBasicgame() {
         timeLabel.isHidden = true
+        togglePointUIVisibility(hidden: true)
         toggleWordLabelViewVisibility(hidden: true)
         let language = languageManager.getSelectedLanguage()
         //let hasPlusSubscription = IAPManager.shared.isSubscriptionActive()
@@ -269,11 +326,8 @@ class GameView: UIViewController {
         p1indexes = playerIndexes.p1
         p2indexes = playerIndexes.p2
         tasksTemplates = gameParameters.generateTaskTemplatesForBasicGame(numberOfTasks: numberOfTasks, language: language, hasPlusSub: hasPlusSubscription)
-        checkPlayerData()
-        checkPlayerIndexes()
-        //checkTaskTemplates()
-        runIndexSafetyCheck()
-        newTask(didScorePoint: false)
+        if C.debugApp { runIndexSafetyCheck() }
+        newTask()
         adjustPointLabel()
     }
     
@@ -323,6 +377,16 @@ class GameView: UIViewController {
     
     private func initializeExtrememode() {
         toggleWordLabelViewVisibility(hidden: true)
+        togglePointUIVisibility(hidden: true)
+        timeLabel.isHidden = true
+        let language = languageManager.getSelectedLanguage()
+        let playerIndexes = gameParameters.generatePlayerIndexes(players: players, numberOfTasks: numberOfTasks)
+        p1indexes = playerIndexes.p1
+        p2indexes = playerIndexes.p2
+        let tiers = gameParameters.generateTierIndexes(sliderValue: tierValue, numberOfTasks: numberOfTasks)
+        tasksTemplates = gameParameters.generateTaskTemplatesForExtremeMode(numberOfTasks: numberOfTasks, language: language, tiers: tiers)
+        adjustPointLabel()
+        newTask()
     }
     
     //MARK: - Explain mode funtionality
@@ -517,7 +581,7 @@ extension GameView {
             default: return "Invalid category"
             }
         }
-        
+        print("-- GAME DETAILS: --")
         print("Selected gamemode is: \(gameName)")
         print("Intensity meter in position: \(tierValue)")
         print("Penalty meter in position: \(drinkValue)")
@@ -577,10 +641,7 @@ extension GameView {
         print("Current task on display: index \(currentTask)")
         print("Player 1: \(playerData[p1indexes[currentTask]].name)")
         print("Player 2: \(playerData[p2indexes[currentTask]].name)")
-        print("--SCOREBOARD:--")
-        for player in playerData {
-            //print("\(player.name): \(player.points) points")
-        }
+        print("Points to score: \(tasksTemplates[currentTask].pointsToScore)")
     }
     
 }

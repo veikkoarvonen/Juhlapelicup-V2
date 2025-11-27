@@ -23,6 +23,10 @@ struct C {
     static let explainColor = "explainMode"
     
     static let wordGameFont = "EricaOne-Regular"
+    
+    static let debugApp = true
+    
+    
 }
 
 //Data for tableView cells in GameSelect VC. Just copy & paste strings and leave the tableView cell size the same

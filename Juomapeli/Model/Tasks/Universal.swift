@@ -35,6 +35,14 @@ struct TaskStringConverter {
         return result
     }
     
+    func renderPointScoringTemplate(player: String, language: String) -> String {
+        if language == "fi" {
+            return "Suorittiko \(player) tehtävän?"
+        } else {
+            return "Did \(player) complete the task?"
+        }
+    }
+    
     func attributedText(for fullText: String, highlight1: String, highlight2: String, color1: UIColor, color2: UIColor) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: fullText)
         
@@ -199,6 +207,84 @@ struct GameParameters {
         targetTaskArray = Array(targetTaskArray.prefix(numberOfTasks))
         
         return targetTaskArray
+        
+    }
+    
+    func generateTierIndexes(sliderValue: Float, numberOfTasks: Int) -> [Int] {
+        //print("Generating indexes with slider value: \(sliderValue)")
+        
+        var tiers: [Int] = []
+        
+        let minValue: Float = sliderValue - 1
+        let maxValue: Float = sliderValue + 1
+        
+        for _ in 0..<numberOfTasks {
+            
+            let tierIndex = Float.random(in: minValue...maxValue)
+            
+            if tierIndex > 4.5 {
+                tiers.append(5)
+            } else if tierIndex > 3.5 {
+                tiers.append(4)
+            } else if tierIndex > 2.5 {
+                tiers.append(3)
+            } else if tierIndex > 1.5 {
+                tiers.append(2)
+            } else {
+                tiers.append(1)
+            }
+            
+        }
+        
+        return tiers
+        
+    }
+    
+    func generateTaskTemplatesForExtremeMode(numberOfTasks: Int, language: String, tiers: [Int]) -> [Task] {
+        
+        var taskTemplateArray: [Task] = []
+        
+        var t1array: [Task] = (language == "fi") ? Tier1FITasks.tasks : Tier1ENTasks.tasks
+        var t2array: [Task] = (language == "fi") ? Tier2FITasks.tasks : Tier2ENTasks.tasks
+        var t3array: [Task] = (language == "fi") ? Tier3FITasks.tasks : Tier3ENTasks.tasks
+        var t4array: [Task] = (language == "fi") ? Tier4FITasks.tasks : Tier4ENTasks.tasks
+        var t5array: [Task] = (language == "fi") ? Tier5FITasks.tasks : Tier5ENTasks.tasks
+        
+        t1array.shuffle()
+        t2array.shuffle()
+        t3array.shuffle()
+        t4array.shuffle()
+        t5array.shuffle()
+        
+        guard numberOfTasks == tiers.count else {
+            print("Warning: Number of tasks does not match number of tier indexes. Returning empty array.")
+            return []
+        }
+        
+        for i in 0..<numberOfTasks {
+            let tier = tiers[i]
+            var targetArray: [Task]
+            
+            switch tier {
+            case 1:
+                targetArray = t1array
+            case 2:
+                targetArray = t2array
+            case 3:
+                targetArray = t3array
+            case 4:
+                targetArray = t4array
+            case 5:
+                targetArray = t5array
+            default:
+                targetArray = t1array
+            }
+            
+            taskTemplateArray.append(targetArray[i])
+            
+        }
+        
+        return taskTemplateArray
         
     }
     
