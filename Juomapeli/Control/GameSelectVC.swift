@@ -58,12 +58,8 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "34" {
             let destinationVC = segue.destination as! GameView
-            destinationVC.players = players
-            destinationVC.gameCategory = categoryForGame
-            destinationVC.tierValue = tierValueForGame
-            destinationVC.drinkValue = drinkValueForGame
-            destinationVC.countPoints = countPointsInGame
-            destinationVC.shorterGame = isShorterRound
+            
+            destinationVC.gameConfiguration = GameConfiguration(players: players, numberOfTasks: 30, gameCategory: categoryForGame, intensityValue: tierValueForGame, penaltyValue: drinkValueForGame, countPoints: countPointsInGame, shorterRound: isShorterRound)
         }
     }
     

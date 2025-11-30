@@ -48,53 +48,82 @@ struct GameVCUI {
         
         taskLabel.frame = CGRect(x: x, y: y, width: width, height: height)
         
+        if C.testUIWithColors { taskLabel.backgroundColor = .yellow }
+        
         return taskLabel
         
     }
     
-    func generateYesButton(viewFrame: CGRect, safeArea: UIEdgeInsets) -> UIImageView {
+    func generateYesButton(viewFrame: CGRect, safeArea: UIEdgeInsets) -> PointButtonComponents {
         
         let yesView = UIImageView()
-        yesView.image = UIImage(named: "right")
+        yesView.image = UIImage(named: "points-right")
         
-        let size: CGFloat = 60.0
-        let x: CGFloat = viewFrame.width - 70.0 - size
-        let y: CGFloat = viewFrame.height - safeArea.bottom - 150 - size
+        let width: CGFloat = 115.0
+        let heigth: CGFloat = 60.0
+        let x: CGFloat = 50.0
+        let y: CGFloat = viewFrame.height - safeArea.bottom - 70 - heigth
         
-        yesView.frame = CGRect(x: x, y: y, width: size, height: size)
+        yesView.frame = CGRect(x: x, y: y, width: width, height: heigth)
         
-        return yesView
+        if C.testUIWithColors { yesView.backgroundColor = .green }
+        
+        let label = UILabel()
+        label.text = "+3"
+        label.font = UIFont(name: "Optima-Bold", size: 17.0)
+        label.textAlignment = .center
+        label.textColor = .black
+        
+        label.frame = CGRect(x: 55.0, y: 0.0, width: 50.0, height: 60.0)
+        
+        yesView.addSubview(label)
+        
+        return PointButtonComponents(container: yesView, label: label)
         
     }
     
-    func generateNoButton(viewFrame: CGRect, safeArea: UIEdgeInsets) -> UIImageView {
+    func generateNoButton(viewFrame: CGRect, safeArea: UIEdgeInsets) -> PointButtonComponents {
         
         let noView = UIImageView()
-        noView.image = UIImage(named: "wrong")
+        noView.image = UIImage(named: "points-wrong")
         
-        let size: CGFloat = 60.0
-        let x: CGFloat = 70.0
-        let y: CGFloat = viewFrame.height - safeArea.bottom - 150 - size
+        let width: CGFloat = 115.0
+        let heigth: CGFloat = 60.0
+        let x: CGFloat = viewFrame.width - 50.0 - width
+        let y: CGFloat = viewFrame.height - safeArea.bottom - 50 - heigth
         
-        noView.frame = CGRect(x: x, y: y, width: size, height: size)
+        noView.frame = CGRect(x: x, y: y, width: width, height: heigth)
         
-        return noView
+        if C.testUIWithColors { noView.backgroundColor = .green }
+        
+        let label = UILabel()
+        label.text = "+3"
+        label.font = UIFont(name: "Optima-Bold", size: 17.0)
+        label.textAlignment = .center
+        label.textColor = .black
+        
+        label.frame = CGRect(x: 10.0, y: 0.0, width: 50.0, height: 60.0)
+        
+        noView.addSubview(label)
+        
+        return PointButtonComponents(container: noView, label: label)
         
     }
     
     func generatePointLabel(viewFrame: CGRect, safeArea: UIEdgeInsets) -> UILabel {
         
         let pointLabel = UILabel()
-        pointLabel.text = "0"
+        pointLabel.numberOfLines = 0
+        pointLabel.text = "Suorittiko Veikko tehtävän?"
         pointLabel.textColor = .white
         pointLabel.textAlignment = .center
-        pointLabel.font = UIFont(name: "EricaOne-Regular", size: 50.0)
+        pointLabel.font = UIFont(name: "EricaOne-Regular", size: 20.0)
         pointLabel.backgroundColor = .red
         
         let width: CGFloat = viewFrame.width - 100.0
-        let height: CGFloat = 50
+        let height: CGFloat = 80
         let x: CGFloat = viewFrame.width / 2 - width / 2
-        let y: CGFloat = safeArea.top + 25.0
+        let y: CGFloat = viewFrame.height - safeArea.bottom - height - 50.0 - 80.0
         
         pointLabel.frame = CGRect(x: x, y: y, width: width, height: height)
         
@@ -167,4 +196,25 @@ struct GameVCUI {
 struct WordLabelComponents {
     let container: UIView
     let label: UILabel
+}
+
+struct PointButtonComponents {
+    let container: UIImageView
+    let label: UILabel
+}
+
+struct GameVCUIElements {
+    var backGroundImage = UIImageView()
+    var taskLabel = UILabel()
+    var yesView: PointButtonComponents?
+    var noView: PointButtonComponents?
+    var pointLabel = UILabel()
+    
+    init(backGroundImage: UIImageView = UIImageView(), taskLabel: UILabel = UILabel(), yesView: PointButtonComponents? = nil, noView: PointButtonComponents? = nil, pointLabel: UILabel = UILabel()) {
+        self.backGroundImage = backGroundImage
+        self.taskLabel = taskLabel
+        self.yesView = yesView
+        self.noView = noView
+        self.pointLabel = pointLabel
+    }
 }

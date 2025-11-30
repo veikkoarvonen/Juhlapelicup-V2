@@ -11,6 +11,294 @@ class GameView: UIViewController {
     
     var hasSetUI = false
     let languageManager = LanguageManager()
+    let gameFunctionality = GameFunctionality()
+    let converter = TaskStringConverter()
+    let UIBuilder = GameVCUI()
+    
+    var gameConfiguration: GameConfiguration!
+    var UIElements: GameVCUIElements!
+    var gameParameters: GameParameters?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if !hasSetUI {
+            if C.debugApp { printGameDetails() }
+            setUIElements()
+            initializeGame()
+            hasSetUI = true
+        }
+    }
+    
+//MARK: - Yes No & Screen tap
+    
+    @objc func handleYesTap() {
+        print("Yes tapped")
+    }
+    
+    @objc func handleNoTap() {
+        print("No tapped")
+    }
+    
+    @objc func handleScreenTap() {
+        print("Screen tapped")
+    }
+    
+//MARK: - Beginning
+    
+    private func initializeGame() {
+        setGameParameters(category: gameConfiguration.gameCategory)
+        beginGame()
+    }
+    
+    private func setGameParameters(category: Int) {
+        
+        //Game parameters are:
+        //currentTask: Int, numberOfTasks: Int, playerData: [PlayerData]
+        //p1indexes: [Int], p2indexes: [Int], tasksTemplates: [Task]
+        
+        if C.debugApp { print("--GENERATING GAME PARAMETERS--") }
+        
+        let players = gameConfiguration.players
+        let language = languageManager.getSelectedLanguage()
+        //let hasPlusSub = IAPManager.shared.isSubscriptionActive()
+        let hasPlusSub: Bool = false
+        let gameCategory = gameConfiguration.gameCategory
+        
+        //Generate number of tasks based on shorter round status
+        var numberOfTasks: Int {
+            if gameConfiguration.shorterRound { return 10 } else { return 30 }
+        }
+        
+        
+        //Generate tiers based on slider value (Only for extreme mode)
+        let tiers = gameFunctionality.generateTierIndexes(sliderValue: gameConfiguration.intensityValue, numberOfTasks: numberOfTasks)
+        if C.debugApp { print("Tiers for game: \(tiers)") }
+        
+        //Generate player data
+        let playerData = gameFunctionality.generatePlayerData(players: players)
+        
+        //Generate player indexes
+        var p1indexes: [Int] = []
+        var p2indexes: [Int] = []
+        
+        if gameCategory == 1 {
+            let playerIndexes = gameFunctionality.generatePlayerIndexesForDatemode(players: players, numberOfTasks: numberOfTasks)
+            p1indexes = playerIndexes.p1
+            p2indexes = playerIndexes.p2
+        } else {
+            let playerIndexes = gameFunctionality.generatePlayerIndexes(players: players, numberOfTasks: numberOfTasks)
+            p1indexes = playerIndexes.p1
+            p2indexes = playerIndexes.p2
+        }
+        
+        //Generate task templates
+        var tasktemplates: [Task] {
+            switch gameCategory {
+            case 0:
+                return gameFunctionality.generateTaskTemplatesForBasicGame(numberOfTasks: numberOfTasks, language: language, hasPlusSub: hasPlusSub)
+            case 1:
+                return gameFunctionality.generateTaskTemplatesForDatemode(numberOfTasks: numberOfTasks, language: language)
+            case 2:
+                return gameFunctionality.generateTaskTemplatesForBasicGame(numberOfTasks: numberOfTasks, language: language, hasPlusSub: hasPlusSub)
+            case 3:
+                return gameFunctionality.generateTaskTemplatesForExtremeMode(numberOfTasks: numberOfTasks, language: language, tiers: tiers)
+            default:
+                return gameFunctionality.generateTaskTemplatesForBasicGame(numberOfTasks: numberOfTasks, language: language, hasPlusSub: hasPlusSub)
+            }
+        }
+        
+        gameParameters = GameParameters(currentTask: 0, numberOfTasks: numberOfTasks, playerData: playerData, p1indexes: p1indexes, p2indexes: p2indexes, tasksTemplates: tasktemplates)
+        
+        if C.debugApp { checkGameParameters() }
+        
+    }
+    
+    private func beginGame() {
+        let category = gameConfiguration.gameCategory
+        if category == 1 {
+            if C.debugApp { print("Date mode: showing instructions before starting the game") }
+            displayDatemodeInstructions()
+            togglePointUI(showPointUI: false)
+        } else {
+            
+        }
+    }
+    
+    private func displayDatemodeInstructions() {
+        
+        let language = languageManager.getSelectedLanguage()
+        let startingPlayer = gameParameters!.playerData.last!
+        var template: String {
+            if language == "fi" {
+                return DateTasksFI().instuctions(startingPlayer: startingPlayer.name)
+            } else {
+                return DateTasksEN().instuctions(startingPlayer: startingPlayer.name)
+            }
+        }
+        
+        let attributedString = converter.attributedText(for: template, highlight1: startingPlayer.name, highlight2: "XXXXXXX", color1: startingPlayer.color, color2: .red)
+        
+        
+        UIElements.taskLabel.attributedText = attributedString
+        
+    }
+    
+//MARK: During game
+    
+    private func togglePointUI(showPointUI: Bool) {
+        
+        if C.debugApp { print("Showing Point UI: \(showPointUI)") }
+        
+        let language = languageManager.getSelectedLanguage()
+        
+        if showPointUI {
+            UIElements.backGroundImage.image = UIImage(named: "pisteet_raibale")
+            UIElements.taskLabel.transform = CGAffineTransform(translationX: 0.0, y: -100.0)
+        } else {
+            UIElements.taskLabel.transform = CGAffineTransform(translationX: 0.0, y: 0.0)
+            if language == "fi" {
+                UIElements.backGroundImage.image = UIImage(named: "raibale_OIKEESTIOIKEESTI")
+            } else {
+                UIElements.backGroundImage.image = UIImage(named: "jampartycup_raibale")
+            }
+        }
+        
+        UIElements.yesView?.container.isHidden = !showPointUI
+        UIElements.noView?.container.isHidden = !showPointUI
+        UIElements.yesView?.container.isUserInteractionEnabled = showPointUI
+        UIElements.noView?.container.isUserInteractionEnabled = showPointUI
+        UIElements.pointLabel.isHidden = !showPointUI
+        
+    }
+    
+//MARK: End game
+    
+}
+
+//MARK: - UI Elements
+
+extension GameView {
+    
+    private func setUIElements() {
+        
+        //Background image
+        let bgImage = UIBuilder.generateBackGroundImage(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(bgImage)
+        
+        //Task label
+        let tLabel = UIBuilder.generateTaskLabel(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(tLabel)
+        
+        //yesView
+        let yView = UIBuilder.generateYesButton(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(yView.container)
+        
+        // ➕ Add tap recognizer
+        let yesTap = UITapGestureRecognizer(target: self, action: #selector(handleYesTap))
+        yView.container.isUserInteractionEnabled = true
+        yView.container.addGestureRecognizer(yesTap)
+        
+        
+        //noView
+        let nView = UIBuilder.generateNoButton(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(nView.container)
+        
+        // ➕ Add tap recognizer
+        let noTap = UITapGestureRecognizer(target: self, action: #selector(handleNoTap))
+        nView.container.isUserInteractionEnabled = true
+        nView.container.addGestureRecognizer(noTap)
+        
+        
+        //Point label
+        let pLabel = UIBuilder.generatePointLabel(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(pLabel)
+        
+        // ➕ Add tap recognizer to the whole view
+        let mainTap = UITapGestureRecognizer(target: self, action: #selector(handleScreenTap))
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(mainTap)
+        
+        UIElements = GameVCUIElements(backGroundImage: bgImage, taskLabel: tLabel, yesView: yView, noView: nView, pointLabel: pLabel)
+        
+    }
+    
+}
+
+//MARK: - Only for debugging below this point
+
+extension GameView {
+    
+    private func printGameDetails() {
+        var gameName: String {
+            switch gameConfiguration.gameCategory {
+            case 0: return "Basic game"
+            case 1: return "Date mode"
+            case 2: return "Team mode"
+            case 3: return "Extreme mode"
+            case 4: return "Explain mode"
+            default: return "Invalid category"
+            }
+        }
+        print("-- GAME DETAILS: --")
+        print("Selected gamemode is: \(gameName)")
+        print("Intensity meter in position: \(gameConfiguration.intensityValue)")
+        print("Penalty meter in position: \(gameConfiguration.penaltyValue)")
+        print("Counting points: \(gameConfiguration.countPoints)")
+        print("Having shorter game: \(gameConfiguration.shorterRound)")
+    }
+    
+    private func checkGameParameters() {
+        
+        guard gameParameters != nil else {
+            print("Cannot check player data, as it is nil")
+            return
+        }
+        
+        let numberOfTasks = gameParameters!.numberOfTasks
+        print("Number of tasks for the game is: \(numberOfTasks)")
+        let playerData = gameParameters!.playerData
+        print("Player data has: \(playerData.count) players")
+        let p1indexes = gameParameters!.p1indexes
+        print("P1 indexes: \(p1indexes). Total: \(p1indexes.count). Max: \(p1indexes.max()!)")
+        let p2indexes = gameParameters!.p2indexes
+        print("P2 indexes: \(p2indexes). Total: \(p2indexes.count). Max: \(p2indexes.max()!)")
+        let taskTemplates = gameParameters!.tasksTemplates
+        print("Number of tasks templates: \(taskTemplates.count)")
+        
+        var hasDuplicates: Bool = false
+        
+        for i in 0..<p1indexes.count {
+            if p1indexes[i] == p2indexes[i] {
+                print("WARNING: P1 and P2 have the same task index at index: \(i)")
+                hasDuplicates = true
+            }
+        }
+        
+        if !hasDuplicates { print("No duplicate task indexes in gameParameters") }
+        
+        let maxp1index: Int = p1indexes.max() ?? 0
+        let maxp2index: Int = p2indexes.max() ?? 0
+        
+        if maxp1index > playerData.count || maxp2index > playerData.count {
+            print("WARNING: One or both of the max task indexes is higher than the number of players, Application will crash!")
+        } else {
+            print("All player indexes inside are within range")
+        }
+        
+        
+        
+    }
+    
+}
+/*
+
+class GameView: UIViewController {
+    
+    var hasSetUI = false
+    let languageManager = LanguageManager()
     let gameParameters = GameParameters()
     let converter = TaskStringConverter()
     var shouldUsePointButtons = false
@@ -562,6 +850,10 @@ extension GameView {
         let y: CGFloat = view.frame.height - 100.0 - height
         timeLabel.frame = CGRect(x: x, y: y, width: width, height: height)
     }
+    
+    private func setBackgroundImageForPoints() {
+        backGroundImage.image = UIImage(named: "pisteet_raibale")
+    }
 
     
 }
@@ -647,6 +939,8 @@ extension GameView {
 }
 
 /*
+ 
+ */
 
 class GameView: UIViewController {
     

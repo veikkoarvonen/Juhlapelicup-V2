@@ -25,6 +25,7 @@ struct C {
     static let wordGameFont = "EricaOne-Regular"
     
     static let debugApp = true
+    static let testUIWithColors = true
     
     
 }

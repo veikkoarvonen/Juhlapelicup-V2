@@ -7,24 +7,6 @@
 
 import UIKit
 
-struct PlayerData {
-    var name: String
-    var color: UIColor
-    var points: Int
-    
-    init(name: String, color: UIColor, points: Int) {
-        self.name = name
-        self.color = color
-        self.points = points
-    }
-}
-
-struct Task {
-    var template: String
-    var pointsToScore: Int
-    var baselinePenalty: Int
-}
-
 struct TaskStringConverter {
     
     func renderTemplate(_ template: String, values: [String: String]) -> String {
@@ -73,7 +55,7 @@ struct TaskStringConverter {
 
 }
 
-struct GameParameters {
+struct GameFunctionality {
     
     func generatePenaltyValue(baseline: Int, penaltySliderValue: Float) -> Int {
         
