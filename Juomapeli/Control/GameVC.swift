@@ -11,7 +11,8 @@ class GameView: UIViewController {
     
     var hasSetUI = false
     var pointUIisVisible = false
-    var isGameOver: Bool = false
+    var timer: Timer?
+    
     let languageManager = LanguageManager()
     let gameFunctionality = GameFunctionality()
     let converter = TaskStringConverter()
@@ -20,6 +21,15 @@ class GameView: UIViewController {
     var gameConfiguration: GameConfiguration!
     var UIElements: GameVCUIElements!
     var gameParameters: GameParameters?
+    
+    enum GamePhase {
+        case preparing
+        case pointInstructions
+        case playing
+        case ended
+    }
+    
+    var phase: GamePhase = .preparing
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,31 +47,37 @@ class GameView: UIViewController {
 //MARK: - Yes No & Screen tap
     
     @objc func handleYesTap() {
-        if isGameOver {
+        if phase == .ended {
             navigationController?.popViewController(animated: true)
-        } else {
+        } else if phase == .playing {
             scorePoint()
             newTask()
+            popAnimation(for: UIElements.yesView!.container)
         }
     }
     
     @objc func handleNoTap() {
-        if isGameOver {
+        if phase == .ended {
             navigationController?.popViewController(animated: true)
-        } else {
+        } else if phase == .playing {
             newTask()
+            popAnimation(for: UIElements.noView!.container)
+            popCrossAnimation()
         }
     }
     
     @objc func handleScreenTap() {
-        if isGameOver {
+        if phase == .ended {
             navigationController?.popViewController(animated: true)
-        } else {
+        } else if phase == .playing {
             if pointUIisVisible {
-                if C.debugApp { print("Point UI is visible. Use buttons to proceed in game") }
+                if C.debugApp { print("Point UI is visible, use buttons to proceed") }
                 return
+            } else {
+                newTask()
             }
-            newTask()
+        } else if phase == .pointInstructions {
+            beginGame()
         }
     }
     
@@ -69,7 +85,14 @@ class GameView: UIViewController {
     
     private func initializeGame() {
         setGameParameters(category: gameConfiguration.gameCategory)
-        beginGame()
+        UIElements.instructionView.isHidden = true
+        if gameConfiguration.countPoints {
+            phase = .pointInstructions
+            animatePointInstructions()
+        } else {
+            phase = .playing
+            beginGame()
+        }
     }
     
     private func setGameParameters(category: Int) {
@@ -136,6 +159,13 @@ class GameView: UIViewController {
     }
     
     private func beginGame() {
+        UIElements.instructionView.isHidden = true
+        timer?.invalidate()
+        timer = nil
+        UIView.animate(withDuration: 0.3) {
+            self.UIElements.backGroundImage.alpha = 1.0
+        }
+        phase = .playing
         let category = gameConfiguration.gameCategory
         if category == 1 {
             if C.debugApp { print("Date mode: showing instructions before starting the game") }
@@ -162,6 +192,7 @@ class GameView: UIViewController {
         
         
         UIElements.taskLabel.attributedText = attributedString
+        performShakingAnimation()
         
     }
     
@@ -180,6 +211,7 @@ class GameView: UIViewController {
         if C.debugApp { showCurrentTaskDetails() }
         
         updateTasklabel()
+        updatePointUI()
         
         performShakingAnimation()
         
@@ -218,18 +250,7 @@ class GameView: UIViewController {
         
         let currentTaskIndex = gameParameters!.currentTask
         let currentTemplate = gameParameters!.tasksTemplates[currentTaskIndex]
-        let p1index = gameParameters!.p1indexes[currentTaskIndex]
-        let player1 = gameParameters!.playerData[p1index]
-        //Display points to score
-        var pointString: String {
-            if languageManager.getSelectedLanguage() == "fi" {
-                return "Suorittiko \(player1.name) tehtävän?"
-            } else {
-                return "Did \(player1.name) do the task?)"
-            }
-        }
         
-        UIElements.pointLabel.text = pointString
         
         let pointsToScore = currentTemplate.pointsToScore
         
@@ -248,6 +269,7 @@ class GameView: UIViewController {
         let pointsToScore = gameParameters!.tasksTemplates[currentTaskIndex].pointsToScore
         let scoringPlayerIndex = gameParameters!.p1indexes[currentTaskIndex]
         gameParameters!.playerData[scoringPlayerIndex].points += pointsToScore
+        popPlusAnimation(points: pointsToScore)
         
         if C.debugApp {
             print("Scoring \(pointsToScore) to player \(gameParameters!.playerData[scoringPlayerIndex].name)")
@@ -257,27 +279,16 @@ class GameView: UIViewController {
     
     private func togglePointUI(showPointUI: Bool) {
         
+        var alphaValue: CGFloat { if showPointUI { return 1 } else { return 0.3 } }
+        
         if C.debugApp { print("Showing Point UI: \(showPointUI)") }
         
-        let language = languageManager.getSelectedLanguage()
-        
-        if showPointUI {
-            UIElements.backGroundImage.image = UIImage(named: "pisteet_raibale")
-            UIElements.taskLabel.transform = CGAffineTransform(translationX: 0.0, y: -100.0)
-        } else {
-            UIElements.taskLabel.transform = CGAffineTransform(translationX: 0.0, y: 0.0)
-            if language == "fi" {
-                UIElements.backGroundImage.image = UIImage(named: "raibale_OIKEESTIOIKEESTI")
-            } else {
-                UIElements.backGroundImage.image = UIImage(named: "jampartycup_raibale")
-            }
+        UIView.animate(withDuration: 0.1) { [self] in
+            UIElements.yesView?.container.alpha = alphaValue
+            UIElements.noView?.container.alpha = alphaValue
+            UIElements.yesView?.container.isUserInteractionEnabled = showPointUI
+            UIElements.noView?.container.isUserInteractionEnabled = showPointUI
         }
-        
-        UIElements.yesView?.container.isHidden = !showPointUI
-        UIElements.noView?.container.isHidden = !showPointUI
-        UIElements.yesView?.container.isUserInteractionEnabled = showPointUI
-        UIElements.noView?.container.isUserInteractionEnabled = showPointUI
-        UIElements.pointLabel.isHidden = !showPointUI
         
         pointUIisVisible = showPointUI
         
@@ -294,7 +305,7 @@ class GameView: UIViewController {
 //MARK: End game
     
     private func endGame() {
-        
+        phase = .ended
         if gameConfiguration.countPoints {
             if C.debugApp { print("Counting points, displaying scoreboard") }
             displayScoreboard()
@@ -302,7 +313,6 @@ class GameView: UIViewController {
             UIElements.taskLabel.text = languageManager.localizedString(forKey: "GAME_OVER")
             performShakingAnimation()
         }
-        isGameOver = true
     }
     
     private func displayScoreboard() {
@@ -310,7 +320,6 @@ class GameView: UIViewController {
         UIElements.taskLabel.isHidden = true
         UIElements.yesView!.container.isHidden = true
         UIElements.noView!.container.isHidden = true
-        UIElements.pointLabel.isHidden = true
       
         
         let sortedPlayers = gameParameters!.playerData.sorted { $0.points > $1.points }
@@ -321,7 +330,7 @@ class GameView: UIViewController {
         for i in 0..<4 {
             //print("Running scoreboard loop")
             let label = UILabel()
-            label.font = UIFont(name: C.wordGameFont, size: 30)
+            label.font = UIFont(name: "Optima-Bold", size: 30)
             label.textAlignment = .center
             label.textColor = .white
             label.frame = CGRect(x: 15.0, y: yPosition, width: labelWidth, height: 50)
@@ -354,11 +363,117 @@ class GameView: UIViewController {
                 }
             }
         }
-        isGameOver = true
         
     }
     
+//MARK: Animations
+    
+    private func animatePointInstructions() {
+        UIElements.instructionView.isHidden = false
+        UIElements.instructionView.alpha = 0.0
+        UIView.animate(withDuration: 0.3) { [self] in
+            UIElements.instructionView.alpha = 1.0
+            UIElements.backGroundImage.alpha = 0.3
+        }
+        
+        var count = 0
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [self] timer in
+            count += 1
+            if count == 1 {
+                popAnimation(for: UIElements.yesView!.container)
+                popPlusAnimation(points: 0)
+            }
+            if count == 2 {
+                popAnimation(for: UIElements.noView!.container)
+                popCrossAnimation()
+            }
+            print(count)
+            if count == 5 {
+                count = 0
+            }
+        }
+        
+    }
+    
+    private func popAnimation(for element: UIView) {
+        let scale = 1.1
+        let interval = 0.1
+        UIView.animate(withDuration: interval) {
+            element.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + interval) {
+            UIView.animate(withDuration: interval) {
+                element.transform = .identity
+            }
+        }
+    }
+    
+    private func popPlusAnimation(points: Int) {
+        let interval = 1.0
+        let label = UILabel()
+        label.text = "+"
+        if points > 0 { label.text = String(points) }
+        label.font = UIFont.boldSystemFont(ofSize: 150)
+        label.textAlignment = .center
+        label.textColor = .green
+        label.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+
+        // Position above yes button
+        label.center = CGPoint(
+            x: UIElements.yesView!.container.center.x,
+            y: UIElements.yesView!.container.center.y - 120
+        )
+        
+        view.addSubview(label)
+
+        // Start slightly bigger
+        label.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+
+        UIView.animate(withDuration: interval, delay: 0, options: [.curveEaseOut]) {
+            // Move upward & shrink
+            label.transform = CGAffineTransform(translationX: 0, y: -100)
+                .scaledBy(x: 0.1, y: 0.1)
+            label.alpha = 0.0
+        } completion: { _ in
+            label.removeFromSuperview()
+        }
+    }
+
+    
+    private func popCrossAnimation() {
+        let interval = 1.0
+        let label = UILabel()
+        label.text = "X"
+        label.font = UIFont.boldSystemFont(ofSize: 150)
+        label.textAlignment = .center
+        label.textColor = .red
+        label.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+
+        // Position above no button
+        label.center = CGPoint(
+            x: UIElements.noView!.container.center.x,
+            y: UIElements.noView!.container.center.y - 120
+        )
+
+        view.addSubview(label)
+
+        // Start slightly bigger
+        label.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+
+        UIView.animate(withDuration: interval, delay: 0, options: [.curveEaseOut]) {
+            label.transform = CGAffineTransform(translationX: 0, y: -100)
+                .scaledBy(x: 0.1, y: 0.1)
+            label.alpha = 0.0
+        } completion: { _ in
+            label.removeFromSuperview()
+        }
+    }
+
+    
 }
+
+
 
 //MARK: - UI Elements
 
@@ -367,7 +482,7 @@ extension GameView {
     private func setUIElements() {
         
         //Background image
-        let bgImage = UIBuilder.generateBackGroundImage(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        let bgImage = UIBuilder.generateBackGroundImage(viewFrame: view.frame, safeArea: view.safeAreaInsets, countPoints: gameConfiguration.countPoints)
         view.addSubview(bgImage)
         
         //Task label
@@ -388,22 +503,28 @@ extension GameView {
         let nView = UIBuilder.generateNoButton(viewFrame: view.frame, safeArea: view.safeAreaInsets)
         view.addSubview(nView.container)
         
+        //InstructionView
+        let iView = UIBuilder.generatePointInstructionView(viewFrame: view.frame, safeArea: view.safeAreaInsets)
+        view.addSubview(iView)
+        
         // ➕ Add tap recognizer
         let noTap = UITapGestureRecognizer(target: self, action: #selector(handleNoTap))
         nView.container.isUserInteractionEnabled = true
         nView.container.addGestureRecognizer(noTap)
-        
-        
-        //Point label
-        let pLabel = UIBuilder.generatePointLabel(viewFrame: view.frame, safeArea: view.safeAreaInsets)
-        view.addSubview(pLabel)
         
         // ➕ Add tap recognizer to the whole view
         let mainTap = UITapGestureRecognizer(target: self, action: #selector(handleScreenTap))
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(mainTap)
         
-        UIElements = GameVCUIElements(backGroundImage: bgImage, taskLabel: tLabel, yesView: yView, noView: nView, pointLabel: pLabel)
+        UIElements = GameVCUIElements(backGroundImage: bgImage, taskLabel: tLabel, yesView: yView, noView: nView, instructionView: iView)
+        
+        if gameConfiguration.countPoints {
+            UIElements.taskLabel.transform = CGAffineTransform(translationX: 0, y: -100)
+        } else {
+            UIElements.yesView!.container.isHidden = true
+            UIElements.noView!.container.isHidden = true
+        }
         
     }
     

@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		27A58B6E2E81B8D000F8045A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27A58B6C2E81B8D000F8045A /* InfoPlist.strings */; };
-		27D0F5522EC878C500EFDB40 /* GameVCUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D0F5512EC878C500EFDB40 /* GameVCUI.swift */; };
-		27D0F5542EC88E6400EFDB40 /* GameSelectVCUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D0F5532EC88E6400EFDB40 /* GameSelectVCUI.swift */; };
 		27EB4F1A2E4656E2001E715C /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB4F192E4656DB001E715C /* AppLanguage.swift */; };
 		27EB4F2B2E46778D001E715C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27EB4F292E46778D001E715C /* Localizable.strings */; };
 		A2DFD8032D7CACF000F115FA /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2DFD8022D7CACF000F115FA /* IAPManager.swift */; };
@@ -33,14 +31,13 @@
 		B64A93112C32C07F00C00BA9 /* GameSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A93102C32C07F00C00BA9 /* GameSelectVC.swift */; };
 		B65FAFF22C3E706D00D9EF26 /* TableViewTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65FAFF02C3E706D00D9EF26 /* TableViewTextCell.swift */; };
 		B65FAFF32C3E706D00D9EF26 /* TableViewTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B65FAFF12C3E706D00D9EF26 /* TableViewTextCell.xib */; };
+		B6ABEE862EDEEF5B0077C1A2 /* WordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6ABEE852EDEEF5B0077C1A2 /* WordVC.swift */; };
 		B6D3BEBD2CCD03B200D635FF /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D3BEBC2CCD03B200D635FF /* SubscriptionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		27A58B6D2E81B8D000F8045A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		27A58B6F2E81B8D700F8045A /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		27D0F5512EC878C500EFDB40 /* GameVCUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVCUI.swift; sourceTree = "<group>"; };
-		27D0F5532EC88E6400EFDB40 /* GameSelectVCUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectVCUI.swift; sourceTree = "<group>"; };
 		27EB4F192E4656DB001E715C /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
 		27EB4F2A2E46778D001E715C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		27EB4F2C2E4677B6001E715C /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Main.strings; sourceTree = "<group>"; };
@@ -69,6 +66,7 @@
 		B64A93102C32C07F00C00BA9 /* GameSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectVC.swift; sourceTree = "<group>"; };
 		B65FAFF02C3E706D00D9EF26 /* TableViewTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewTextCell.swift; sourceTree = "<group>"; };
 		B65FAFF12C3E706D00D9EF26 /* TableViewTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewTextCell.xib; sourceTree = "<group>"; };
+		B6ABEE852EDEEF5B0077C1A2 /* WordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordVC.swift; sourceTree = "<group>"; };
 		B6D3BEBC2CCD03B200D635FF /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +74,11 @@
 		27D0F5572EC8E93900EFDB40 /* Tasks */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Tasks;
+			sourceTree = "<group>";
+		};
+		B6ABEE892EDEF1910077C1A2 /* UIBuilder */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = UIBuilder;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -149,6 +152,7 @@
 				B6194D632C2C9F9400B6E462 /* GameVC.swift */,
 				B604BC0B2C527CE50056B9CE /* SettingsVC.swift */,
 				B604BC0D2C5290360056B9CE /* ProBannerVC.swift */,
+				B6ABEE852EDEEF5B0077C1A2 /* WordVC.swift */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -156,6 +160,7 @@
 		B6194D652C2CA1C200B6E462 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B6ABEE892EDEF1910077C1A2 /* UIBuilder */,
 				27D0F5572EC8E93900EFDB40 /* Tasks */,
 				27EB4F192E4656DB001E715C /* AppLanguage.swift */,
 				B6194D462C2C865F00B6E462 /* AppDelegate.swift */,
@@ -166,8 +171,6 @@
 				B6385E992C4FE96300D5B3C2 /* OneTask.swift */,
 				B6385E9B2C4FEDCE00D5B3C2 /* WholeGame.swift */,
 				A2DFD8022D7CACF000F115FA /* IAPManager.swift */,
-				27D0F5512EC878C500EFDB40 /* GameVCUI.swift */,
-				27D0F5532EC88E6400EFDB40 /* GameSelectVCUI.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				27D0F5572EC8E93900EFDB40 /* Tasks */,
+				B6ABEE892EDEF1910077C1A2 /* UIBuilder */,
 			);
 			name = Juomapeli;
 			productName = Juomapeli;
@@ -263,7 +267,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27D0F5522EC878C500EFDB40 /* GameVCUI.swift in Sources */,
 				A2DFD8032D7CACF000F115FA /* IAPManager.swift in Sources */,
 				B65FAFF22C3E706D00D9EF26 /* TableViewTextCell.swift in Sources */,
 				B64A93112C32C07F00C00BA9 /* GameSelectVC.swift in Sources */,
@@ -279,7 +282,7 @@
 				B6194D472C2C865F00B6E462 /* AppDelegate.swift in Sources */,
 				B6D3BEBD2CCD03B200D635FF /* SubscriptionManager.swift in Sources */,
 				B6385E9A2C4FE96300D5B3C2 /* OneTask.swift in Sources */,
-				27D0F5542EC88E6400EFDB40 /* GameSelectVCUI.swift in Sources */,
+				B6ABEE862EDEEF5B0077C1A2 /* WordVC.swift in Sources */,
 				B6194D642C2C9F9400B6E462 /* GameVC.swift in Sources */,
 				B6194D492C2C865F00B6E462 /* SceneDelegate.swift in Sources */,
 			);

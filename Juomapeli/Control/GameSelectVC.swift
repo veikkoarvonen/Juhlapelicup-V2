@@ -252,7 +252,12 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
             print("Image view is nil")
         }
         
-        if indexPath.row != 0 && !IAPManager.shared.isSubscriptionActive() {
+//MARK: - Override paywall here for colors
+        
+        //let hasPlus = IAPManager.shared.isSubscriptionActive()
+        let hasPlus = true
+        
+        if indexPath.row != 0 && !hasPlus {
             cell.header.textColor = .orange //Orange
         } else {
             cell.header.textColor = .black
@@ -276,20 +281,25 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
         
         categoryForGame = category
         
-        if indexPath.row != 0 && !IAPManager.shared.isSubscriptionActive() {
-            if IAPManager.shared.isSubscriptionActive() {
-                print("No need to show subscription screen user has active subscription")
-                return
-            }
-            
-            //MARK: - Override paywall here
-            
-            performSegue(withIdentifier: "34", sender: self)
-            //performSegue(withIdentifier: "pro", sender: self)
+        //MARK: - Override paywall here for testing
+        //let hasPlus = IAPManager.shared.isSubscriptionActive()
+        let hasPlus: Bool = true
+        
+        //pro VC - User doesn't have plus sub
+        if indexPath.row != 0 && !hasPlus {
+            performSegue(withIdentifier: "pro", sender: self)
+        //Next VC - User has plus sub or selects basic game
         } else {
-            performSegue(withIdentifier: "34", sender: self)
-            if !IAPManager.shared.isSubscriptionActive() {
-                //shouldPopProVC = true
+            //pop pro VC after round if user doesn't have plus sub
+            if !hasPlus { shouldPopProVC = true }
+            if category == 2 {
+                //Team mode
+            } else if category == 4 {
+                //Explain mode
+                performSegue(withIdentifier: "word", sender: self)
+            } else {
+                //Basic, date & Extreme
+                performSegue(withIdentifier: "34", sender: self)
             }
         }
     }
