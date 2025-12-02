@@ -68,6 +68,13 @@ POINTLABEL_TEXT = "Points from task:";
 POINTS = "Points";
 SCOREBOAD_HEADER = "Scoreboard:";
 WORDGAME_INSTRUCTIONS = "Explain! You have 60 seconds to explain as many words as possible to your peer. Every correct answer gives you a point. Touch the screen to begin";
+RANDOMIZE = "Randomize";
+START_TEAM_GAME = "Start";
+RED_TEAM = "Red team";
+BLUE_TEAM = "Blue Team";
+
+TEAM_ERROR_HEADER = "Unequal team";
+TEAM_ERROR_MESSAGE = "Teams must be equal, adjust player selection.";
 
 //Pro VC
 DISCOUNT_LABEL = "discountEN";

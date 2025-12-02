@@ -62,3 +62,35 @@ struct GameParameters {
         self.tasksTemplates = tasksTemplates
     }
 }
+
+struct TeamModeParameters {
+    var currentTask: Int
+    var numberOfTasks: Int
+    var taskTemplates: [Task]
+    var redTeam: Team?
+    var blueTeam: Team?
+}
+
+struct TeamModeConfiguration {
+    var players: [String]
+    var numberOfTasks: Int
+    var countPoints: Bool
+    var shorterRound: Bool
+    var teamConfigurationIndexes: [Int]
+}
+
+struct Team {
+    var name: String
+    var players: [String]
+    var points: Int
+    var color: UIColor
+    
+    init(name: String, players: [String], points: Int, color: UIColor) {
+        self.name = name
+        self.players = players
+        self.points = points
+        self.color = color
+    }
+}
+
+

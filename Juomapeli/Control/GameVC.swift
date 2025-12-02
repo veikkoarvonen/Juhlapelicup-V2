@@ -188,6 +188,9 @@ class GameView: UIViewController {
             }
         }
         
+        UIElements.yesView?.container.isHidden = true
+        UIElements.noView?.container.isHidden = true
+        
         let attributedString = converter.attributedText(for: template, highlight1: startingPlayer.name, highlight2: "XXXXXXX", color1: startingPlayer.color, color2: .red)
         
         
@@ -256,6 +259,8 @@ class GameView: UIViewController {
         
         //Toggle point UI visibility based on current task
         if gameConfiguration.countPoints && pointsToScore > 0 {
+            UIElements.yesView?.container.isHidden = false
+            UIElements.noView?.container.isHidden = false
             togglePointUI(showPointUI: true)
             UIElements.yesView!.label.text = "+\(pointsToScore)"
             UIElements.noView!.label.text = "0"

@@ -60,6 +60,10 @@ class GameSelectView: UIViewController, valueDelegate, LanguageReloader {
             let destinationVC = segue.destination as! GameView
             
             destinationVC.gameConfiguration = GameConfiguration(players: players, numberOfTasks: 30, gameCategory: categoryForGame, intensityValue: tierValueForGame, penaltyValue: drinkValueForGame, countPoints: countPointsInGame, shorterRound: isShorterRound)
+        } else if segue.identifier == "team" {
+            let destinationVC = segue.destination as! TeamView
+            
+            destinationVC.gameConfiguaration = TeamModeConfiguration(players: players, numberOfTasks: 30, countPoints: countPointsInGame, shorterRound: isShorterRound, teamConfigurationIndexes: [])
         }
     }
     
@@ -294,6 +298,7 @@ extension GameSelectView: UITableViewDataSource, UITableViewDelegate {
             if !hasPlus { shouldPopProVC = true }
             if category == 2 {
                 //Team mode
+                performSegue(withIdentifier: "team", sender: self)
             } else if category == 4 {
                 //Explain mode
                 performSegue(withIdentifier: "word", sender: self)

@@ -135,6 +135,14 @@ struct GameVCUI {
         
         view.frame = CGRect(x: x, y: y, width: width, height: height)
         
+        let bgLabel = UILabel()
+        bgLabel.backgroundColor = .white
+        bgLabel.layer.cornerRadius = 10
+        bgLabel.layer.masksToBounds = true  // IMPORTANT
+        view.addSubview(bgLabel)
+        bgLabel.frame = view.bounds
+        
+        
         let label = UILabel()
         label.text = "Tähä raibaleesee tulee viel ohjeet siit mite pisteet toimii jeejee ihavaa sentakii et TikTok brainrot jonnet ei osaa käyttää enää mitää äppejä plus nytku tää on pitkä teksti ni nähää et mahtuu raibaleesee hyvi"
         label.textColor = .black
@@ -147,7 +155,7 @@ struct GameVCUI {
         label.layer.cornerRadius = 10
         label.layer.masksToBounds = true  // IMPORTANT
         view.addSubview(label)
-        label.frame = view.bounds
+        label.frame = CGRect(x: 10, y: 10, width: view.frame.width - 20, height: view.frame.height - 20)
         
         return view
     }

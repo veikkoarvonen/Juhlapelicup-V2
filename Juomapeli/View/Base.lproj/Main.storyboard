@@ -78,6 +78,22 @@
             </objects>
             <point key="canvasLocation" x="1826.4000000000001" y="-28.078817733990149"/>
         </scene>
+        <!--Team View-->
+        <scene sceneID="ofS-ha-r69">
+            <objects>
+                <viewController id="vX6-Rb-6as" customClass="TeamView" customModule="Juomapeli" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MuL-VL-fKN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="4JQ-Nr-8jI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="pnk-n1-hl2"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="agQ-jO-hle" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2681" y="-849"/>
+        </scene>
         <!--Word View-->
         <scene sceneID="h25-Ze-7FI">
             <objects>
@@ -137,6 +153,7 @@
                         <segue destination="0Sf-Hj-GC8" kind="show" identifier="34" id="r40-vw-hja"/>
                         <segue destination="zSN-b5-bL2" kind="showDetail" identifier="pro" id="Aiq-we-IZI"/>
                         <segue destination="SPX-zx-RAG" kind="show" identifier="word" id="wSc-M0-ORb"/>
+                        <segue destination="vX6-Rb-6as" kind="show" identifier="team" id="6Um-ed-Ycm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bjW-YV-yWg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

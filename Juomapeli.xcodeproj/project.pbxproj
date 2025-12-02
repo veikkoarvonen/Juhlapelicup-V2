@@ -33,6 +33,7 @@
 		B65FAFF32C3E706D00D9EF26 /* TableViewTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B65FAFF12C3E706D00D9EF26 /* TableViewTextCell.xib */; };
 		B6ABEE862EDEEF5B0077C1A2 /* WordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6ABEE852EDEEF5B0077C1A2 /* WordVC.swift */; };
 		B6D3BEBD2CCD03B200D635FF /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D3BEBC2CCD03B200D635FF /* SubscriptionManager.swift */; };
+		B6FA76232EDF24D000A4BA59 /* TeamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FA76222EDF24D000A4BA59 /* TeamVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		B65FAFF12C3E706D00D9EF26 /* TableViewTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewTextCell.xib; sourceTree = "<group>"; };
 		B6ABEE852EDEEF5B0077C1A2 /* WordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordVC.swift; sourceTree = "<group>"; };
 		B6D3BEBC2CCD03B200D635FF /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
+		B6FA76222EDF24D000A4BA59 /* TeamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -153,6 +155,7 @@
 				B604BC0B2C527CE50056B9CE /* SettingsVC.swift */,
 				B604BC0D2C5290360056B9CE /* ProBannerVC.swift */,
 				B6ABEE852EDEEF5B0077C1A2 /* WordVC.swift */,
+				B6FA76222EDF24D000A4BA59 /* TeamVC.swift */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6FA76232EDF24D000A4BA59 /* TeamVC.swift in Sources */,
 				A2DFD8032D7CACF000F115FA /* IAPManager.swift in Sources */,
 				B65FAFF22C3E706D00D9EF26 /* TableViewTextCell.swift in Sources */,
 				B64A93112C32C07F00C00BA9 /* GameSelectVC.swift in Sources */,

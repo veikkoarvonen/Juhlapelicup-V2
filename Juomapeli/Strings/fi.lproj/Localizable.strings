@@ -72,6 +72,14 @@ POINTLABEL_TEXT = "Pisteet suorittamisesta:";
 POINTS = "Pisteet";
 SCOREBOAD_HEADER = "Tulokset:";
 WORDGAME_INSTRUCTIONS = "Sanaselityspeli! Sinulla on minuutti aikaa selittää pelitoverillesi niin monta sanaa, kuin kerkeät. Jokaisesta oikeasta vastauksesta saatte pisteen. Kosketa näyttöä aloittaaksesi";
+RANDOMIZE = "Sekoita";
+START_TEAM_GAME = "Aloita";
+RED_TEAM = "Punainen joukkue";
+BLUE_TEAM = "Sininen joukkue";
+
+TEAM_ERROR_HEADER = "Epätasaiset joukkueet";
+TEAM_ERROR_MESSAGE = "Joukkueiden pitää olla tasaiset, muuta osallistujien jakoa.";
+
 
 //Pro VC
 DISCOUNT_LABEL = "discountFI";

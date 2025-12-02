@@ -270,6 +270,28 @@ struct GameFunctionality {
         
     }
     
+    func generateTeams(players: [String]) -> (red: Team, blue: Team) {
+        let languageManager = LanguageManager()
+        var playersToAssign: [String] = players
+        playersToAssign.shuffle()
+        
+        var redTeam = Team(name: languageManager.localizedString(forKey: "RED_TEAM"), players: [], points: 0, color: .red)
+        var blueTeam = Team(name: languageManager.localizedString(forKey: "BLUE_TEAM"), players: [], points: 0, color: .blue)
+        
+        var addToRedTeam: Bool = true
+        
+        for player in playersToAssign {
+            if addToRedTeam {
+                redTeam.players.append(player)
+            } else {
+                blueTeam.players.append(player)
+            }
+            addToRedTeam.toggle()
+        }
+        
+        return (red: redTeam, blue: blueTeam)
+    }
+    
     func generateTaskIndexesForBasicGame(numberOfTasks: Int, currentLanguage: String, hasPlusSubscription: Bool) -> [Int] {
         
         
