@@ -270,28 +270,6 @@ struct GameFunctionality {
         
     }
     
-    func generateTeams(players: [String]) -> (red: Team, blue: Team) {
-        let languageManager = LanguageManager()
-        var playersToAssign: [String] = players
-        playersToAssign.shuffle()
-        
-        var redTeam = Team(name: languageManager.localizedString(forKey: "RED_TEAM"), players: [], points: 0, color: .red)
-        var blueTeam = Team(name: languageManager.localizedString(forKey: "BLUE_TEAM"), players: [], points: 0, color: .blue)
-        
-        var addToRedTeam: Bool = true
-        
-        for player in playersToAssign {
-            if addToRedTeam {
-                redTeam.players.append(player)
-            } else {
-                blueTeam.players.append(player)
-            }
-            addToRedTeam.toggle()
-        }
-        
-        return (red: redTeam, blue: blueTeam)
-    }
-    
     func generateTaskIndexesForBasicGame(numberOfTasks: Int, currentLanguage: String, hasPlusSubscription: Bool) -> [Int] {
         
         
@@ -322,6 +300,77 @@ struct GameFunctionality {
         
         return arrayToReturn
         
+    }
+    
+}
+
+struct TeamModeFunctionality {
+    
+    func generateTeams(players: [String]) -> (red: Team, blue: Team) {
+        let languageManager = LanguageManager()
+        var playersToAssign: [String] = players
+        playersToAssign.shuffle()
+        
+        var redTeam = Team(name: languageManager.localizedString(forKey: "RED_TEAM"), players: [], points: 0, color: .red)
+        var blueTeam = Team(name: languageManager.localizedString(forKey: "BLUE_TEAM"), players: [], points: 0, color: .blue)
+        
+        var addToRedTeam: Bool = true
+        
+        for player in playersToAssign {
+            if addToRedTeam {
+                redTeam.players.append(player)
+            } else {
+                blueTeam.players.append(player)
+            }
+            addToRedTeam.toggle()
+        }
+        
+        return (red: redTeam, blue: blueTeam)
+    }
+    
+    func renderTemplate(_ template: String, values: [String: String]) -> String {
+        var result = template
+        for (key, value) in values {
+            result = result.replacingOccurrences(of: "{\(key)}", with: value)
+        }
+        return result
+    }
+    
+    func attributedText(for fullText: String, highlight1: String, highlight2: String, highlight3: String, color1: UIColor, color2: UIColor, color3: UIColor) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(string: fullText)
+        
+        // Attributes for the highlighted texts
+        let highlight1Attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: color1,
+            .font: UIFont.boldSystemFont(ofSize: 24)
+        ]
+        let highlight2Attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: color2,
+            .font: UIFont.boldSystemFont(ofSize: 24)
+        ]
+        let highlight3Attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: color3,
+            .font: UIFont.boldSystemFont(ofSize: 24)
+        ]
+        
+        // Apply attributes to highlight1
+        let highlight1Range = (fullText as NSString).range(of: highlight1)
+        if highlight1Range.location != NSNotFound {
+            attributedString.addAttributes(highlight1Attributes, range: highlight1Range)
+        }
+        
+        // Apply attributes to highlight2
+        let highlight2Range = (fullText as NSString).range(of: highlight2)
+        if highlight2Range.location != NSNotFound {
+            attributedString.addAttributes(highlight2Attributes, range: highlight2Range)
+        }
+        
+        let highlight3Range = (fullText as NSString).range(of: highlight3)
+        if highlight3Range.location != NSNotFound {
+            attributedString.addAttributes(highlight3Attributes, range: highlight3Range)
+        }
+        
+        return attributedString
     }
     
 }

@@ -18,6 +18,7 @@ class Start: UIViewController, LanguageReloader {
         super.viewDidLoad()
         initializeApplication()
         setUpUI()
+        checkTaskArrayCounts()
     }
     
     func renderTemplate(_ template: String, values: [String: String]) -> String {
@@ -104,6 +105,26 @@ class Start: UIViewController, LanguageReloader {
                 print("  Font: \(font)")
             }
         }
+    }
+    
+    private func checkTaskArrayCounts() {
+        print("Finnish basic game has \(BasicGameTasksFI.tasks.count) tasks")
+        print("English basic game has \(BasicGameTasksEN.tasks.count) tasks")
+        print("Finnish date game has \(DateTasksFI.tasks.count) tasks")
+        print("English date game has \(DateTasksEN.tasks.count) tasks")
+        print("Finnish team game has \(TeamsFITasks.tasks.count) tasks")
+        print("English team game has \(TeamsENTasks.tasks.count) tasks")
+        print("Finnish tier1 has \(Tier1FITasks.tasks.count) tasks")
+        print("English tier1 has \(Tier1ENTasks.tasks.count) tasks")
+        print("Finnish tier2 has \(Tier2FITasks.tasks.count) tasks")
+        print("English tier2 has \(Tier2ENTasks.tasks.count) tasks")
+        print("Finnish tier3 has \(Tier3FITasks.tasks.count) tasks")
+        print("English tier3 has \(Tier3ENTasks.tasks.count) tasks")
+        print("Finnish tier4 has \(Tier4FITasks.tasks.count) tasks")
+        print("English tier4 has \(Tier4ENTasks.tasks.count) tasks")
+        print("Finnish tier5 has \(Tier5FITasks.tasks.count) tasks")
+        print("English tier5 has \(Tier5ENTasks.tasks.count) tasks")
+        
     }
     
 }

@@ -304,7 +304,83 @@ struct Tier3ENTasks {
         template:                    "{player1}, tell an embarrassing memory. If the others don’t think it’s embarrassing, take {penalties} penalties",
         pointsToScore: 1,
         baselinePenalty: 3
+        ),
+        Task(
+            template: "All single players take {penalties} penalties, or kiss a player of the same gender",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, play a song of your choice. If any player dislikes it, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, hold your breath for 30 seconds. If you fail, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, tell your best ‘dad joke’. If no one laughs, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Each player shares the worst crime they’ve ever committed. The biggest criminal takes {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "The player who looks the most heterosexual takes {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, play any song you choose. If it doesn’t make at least one player laugh, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "The player who looks the most unemployed takes {penalties} penalties. Vote in case of disagreement",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, if you have tattoos, show one and take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Every player who identifies as a feminist takes {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "From now on, every player must speak and behave like the most polite aristocrat imaginable. The first player to break etiquette takes {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "From now on, each player must exaggeratedly act like a stereotypical member of the opposite sex. The first player to lose their patience takes {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, you may only speak English for the rest of the game. From now on, take {penalties} penalties for every sentence spoken in another language",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, pretend you’re performing at a sold-out show and give the group an unforgettable 15-second performance. If you don’t earn applause, take {penalties} sips",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "The player with the best hairline takes {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
         )
+
 
 
     ]

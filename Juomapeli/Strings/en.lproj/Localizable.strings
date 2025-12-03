@@ -66,6 +66,7 @@ GAME_OVER = "Game over!";
 BACKGROUND_IMAGE = "jampartycup_raibale";
 POINTLABEL_TEXT = "Points from task:";
 POINTS = "Points";
+TIE = "Tie";
 SCOREBOAD_HEADER = "Scoreboard:";
 WORDGAME_INSTRUCTIONS = "Explain! You have 60 seconds to explain as many words as possible to your peer. Every correct answer gives you a point. Touch the screen to begin";
 RANDOMIZE = "Randomize";

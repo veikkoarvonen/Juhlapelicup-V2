@@ -67,6 +67,8 @@ struct TeamModeParameters {
     var currentTask: Int
     var numberOfTasks: Int
     var taskTemplates: [Task]
+    var teamIndexes: [Int]
+    var parametersAreSet: Bool
     var redTeam: Team?
     var blueTeam: Team?
 }

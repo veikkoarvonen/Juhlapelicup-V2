@@ -259,7 +259,48 @@ struct Tier4ENTasks {
         template:            "{player1} and {player2}, press your lips together for 15 seconds, but don’t kiss! Failing means {penalties} penalties",
         pointsToScore: 1,
         baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, when was the last time you embarrassed yourself and how? Answer or take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, sniff {player2}’s crotch. If you refuse, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, for the next 3 rounds you may not speak, but must communicate silently like Mr. Bean. If you fail or refuse, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, choose the player you think is the most sinful. They take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, what did you last masturbate to? Answer or take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Each player tells a joke in turn. If the joke doesn’t make anyone laugh, the person telling it takes {penalties} penalties. You have 15 seconds to prepare, {player1} starts",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Each player removes one piece of clothing in turn. The first player to stop or refuse takes {penalties} penalties. {player1} starts",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Take turns inventing a synonym for the word “penis”. The first person who can’t think of a new one takes {penalties} penalties. {player1} starts",
+            pointsToScore: 1,
+            baselinePenalty: 3
         )
+
     ]
     
 }

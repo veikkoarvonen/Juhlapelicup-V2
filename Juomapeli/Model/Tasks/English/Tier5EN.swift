@@ -234,7 +234,43 @@ struct Tier5ENTasks {
         template:            "{player1}, massage {player2}’s chest for 10 seconds. Refusing means {penalties} penalties",
         pointsToScore: 1,
         baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, you have 10 seconds to grab something red. If you fail, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, describe the adult video that has given you the biggest sense of regret. Or take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, tell a funny fact or story about {player2}. If you can’t think of anything, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, sing the first verse of “Suvivirsi” perfectly. Failure results in {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, sing the first verse of the Finnish national anthem “Maamme” perfectly. Failure results in {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, keep a straight face for the next two rounds. For every time you make a facial expression, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Take turns inventing a synonym for the word “vagina”. The first person who can’t think of a new one takes {penalties} penalties. {player1} starts",
+            pointsToScore: 1,
+            baselinePenalty: 3
         )
+
 
 
     ]

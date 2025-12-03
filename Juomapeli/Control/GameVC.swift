@@ -211,6 +211,9 @@ class GameView: UIViewController {
             return
         }
         
+        timer?.invalidate()
+        timer = nil
+        
         if C.debugApp { showCurrentTaskDetails() }
         
         updateTasklabel()
@@ -300,6 +303,9 @@ class GameView: UIViewController {
     }
     
     private func performShakingAnimation() {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+
         let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.translation.x")
         shakeAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         shakeAnimation.duration = 0.3

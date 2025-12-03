@@ -15,7 +15,7 @@ class TeamView: UIViewController {
     var gameConfiguaration: TeamModeConfiguration!
     var gameParameters: TeamModeParameters?
     let languageManager = LanguageManager()
-    let gameFunctionality = GameFunctionality()
+    let gameFunctionality = TeamModeFunctionality()
     
     enum GamePhase {
         case settingTeams
@@ -36,7 +36,7 @@ class TeamView: UIViewController {
             hasSetUI = true
             setUI()
             updateUI(phase: gamePhase)
-            setGameParameters()
+            randomizeTeams()
         }
     }
     
@@ -62,21 +62,43 @@ class TeamView: UIViewController {
 
     @objc private func handleScreenTap() {
         print("Screen tapped")
-        // Your logic here
+        switch gamePhase {
+        case .instructions:
+            gamePhase = .playing
+            newTask()
+            updateUI(phase: .playing)
+        case .playing:
+            if gameConfiguaration.countPoints { return }
+            newTask()
+        case .ended:
+            navigationController?.popViewController(animated: true)
+        default: return
+        }
     }
     
     @objc private func handleRedTap() {
         print("Red tapped")
-        // Your logic here
+        if !gameConfiguaration.countPoints { return }
+        if gamePhase == .playing {
+            addPointsToRedTeam()
+            newTask()
+            if C.debugApp { printScoreboard() }
+        }
     }
     
     @objc private func handleBlueTap() {
         print("Blue tapped")
-        // Your logic here
+        if !gameConfiguaration.countPoints { return }
+        if gamePhase == .playing {
+            addPointsToBlueTeam()
+            newTask()
+            if C.debugApp { printScoreboard() }
+        }
     }
     
 //MARK: - Team selection pan gesture
     
+    //Handle team selection pan
     @objc private func handlePlayerPan(_ gesture: UIPanGestureRecognizer) {
         guard let label = gesture.view as? UILabel else { return }
         
@@ -135,14 +157,8 @@ class TeamView: UIViewController {
 
     
 //MARK: - Team selection phase
-
-    private func setGameParameters() {
-        gameParameters?.currentTask = 0
-        gameParameters?.numberOfTasks = gameConfiguaration.shorterRound ? 10 : 20
-        gameParameters?.taskTemplates = []
-        randomizeTeams()
-    }
     
+    //Randomize teams in game configuration
     private func randomizeTeams() {
         var teamIndexArray: [Int] = []
         var addToRed: Bool = true
@@ -172,6 +188,7 @@ class TeamView: UIViewController {
         }
     }
     
+    //Move one player between teams
     private func moveTeamMember(index: Int, toRed: Bool) {
         let indexToMove: Int = toRed ? 0 : 1
         gameConfiguaration.teamConfigurationIndexes[index] = indexToMove
@@ -179,6 +196,7 @@ class TeamView: UIViewController {
         if C.debugApp { print("Team index array: \(gameConfiguaration.teamConfigurationIndexes)") }
     }
     
+    //Check if teams are equal, return boolean
     private func canProceedToGame() -> Bool {
         let redTeamCount = gameConfiguaration.teamConfigurationIndexes.filter { $0 == 0 }.count
         let blueTeamCount = gameConfiguaration.teamConfigurationIndexes.filter { $0 == 1 }.count
@@ -192,7 +210,8 @@ class TeamView: UIViewController {
         
         return true
     }
-
+    
+    //Alert if teams are not equal
     private func showAlert() {
         let alert = UIAlertController(
             title: languageManager.localizedString(forKey: "TEAM_ERROR_HEADER"),
@@ -204,17 +223,224 @@ class TeamView: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
-
+    
+    //Proceed to instructions or playing, depending if count points
     private func proceedToGame() {
         gamePhase = gameConfiguaration.countPoints ? .instructions : .playing
         if C.debugApp { print("Proceeding to game!, current phase: \(gamePhase)") }
         updateUI(phase: gamePhase)
+        setGameParameters()
+        if C.debugApp { checkGameParameters() }
+        if gamePhase == .playing { newTask() }
     }
     
 //MARK: - Playing phase
     
-    private func setTeamParameters() {
+    //Set game parameters before starting the game
+    private func setGameParameters() {
         
+        let language = languageManager.getSelectedLanguage()
+        let numberOfTasks: Int = gameConfiguaration.shorterRound ? 10 : 20
+        var taskTemplates: [Task] = language == "fi" ? TeamsFITasks.tasks : TeamsENTasks.tasks
+        taskTemplates.shuffle()
+        taskTemplates = Array(taskTemplates.prefix(numberOfTasks))
+        
+        var redTeam = Team(name: languageManager.localizedString(forKey: "RED_TEAM"), players: [], points: 0, color: .red)
+        var blueTeam = Team(name: languageManager.localizedString(forKey: "BLUE_TEAM"), players: [], points: 0, color: .blue)
+        for i in 0..<gameConfiguaration.players.count {
+            let index: Int = gameConfiguaration.teamConfigurationIndexes[i]
+            if index == 0 {
+                redTeam.players.append(gameConfiguaration.players[i])
+            } else {
+                blueTeam.players.append(gameConfiguaration.players[i])
+            }
+        }
+        
+        var teamIndexes: [Int] {
+            var addToRed: Bool = true
+            var indexes: [Int] = []
+            for _ in 0..<numberOfTasks {
+                let index = addToRed ? 0 : 1
+                indexes.append(index)
+                addToRed.toggle()
+            }
+            indexes.shuffle()
+            return indexes
+        }
+        
+        gameParameters = TeamModeParameters(currentTask: 0, numberOfTasks: numberOfTasks, taskTemplates: taskTemplates, teamIndexes: teamIndexes, parametersAreSet: true, redTeam: redTeam, blueTeam: blueTeam)
+    }
+    
+    //Display new task based on game parameters. End game if index out of range
+    private func newTask() {
+        guard gameParameters!.parametersAreSet else {
+            print("WARNING! Game parameters not set when calling newTask()")
+            return
+        }
+        let currentTaskIndex = gameParameters!.currentTask
+        
+        if currentTaskIndex >= gameParameters!.numberOfTasks {
+            endGame()
+            if C.debugApp { print("Task index exeeded - ending game") }
+            return
+        }
+        
+        if C.debugApp { printCurrentTaskDetails() }
+        
+        let testTemplate = TeamsFITasks.testTemplate
+        let currentTemplate = gameParameters!.taskTemplates[currentTaskIndex]
+        
+        
+        let currentTeamIndex = gameParameters!.teamIndexes[currentTaskIndex]
+        let currentTeam = currentTeamIndex == 0 ? gameParameters!.redTeam! : gameParameters!.blueTeam!
+        let opponentTeam = currentTeamIndex == 0 ? gameParameters!.blueTeam! : gameParameters!.redTeam!
+        
+        let p1 = currentTeam.players.randomElement()!
+        let p2 = opponentTeam.players.randomElement()!
+        
+        let taskTemplate = gameFunctionality.renderTemplate(currentTemplate.template, values: [
+            "team" : currentTeam.name,
+            "player1" : p1,
+            "player2" : p2,
+            "penalties" : String(currentTemplate.baselinePenalty)
+        ])
+        
+        let attributedString = gameFunctionality.attributedText(for: taskTemplate, highlight1: currentTeam.name, highlight2: p1, highlight3: p2, color1: currentTeam.color, color2: currentTeam.color, color3: opponentTeam.color)
+        UIElements.taskLabel.attributedText = attributedString
+        performShakingAnimation()
+        
+        gameParameters!.currentTask += 1
+    }
+    
+    //Shake task label
+    private func performShakingAnimation() {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+        let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        shakeAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        shakeAnimation.duration = 0.3
+        shakeAnimation.values = [-9, 9, -6, 6, -3, 3, 0]
+        UIElements.taskLabel.layer.add(shakeAnimation, forKey: "shake")
+    }
+    
+    //Add points to red (Checks index based on game parameters
+    private func addPointsToRedTeam() {
+        guard gameParameters!.parametersAreSet else {
+            print("WARNING! Game parameters not set when calling addPointsToRedTeam()")
+            return
+        }
+        let currentTaskIndex = gameParameters!.currentTask
+        let pointsToAdd: Int = (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
+        gameParameters?.redTeam?.points += pointsToAdd
+        if C.debugApp {
+            print("Adding \(pointsToAdd) to red team points from task index: \(currentTaskIndex - 1)")
+        }
+    }
+    
+    //Add points to blue (Checks index based on game parameters
+    private func addPointsToBlueTeam() {
+        guard gameParameters!.parametersAreSet else {
+            print("WARNING! Game parameters not set when calling addPointsToBlueTeam()")
+            return
+        }
+        let currentTaskIndex = gameParameters!.currentTask
+        let pointsToAdd: Int = (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
+        gameParameters?.blueTeam?.points += pointsToAdd
+        if C.debugApp {
+            print("Adding \(pointsToAdd) to blue team points from task index: \(currentTaskIndex - 1)")
+        }
+    }
+    
+//MARK: - End game
+    
+    //End game - Display scoreboard of counting points
+    private func endGame() {
+        if C.debugApp { print("Ending game") }
+        gamePhase = .ended
+        updateUI(phase: gamePhase)
+        if gameConfiguaration.countPoints {
+            if C.debugApp { print("Counting points: moving to scoreboard function") }
+            displayScoreBoard()
+        } else {
+            if C.debugApp { print("not counting points, showing end game text") }
+            UIElements.taskLabel.text = languageManager.localizedString(forKey: "GAME_OVER")
+            performShakingAnimation()
+        }
+    }
+    
+    //Scoreboard generation
+    private func displayScoreBoard() {
+        
+        guard gameParameters!.parametersAreSet else {
+            print("WARNING: game parameters not set when displaying scoreboard. Exiting function")
+            return
+        }
+        
+        if C.debugApp { print("Displaying scoreboard!") }
+        
+        var scoreBoardStringArray: [String] = []
+        
+        let redTeam = gameParameters!.redTeam!
+        let blueTeam = gameParameters!.blueTeam!
+        
+        let headerString = redTeam.points == blueTeam.points ? languageManager.localizedString(forKey: "TIE") : languageManager.localizedString(forKey: "POINTS")
+        scoreBoardStringArray.append(headerString)
+        
+        if blueTeam.points > redTeam.points {
+            scoreBoardStringArray.append("\(blueTeam.name) (\(blueTeam.points))")
+            scoreBoardStringArray.append("\(redTeam.name) (\(redTeam.points))")
+        } else {
+            scoreBoardStringArray.append("\(redTeam.name) (\(redTeam.points))")
+            scoreBoardStringArray.append("\(blueTeam.name) (\(blueTeam.points))")
+        }
+        var y: CGFloat = view.safeAreaInsets.top + 100.0
+        
+        var labelsToAdd: [UILabel] = []
+        
+        for i in 0...2 {
+            let label = UILabel()
+            label.textAlignment = .center
+            label.font = i == 0 ? UIFont(name: C.wordGameFont, size: 40) : UIFont(name: "Optima-Bold", size: 30)
+            label.textColor = .white
+            label.text = scoreBoardStringArray[i]
+            label.shadowColor = UIColor.black
+            label.shadowOffset = CGSize(width: 2, height: 2)
+            labelsToAdd.append(label)
+            label.frame = CGRect(x: 0, y: y, width: view.frame.width, height: 50)
+            y += 50.0
+        }
+        
+        labelsToAdd[0].text = ""
+        view.addSubview(labelsToAdd[0])
+        let text = languageManager.localizedString(forKey: "SCOREBOAD_HEADER")
+        var charIndex = 0.0
+        for letter in text {
+            Timer.scheduledTimer(withTimeInterval: 0.1 * charIndex, repeats: false) { (timer) in labelsToAdd[0].text?.append(letter)
+            }
+            charIndex += 1
+        }
+        
+        view.addSubview(labelsToAdd[1])
+        view.addSubview(labelsToAdd[2])
+        
+        labelsToAdd[1].alpha = 0.0
+        labelsToAdd[1].transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+        labelsToAdd[2].alpha = 0.0
+        labelsToAdd[2].transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut]) { [self] in
+                labelsToAdd[1].alpha = 1.0
+                labelsToAdd[1].transform = .identity
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut]) { [self] in
+                labelsToAdd[2].alpha = 1.0
+                labelsToAdd[2].transform = .identity
+            }
+        }
+            
     }
     
 }
@@ -339,57 +565,51 @@ extension TeamView {
     
     private func updateUI(phase: GamePhase) {
         if C.debugApp { print("Updating UI with phase: \(phase)") }
+        let countPoints = gameConfiguaration.countPoints
         switch phase {
         case .settingTeams:
-            UIElements.redTeamButton?.container.isHidden = true
-            UIElements.blueTeamVButton?.container.isHidden = true
-            UIElements.redTeamButton?.container.alpha = 0.0
-            UIElements.blueTeamVButton?.container.alpha = 0.0
-            UIElements.redTeamButton?.container.isUserInteractionEnabled = false
-            UIElements.blueTeamVButton?.container.isUserInteractionEnabled = false
-        case .instructions, .playing:
-            UIElements.instructionView.isHidden = false
-            if phase == .playing {
-                UIElements.instructionView.removeFromSuperview()
-            }
-            UIElements.redTeamButton?.container.alpha = 0.0
-            UIElements.blueTeamVButton?.container.alpha = 0.0
-            UIElements.instructionView.alpha = 0.0
-            UIView.animate(withDuration: 0.2) { [self] in
-                UIElements.redView.alpha = 0.0
-                UIElements.blueView.alpha = 0.0
-                UIElements.instructionView.alpha = 1.0
-                UIElements.redHeader.alpha = 0.0
-                UIElements.blueHeader.alpha = 0.0
-                UIElements.startButton.alpha = 0.0
-                UIElements.randomizeButton.alpha = 0.0
-                UIElements.redTeamButton?.container.alpha = 1.0
-                UIElements.blueTeamVButton?.container.alpha = 1.0
-                UIElements.redHeader.alpha = 0.0
-                UIElements.blueHeader.alpha = 0.0
-                for label in UIElements.playerLabels {
-                    label.alpha = 0.0
-                }
-                if phase == .instructions {
-                    UIElements.backGroundImage.alpha = 0.5
-                } else {
-                    UIElements.backGroundImage.alpha = 1.0
-                }
-            } completion: { [self] _ in
-                UIElements.redView.removeFromSuperview()
-                UIElements.blueView.removeFromSuperview()
-                UIElements.redHeader.removeFromSuperview()
-                UIElements.blueHeader.removeFromSuperview()
-                UIElements.startButton.removeFromSuperview()
-                UIElements.randomizeButton.removeFromSuperview()
-                UIElements.redHeader.removeFromSuperview()
-                UIElements.blueHeader.removeFromSuperview()
-                for label in UIElements.playerLabels {
-                    label.removeFromSuperview()
-                }
-            }
-        default: return
+            hideUIElements(redHeader: false, blueHeader: false, redView: false, blueView: false, playerLabels: false, startButton: false, randomizeButton: false, instructionView: true, taskLabel: true, backGroundImage: true, redTeamButton: true, blueTeamButton: true)
+        case .instructions:
+            hideUIElements(redHeader: true, blueHeader: true, redView: true, blueView: true, playerLabels: true, startButton: true, randomizeButton: true, instructionView: false, taskLabel: true, backGroundImage: false, redTeamButton: true, blueTeamButton: true)
+        case .playing:
+            hideUIElements(redHeader: true, blueHeader: true, redView: true, blueView: true, playerLabels: true, startButton: true, randomizeButton: true, instructionView: true, taskLabel: false, backGroundImage: false, redTeamButton: !countPoints, blueTeamButton: !countPoints)
+        case .ended:
+            hideUIElements(redHeader: true, blueHeader: true, redView: true, blueView: true, playerLabels: true, startButton: true, randomizeButton: true, instructionView: true, taskLabel: countPoints, backGroundImage: countPoints, redTeamButton: true, blueTeamButton: true)
         }
+    }
+    
+    private func hideUIElements(redHeader: Bool, blueHeader: Bool, redView: Bool, blueView: Bool, playerLabels: Bool, startButton: Bool, randomizeButton: Bool, instructionView: Bool, taskLabel: Bool, backGroundImage: Bool, redTeamButton: Bool, blueTeamButton: Bool) {
+        
+        UIElements.redHeader.isHidden = redHeader
+        UIElements.blueHeader.isHidden = blueHeader
+        UIElements.redView.isHidden = redView
+        UIElements.blueView.isHidden = blueView
+        UIElements.startButton.isHidden = startButton
+        UIElements.randomizeButton.isHidden = randomizeButton
+        UIElements.instructionView.isHidden = instructionView
+        UIElements.taskLabel.isHidden = taskLabel
+        for label in UIElements.playerLabels {
+            label.isHidden = playerLabels
+        }
+        
+        UIView.animate(withDuration: 0.2) { [self] in
+            UIElements.redHeader.alpha = redHeader ? 0 : 1
+            UIElements.blueHeader.alpha = blueHeader ? 0 : 1
+            UIElements.redView.alpha = redView ? 0 : 1
+            UIElements.blueView.alpha = blueView ? 0 : 1
+            UIElements.startButton.alpha = startButton ? 0 : 1
+            UIElements.randomizeButton.alpha = randomizeButton ? 0 : 1
+            UIElements.instructionView.alpha = instructionView ? 0 : 1
+            UIElements.taskLabel.alpha = taskLabel ? 0 : 1
+            UIElements.backGroundImage.alpha = backGroundImage ? 0 : 1
+            UIElements.redTeamButton?.container.alpha = redTeamButton ? 0 : 1
+            UIElements.blueTeamVButton?.container.alpha = blueTeamButton ? 0 : 1
+            for label in UIElements.playerLabels {
+                label.alpha = playerLabels ? 0 : 1
+            }
+        }
+        
+        
     }
 
 }
@@ -403,6 +623,42 @@ extension TeamView {
         print("Players: \(gameConfiguaration.players) total: \(gameConfiguaration.players.count)")
         print("Counting points: \(gameConfiguaration.countPoints)")
         print("Is shorter round: \(gameConfiguaration.shorterRound)")
+    }
+    
+    private func checkGameParameters() {
+        
+        guard gameParameters != nil && gameParameters?.redTeam != nil && gameParameters?.blueTeam != nil && gameParameters?.teamIndexes != nil else {
+            print("WARNING: Game parameters are not set!")
+            return
+        }
+        
+        print("--GAME PARAMETERS:--")
+        print("Numer of tasks for game: \(gameParameters!.numberOfTasks)")
+        print("Number of task templates: \(gameParameters!.taskTemplates.count)")
+        print("Team indexes: \(gameParameters!.teamIndexes)")
+        print("Red team players:")
+        for player in gameParameters!.redTeam!.players {
+            print(player)
+        }
+        print("Blue team players:")
+        for player in gameParameters!.blueTeam!.players {
+            print(player)
+        }
+
+    }
+    
+    private func printCurrentTaskDetails() {
+        print("Showing task on index: \(gameParameters!.currentTask)")
+        let currentTeam = gameParameters?.teamIndexes[gameParameters!.currentTask] == 0 ? gameParameters!.redTeam!.name : gameParameters!.blueTeam!.name
+        print("Current Team: \(currentTeam)")
+    }
+    
+    private func printScoreboard() {
+        guard gameParameters!.parametersAreSet else {
+            return
+        }
+        
+        print("SCOREBOARD: Red team has \(gameParameters!.redTeam!.points) points, Blue team has \(gameParameters!.blueTeam!.points) points")
     }
     
 }

@@ -81,7 +81,7 @@ struct Tier1ENTasks {
         baselinePenalty: 3
         ),
         Task(
-        template:            "{player1}, list the Finnish vowels in reverse order. If you fail, take {penalties} penalties",
+        template:            "{player1}, list the English vowels in reverse order. If you fail, take {penalties} penalties",
         pointsToScore: 1,
         baselinePenalty: 3
         ),
@@ -175,6 +175,91 @@ struct Tier1ENTasks {
         pointsToScore: 1,
         baselinePenalty: 3
         ),
+        Task(
+            template: "Each player sings Mirella’s song “Timanttei” one word at a time. The first person to freeze takes {penalties} penalties. {player1} starts",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Each player sings Kasmir’s song “Vadelmavene” one word at a time. The first person to freeze takes {penalties} penalties. {player1} starts",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Each player sings Käärijä’s song “Cha Cha Cha” one word at a time. The first person to freeze takes {penalties} penalties. {player1} starts",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Each player sings JVG’s song “Ikuinen vappu” one word at a time. The first person to freeze takes {penalties} penalties. {player1} starts",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, choose which player must take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "The player with the smallest foot takes {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "What scares you more: heights or tight spaces? Vote now! The minority takes {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, when was the last time you embarrassed yourself and how? Answer or take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, for the next 3 rounds you must communicate silently like Mr. Bean. If you fail or refuse, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, you have 10 seconds to grab something red. If you fail, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, tell a funny fact or story about {player2}. If you can’t come up with anything, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, sing the first verse of “Suvivirsi” perfectly. Failure results in {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, sing the first verse of the Finnish national anthem “Maamme” perfectly. Failure results in {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, say player {player2}’s full name. If you don’t know it, it’s time to take {penalties} penalties and get to know your teammate better",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, make an assumption about {player2}. If you’re correct, they take {penalties} penalties. Otherwise you take {penalties} penalties yourself",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Each player tells a joke in turn. If the joke doesn’t make anyone laugh, the person telling it takes {penalties} penalties. You have 15 seconds to prepare, {player1} starts",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, what is {player2}’s birthday and birth year? If you guess correctly, they take {penalties} penalties. If you’re wrong, you take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        )
     ]
     
 }

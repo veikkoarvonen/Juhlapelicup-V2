@@ -279,9 +279,37 @@ struct Tier2ENTasks {
         template:                    "{player1}, howl like a wolf or take {penalties} penalties.",
         pointsToScore: 1,
         baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, name 5 anime series in 10 seconds or take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "The oldest player must give the youngest player a life-changing piece of advice, or take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Each player shares the worst thing they’ve done in the past week. The biggest scoundrel takes {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, keep a straight face for the next two rounds. For every time you make a facial expression, take {penalties} penalties",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "{player1}, compliment {player1} all the way to the heavens! If you make them smile, you avoid {penalties} penalties. If they blush, they take {penalties} penalties themselves",
+            pointsToScore: 1,
+            baselinePenalty: 3
+        ),
+        Task(
+            template: "Each player introduces themselves with a funny fact. The player with the dullest introduction takes {penalties} penalties. {player1} starts",
+            pointsToScore: 1,
+            baselinePenalty: 3
         )
-
-
     ]
     
 }

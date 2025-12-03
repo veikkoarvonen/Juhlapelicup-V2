@@ -250,6 +250,7 @@ class WordView: UIViewController {
         if C.debugApp { print("Staring game: setting game state to playing") }
         gameState = .playing
         gameParameters.currentTime = gameParameters.gameTime
+        gameParameters.wordList.shuffle()
         
         //TOGGLE UI
         // Time label
@@ -290,6 +291,7 @@ class WordView: UIViewController {
         
         //Update point label
         UIElements.pointLabel.text = "\(languageManager.localizedString(forKey: "POINTS")): \(gameParameters.points)"
+        UIElements.wordContainer?.label.text = gameParameters.wordList[gameParameters.currentWord]
         
         //Perform animation
         view.isUserInteractionEnabled = false
