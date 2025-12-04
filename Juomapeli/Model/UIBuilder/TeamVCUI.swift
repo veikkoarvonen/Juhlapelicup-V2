@@ -24,7 +24,7 @@ struct TeamVCUI {
                 }
             } else {
                 if countPoints {
-                    return "pisteet_raibale"
+                    return "raibale_uus_enkku"
                 } else {
                     return "jampartycup_raibale"
                 }
@@ -66,7 +66,7 @@ struct TeamVCUI {
     func generateRedTeamButton(viewFrame: CGRect, safeArea: UIEdgeInsets) -> PointButtonComponents {
         
         let yesView = UIImageView()
-        yesView.image = UIImage(named: "points-right")
+        yesView.image = UIImage(named: "kuppi_puna")
         
         let width: CGFloat = 170.0
         let heigth: CGFloat = 85.0
@@ -94,7 +94,7 @@ struct TeamVCUI {
     func generateBlueTeamButton(viewFrame: CGRect, safeArea: UIEdgeInsets) -> PointButtonComponents {
         
         let noView = UIImageView()
-        noView.image = UIImage(named: "points-wrong")
+        noView.image = UIImage(named: "kuppi_sini")
         
         let width: CGFloat = 170.0
         let heigth: CGFloat = 85.0
@@ -162,7 +162,7 @@ struct TeamVCUI {
     
     func generateRedTeamView(viewFrame: CGRect) -> UIView {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor(named: "redTeamColor")
         view.frame = CGRect(x: 0, y: 0, width: viewFrame.width / 2, height: viewFrame.height)
         if C.testUIWithColors { view.alpha = 0.4 }
         return view
@@ -170,7 +170,7 @@ struct TeamVCUI {
     
     func generateBlueTeamView(viewFrame: CGRect) -> UIView {
         let view = UIView()
-        view.backgroundColor = .blue
+        view.backgroundColor = UIColor(named: "blueTeamColor")
         view.frame = CGRect(x: viewFrame.width / 2, y: 0, width: viewFrame.width / 2, height: viewFrame.height)
         if C.testUIWithColors { view.alpha = 0.4 }
         return view

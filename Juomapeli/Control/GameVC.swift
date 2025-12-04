@@ -68,6 +68,8 @@ class GameView: UIViewController {
     
     @objc func handleScreenTap() {
         if phase == .ended {
+            timer?.invalidate()
+            timer = nil
             navigationController?.popViewController(animated: true)
         } else if phase == .playing {
             if pointUIisVisible {
@@ -338,6 +340,65 @@ class GameView: UIViewController {
         var yPosition: CGFloat = view.safeAreaInsets.top + 150.0
         let trophyArray = ["🥇","🥈","🥉"]
         
+        let label = UILabel()
+        label.font = UIFont(name: "Optima-Bold", size: 30)
+        label.font = UIFont(name: C.wordGameFont, size: 40)
+        label.textAlignment = .center
+        label.shadowColor = UIColor.black
+        label.shadowOffset = CGSize(width: 2, height: 2)
+        label.textColor = .white
+        view.addSubview(label)
+        label.frame = CGRect(x: 15.0, y: yPosition, width: labelWidth, height: 50)
+        yPosition += 80.0
+        
+        label.text = ""
+        let text = languageManager.localizedString(forKey: "SCOREBOAD_HEADER")
+        var charIndex = 0.0
+        for letter in text {
+            Timer.scheduledTimer(withTimeInterval: 0.1 * charIndex, repeats: false) { (timer) in label.text?.append(letter)
+            }
+            charIndex += 1
+        }
+        
+        var labelsToInsert: [UILabel] = []
+        
+        for i in 0...2 {
+            if i >= sortedPlayers.count { break }
+            let label = UILabel()
+            label.font = UIFont(name: "Optima-Bold", size: 30)
+            label.textAlignment = .center
+            label.textColor = .white
+            label.shadowColor = UIColor.black
+            label.shadowOffset = CGSize(width: 2, height: 2)
+            label.alpha = 0.0
+            view.addSubview(label)
+            label.frame = CGRect(x: 15.0, y: yPosition, width: labelWidth, height: 50)
+            label.text = "\(trophyArray[i]) \(sortedPlayers[i].name): (\(sortedPlayers[i].points))"
+            labelsToInsert.append(label)
+            yPosition += 50.0
+        }
+        
+        timer?.invalidate()
+        timer = nil
+        
+        var indexForNextLabel: Int = 0
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [self] timer in
+            if C.debugApp { print("Timer fired!") }
+            if indexForNextLabel >= labelsToInsert.count {
+                timer.invalidate()
+            } else {
+                let labelToAnimate = labelsToInsert[indexForNextLabel]
+                labelToAnimate.alpha = 0.0
+                labelToAnimate.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+                
+                UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut]) { [self] in
+                    labelToAnimate.alpha = 1.0
+                    labelToAnimate.transform = .identity
+                }
+            }
+            indexForNextLabel += 1
+        }
+ /*
         for i in 0..<4 {
             //print("Running scoreboard loop")
             let label = UILabel()
@@ -374,7 +435,7 @@ class GameView: UIViewController {
                 }
             }
         }
-        
+  */
     }
     
 //MARK: Animations

@@ -24,7 +24,7 @@ struct GameVCUI {
                 }
             } else {
                 if countPoints {
-                    return "pisteet_raibale"
+                    return "raibale_uus_enkku"
                 } else {
                     return "jampartycup_raibale"
                 }

@@ -307,6 +307,10 @@ class TeamView: UIViewController {
         
         let attributedString = gameFunctionality.attributedText(for: taskTemplate, highlight1: currentTeam.name, highlight2: p1, highlight3: p2, color1: currentTeam.color, color2: currentTeam.color, color3: opponentTeam.color)
         UIElements.taskLabel.attributedText = attributedString
+        
+        UIElements.redTeamButton?.label.text = String(currentTemplate.pointsToScore)
+        UIElements.blueTeamVButton?.label.text = String(currentTemplate.pointsToScore)
+        
         performShakingAnimation()
         
         gameParameters!.currentTask += 1
@@ -332,6 +336,7 @@ class TeamView: UIViewController {
         let currentTaskIndex = gameParameters!.currentTask
         let pointsToAdd: Int = (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
         gameParameters?.redTeam?.points += pointsToAdd
+        popRedPointAnimation()
         if C.debugApp {
             print("Adding \(pointsToAdd) to red team points from task index: \(currentTaskIndex - 1)")
         }
@@ -346,8 +351,73 @@ class TeamView: UIViewController {
         let currentTaskIndex = gameParameters!.currentTask
         let pointsToAdd: Int = (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
         gameParameters?.blueTeam?.points += pointsToAdd
+        popBluePointAnimation()
         if C.debugApp {
             print("Adding \(pointsToAdd) to blue team points from task index: \(currentTaskIndex - 1)")
+        }
+    }
+    
+    private func popRedPointAnimation() {
+        let interval = 1.0
+        let label = UILabel()
+        let currentTaskIndex = gameParameters!.currentTask
+        let pointsToAdd: Int = (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
+        label.text = "\(pointsToAdd)"
+        label.font = UIFont.boldSystemFont(ofSize: 150)
+        label.textAlignment = .center
+        label.textColor = UIColor(named: "redTeamColor")
+        label.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+
+        // Position above yes button
+        label.center = CGPoint(
+            x: UIElements.redTeamButton!.container.center.x,
+            y: UIElements.redTeamButton!.container.center.y - 120
+        )
+        
+        view.addSubview(label)
+
+        // Start slightly bigger
+        label.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+
+        UIView.animate(withDuration: interval, delay: 0, options: [.curveEaseOut]) {
+            // Move upward & shrink
+            label.transform = CGAffineTransform(translationX: 0, y: -100)
+                .scaledBy(x: 0.1, y: 0.1)
+            label.alpha = 0.0
+        } completion: { _ in
+            label.removeFromSuperview()
+        }
+    }
+
+    
+    private func popBluePointAnimation() {
+        let interval = 1.0
+        let label = UILabel()
+        let currentTaskIndex = gameParameters!.currentTask
+        let pointsToAdd: Int = (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
+        label.text = "\(pointsToAdd)"
+        label.font = UIFont.boldSystemFont(ofSize: 150)
+        label.textAlignment = .center
+        label.textColor = UIColor(named: "blueTeamColor")
+        label.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+
+        // Position above no button
+        label.center = CGPoint(
+            x: UIElements.blueTeamVButton!.container.center.x,
+            y: UIElements.blueTeamVButton!.container.center.y - 120
+        )
+
+        view.addSubview(label)
+
+        // Start slightly bigger
+        label.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+
+        UIView.animate(withDuration: interval, delay: 0, options: [.curveEaseOut]) {
+            label.transform = CGAffineTransform(translationX: 0, y: -100)
+                .scaledBy(x: 0.1, y: 0.1)
+            label.alpha = 0.0
+        } completion: { _ in
+            label.removeFromSuperview()
         }
     }
     
