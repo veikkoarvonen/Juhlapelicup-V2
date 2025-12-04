@@ -16,6 +16,7 @@ class TeamView: UIViewController {
     var gameParameters: TeamModeParameters?
     let languageManager = LanguageManager()
     let gameFunctionality = TeamModeFunctionality()
+    var timer: Timer?
     
     enum GamePhase {
         case settingTeams
@@ -65,6 +66,8 @@ class TeamView: UIViewController {
         switch gamePhase {
         case .instructions:
             gamePhase = .playing
+            timer?.invalidate()
+            timer = nil
             newTask()
             updateUI(phase: .playing)
         case .playing:
@@ -231,7 +234,29 @@ class TeamView: UIViewController {
         updateUI(phase: gamePhase)
         setGameParameters()
         if C.debugApp { checkGameParameters() }
-        if gamePhase == .playing { newTask() }
+        if gamePhase == .playing { newTask() } else { animateTeamSelectionLabels() }
+    }
+    
+    private func animateTeamSelectionLabels() {
+            
+            var count = 0
+            
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [self] timer in
+                count += 1
+                if C.debugApp { print(count) }
+                if count == 1 {
+                    popAnimation(for: UIElements.redTeamButton!.container)
+                    popRedPointAnimation()
+                }
+                if count == 2 {
+                    popAnimation(for: UIElements.blueTeamVButton!.container)
+                    popBluePointAnimation()
+                }
+                print(count)
+                if count == 5 {
+                    count = 0
+                }
+            }
     }
     
 //MARK: - Playing phase
@@ -337,6 +362,7 @@ class TeamView: UIViewController {
         let pointsToAdd: Int = (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
         gameParameters?.redTeam?.points += pointsToAdd
         popRedPointAnimation()
+        popAnimation(for: UIElements.redTeamButton!.container)
         if C.debugApp {
             print("Adding \(pointsToAdd) to red team points from task index: \(currentTaskIndex - 1)")
         }
@@ -352,6 +378,7 @@ class TeamView: UIViewController {
         let pointsToAdd: Int = (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
         gameParameters?.blueTeam?.points += pointsToAdd
         popBluePointAnimation()
+        popAnimation(for: UIElements.blueTeamVButton!.container)
         if C.debugApp {
             print("Adding \(pointsToAdd) to blue team points from task index: \(currentTaskIndex - 1)")
         }
@@ -361,7 +388,13 @@ class TeamView: UIViewController {
         let interval = 1.0
         let label = UILabel()
         let currentTaskIndex = gameParameters!.currentTask
-        let pointsToAdd: Int = (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
+        var pointsToAdd: Int {
+            if gamePhase == .playing {
+                return (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
+            } else {
+                return 1
+            }
+        }
         label.text = "\(pointsToAdd)"
         label.font = UIFont.boldSystemFont(ofSize: 150)
         label.textAlignment = .center
@@ -388,13 +421,18 @@ class TeamView: UIViewController {
             label.removeFromSuperview()
         }
     }
-
     
     private func popBluePointAnimation() {
         let interval = 1.0
         let label = UILabel()
         let currentTaskIndex = gameParameters!.currentTask
-        let pointsToAdd: Int = (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
+        var pointsToAdd: Int {
+            if gamePhase == .playing {
+                return (gameParameters?.taskTemplates[currentTaskIndex - 1].pointsToScore)!
+            } else {
+                return 1
+            }
+        }
         label.text = "\(pointsToAdd)"
         label.font = UIFont.boldSystemFont(ofSize: 150)
         label.textAlignment = .center
@@ -418,6 +456,20 @@ class TeamView: UIViewController {
             label.alpha = 0.0
         } completion: { _ in
             label.removeFromSuperview()
+        }
+    }
+    
+    //For team button pop
+    private func popAnimation(for element: UIView) {
+        let scale = 1.1
+        let interval = 0.1
+        UIView.animate(withDuration: interval) {
+            element.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + interval) {
+            UIView.animate(withDuration: interval) {
+                element.transform = .identity
+            }
         }
     }
     
@@ -457,11 +509,11 @@ class TeamView: UIViewController {
         scoreBoardStringArray.append(headerString)
         
         if blueTeam.points > redTeam.points {
-            scoreBoardStringArray.append("\(blueTeam.name) (\(blueTeam.points))")
-            scoreBoardStringArray.append("\(redTeam.name) (\(redTeam.points))")
+            scoreBoardStringArray.append("🥇 \(blueTeam.name) (\(blueTeam.points))")
+            scoreBoardStringArray.append("🥈 \(redTeam.name) (\(redTeam.points))")
         } else {
-            scoreBoardStringArray.append("\(redTeam.name) (\(redTeam.points))")
-            scoreBoardStringArray.append("\(blueTeam.name) (\(blueTeam.points))")
+            scoreBoardStringArray.append("🥇 \(redTeam.name) (\(redTeam.points))")
+            scoreBoardStringArray.append("🥈 \(blueTeam.name) (\(blueTeam.points))")
         }
         var y: CGFloat = view.safeAreaInsets.top + 100.0
         
@@ -477,7 +529,7 @@ class TeamView: UIViewController {
             label.shadowOffset = CGSize(width: 2, height: 2)
             labelsToAdd.append(label)
             label.frame = CGRect(x: 0, y: y, width: view.frame.width, height: 50)
-            y += 50.0
+            if i == 0 { y += 80.0 } else { y += 50.0 }
         }
         
         labelsToAdd[0].text = ""
@@ -530,7 +582,7 @@ extension TeamView {
         //Task label
         let tLabel = UIBuilder.generateTaskLabel(viewFrame: view.frame, safeArea: view.safeAreaInsets)
         view.addSubview(tLabel)
-        if gameConfiguaration.countPoints { tLabel.center.y -= 100 }
+        if gameConfiguaration.countPoints { tLabel.center.y -= 90 }
         
         //Point instruction button
         let iView = UIBuilder.generatePointInstructionView(viewFrame: view.frame, safeArea: view.safeAreaInsets)
@@ -640,7 +692,7 @@ extension TeamView {
         case .settingTeams:
             hideUIElements(redHeader: false, blueHeader: false, redView: false, blueView: false, playerLabels: false, startButton: false, randomizeButton: false, instructionView: true, taskLabel: true, backGroundImage: true, redTeamButton: true, blueTeamButton: true)
         case .instructions:
-            hideUIElements(redHeader: true, blueHeader: true, redView: true, blueView: true, playerLabels: true, startButton: true, randomizeButton: true, instructionView: false, taskLabel: true, backGroundImage: false, redTeamButton: true, blueTeamButton: true)
+            hideUIElements(redHeader: true, blueHeader: true, redView: true, blueView: true, playerLabels: true, startButton: true, randomizeButton: true, instructionView: false, taskLabel: true, backGroundImage: false, redTeamButton: false, blueTeamButton: false)
         case .playing:
             hideUIElements(redHeader: true, blueHeader: true, redView: true, blueView: true, playerLabels: true, startButton: true, randomizeButton: true, instructionView: true, taskLabel: false, backGroundImage: false, redTeamButton: !countPoints, blueTeamButton: !countPoints)
         case .ended:

@@ -78,6 +78,9 @@ START_TEAM_GAME = "Aloita";
 RED_TEAM = "Punainen joukkue";
 BLUE_TEAM = "Sininen joukkue";
 
+POINT_INSTRUCTIONS = "Pistetila päällä! Peli kysyy useimpien tehtävien kohdalla, suorittiko pelaaja tehtävän. Tehtävät on pisteytetty niiden vaativuuden mukaan. Eniten pisteitä kerännyt pelaaja voittaa.";
+POINT_INSTRUCTIONS_TEAM = "Pistetila päällä! Peli kysyy jokaisen tehtävän kohdalla, kumpi joukkue voitti tehtävän. Tehtävät on pisteytetty niiden vaativuuden mukaan. Enemmän pisteitä kerännyt joukkue voittaa.";
+
 TEAM_ERROR_HEADER = "Epätasaiset joukkueet";
 TEAM_ERROR_MESSAGE = "Joukkueiden pitää olla tasaiset, muuta osallistujien jakoa.";
 

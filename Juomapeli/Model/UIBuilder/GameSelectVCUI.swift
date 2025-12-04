@@ -12,7 +12,7 @@ struct GameSelectVCUI {
     func generateSettingsButtonView(viewFrame: CGRect, safeArea: UIEdgeInsets) -> UIView {
         
         // --- Container Circle ---
-        let size: CGFloat = 80
+        let size: CGFloat = 70
         let container = UIView()
         
         container.frame = CGRect(
@@ -40,7 +40,7 @@ struct GameSelectVCUI {
         imageView.image = UIImage(named: "asetukset")
         
         // Center label inside container
-        imageView.frame = container.bounds
+        imageView.frame = CGRect(x: 5, y: 5, width: 60, height: 60)
         container.addSubview(imageView)
         
         return container

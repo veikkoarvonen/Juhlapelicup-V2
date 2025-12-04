@@ -67,6 +67,13 @@ struct GameVCUI {
         
         let yesView = UIImageView()
         yesView.image = UIImage(named: "points-right")
+        yesView.clipsToBounds = false // 👈 important!
+
+        // Add shadow
+        yesView.layer.shadowColor = UIColor.black.cgColor
+        yesView.layer.shadowOpacity = 0.08
+        yesView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        yesView.layer.shadowRadius = 6
         
         let width: CGFloat = 170.0
         let heigth: CGFloat = 85.0
@@ -95,6 +102,13 @@ struct GameVCUI {
         
         let noView = UIImageView()
         noView.image = UIImage(named: "points-wrong")
+        noView.clipsToBounds = false // 👈 important!
+
+        // Add shadow
+        noView.layer.shadowColor = UIColor.black.cgColor
+        noView.layer.shadowOpacity = 0.08
+        noView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        noView.layer.shadowRadius = 6
         
         let width: CGFloat = 170.0
         let heigth: CGFloat = 85.0
@@ -144,7 +158,7 @@ struct GameVCUI {
         
         
         let label = UILabel()
-        label.text = "Tähä raibaleesee tulee viel ohjeet siit mite pisteet toimii jeejee ihavaa sentakii et TikTok brainrot jonnet ei osaa käyttää enää mitää äppejä plus nytku tää on pitkä teksti ni nähää et mahtuu raibaleesee hyvi"
+        label.text = languagemanager.localizedString(forKey: "POINT_INSTRUCTIONS")
         label.textColor = .black
         label.numberOfLines = 0
         label.textAlignment = .center

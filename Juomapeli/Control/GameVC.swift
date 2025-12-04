@@ -553,6 +553,15 @@ extension GameView {
     
     private func setUIElements() {
         
+        if gameConfiguration.gameCategory == 1 {
+            view.backgroundColor = UIColor(named: "dateMode")
+            gameConfiguration.countPoints = false
+        } else if gameConfiguration.gameCategory == 2 {
+            
+        } else if gameConfiguration.gameCategory == 4 {
+            view.backgroundColor = .blue
+        }
+        
         //Background image
         let bgImage = UIBuilder.generateBackGroundImage(viewFrame: view.frame, safeArea: view.safeAreaInsets, countPoints: gameConfiguration.countPoints)
         view.addSubview(bgImage)
@@ -592,7 +601,7 @@ extension GameView {
         UIElements = GameVCUIElements(backGroundImage: bgImage, taskLabel: tLabel, yesView: yView, noView: nView, instructionView: iView)
         
         if gameConfiguration.countPoints {
-            UIElements.taskLabel.transform = CGAffineTransform(translationX: 0, y: -100)
+            UIElements.taskLabel.transform = CGAffineTransform(translationX: 0, y: -90)
         } else {
             UIElements.yesView!.container.isHidden = true
             UIElements.noView!.container.isHidden = true

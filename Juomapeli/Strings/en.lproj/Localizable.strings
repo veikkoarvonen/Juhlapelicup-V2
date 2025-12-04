@@ -74,6 +74,9 @@ START_TEAM_GAME = "Start";
 RED_TEAM = "Red team";
 BLUE_TEAM = "Blue Team";
 
+POINT_INSTRUCTIONS = "Score mode on! The game asks if the player completed the challenge. The challenges are scored by their difficulty. The player with most points at the end wins.";
+POINT_INSTRUCTIONS_TEAM = "Score mode on! The game asks which team won the challenge. The challenges are scored by their difficulty. The team with most points at the end wins.";
+
 TEAM_ERROR_HEADER = "Unequal team";
 TEAM_ERROR_MESSAGE = "Teams must be equal, adjust player selection.";
 
